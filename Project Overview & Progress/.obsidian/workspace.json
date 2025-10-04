@@ -20,8 +20,23 @@
               "icon": "lucide-file",
               "title": "Project Overview"
             }
+          },
+          {
+            "id": "a01ecf25f7e963f0",
+            "type": "leaf",
+            "state": {
+              "type": "webviewer",
+              "state": {
+                "url": "https://excalidraw.com/",
+                "title": "Excalidraw Whiteboard",
+                "mode": "webview"
+              },
+              "icon": "globe-2",
+              "title": "Excalidraw Whiteboard"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -159,8 +174,8 @@
               "state": {
                 "file": "Project Overview.md"
               },
-              "icon": "lucide-file-signature",
-              "title": "Footnotes"
+              "icon": "lucide-file",
+              "title": "Plugin no longer active"
             }
           },
           {
@@ -192,11 +207,10 @@
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "bases:Create new base": false,
       "markdown-importer:Open format converter": false
     }
   },
-  "active": "668f4a46e661afc2",
+  "active": "a01ecf25f7e963f0",
   "lastOpenFiles": [
     "Project Overview.md",
     "Documents/Game Design Document.md",
