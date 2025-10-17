@@ -1,0 +1,21 @@
+﻿  Game.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Game.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Game.cpp(84,31): warning C4189: 'newKeypress': local variable is initialized but not referenced
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Game.cpp(108,28): warning C4100: 't_deltaTime': unreferenced parameter
+  main.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\main.cpp(33,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  Prototory SFML.vcxproj -> C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Debug\Prototory SFML.exe
