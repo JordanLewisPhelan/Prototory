@@ -11,7 +11,7 @@
 /// load and setup the sounds
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ sf::Vector2u{800U, 600U}, 32U }, "SFML Game 3.0" },
+	m_window{ sf::VideoMode{ sf::Vector2u{800U, 600U}, 32U }, "Prototory" },
 	m_quitStatus{false} //when true game will exit
 {
 	setupTexts(); // load font 
