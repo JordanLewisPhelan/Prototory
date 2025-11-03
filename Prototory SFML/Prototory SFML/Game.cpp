@@ -56,7 +56,6 @@ void Game::run()
 /// <summary>
 /// handle user and system events/ input
 /// get key presses/ mouse moves etc. from OS
-/// and user :: Don't do game update here
 /// </summary>
 void Game::processEvents()
 {

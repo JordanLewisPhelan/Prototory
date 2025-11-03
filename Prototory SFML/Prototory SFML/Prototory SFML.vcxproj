@@ -33,6 +33,7 @@
     <ClInclude Include="Globals.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Settings.h" />
   </ItemGroup>

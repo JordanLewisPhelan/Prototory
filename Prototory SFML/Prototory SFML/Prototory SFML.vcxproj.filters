@@ -80,6 +80,9 @@
     <ClInclude Include="Items.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png">

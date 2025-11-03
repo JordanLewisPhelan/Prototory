@@ -1,6 +1,10 @@
 #pragma once
 
-class MainMenu
+class MainMenu : public Scene
 {
+public:
+
+private:
+
 };
 
