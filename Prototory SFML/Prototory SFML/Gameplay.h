@@ -1,9 +1,23 @@
 #pragma once
+#include "Scene.h"
+#include <iostream>
+#include "Globals.h"
 
 class Gameplay : public Scene
 {
 public:
+	Gameplay();
+	~Gameplay() override = default;
+
+	void HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWindow& t_window) override;
+	void Update(sf::Time t_dt) override;
+	void Render(sf::RenderWindow& t_window) override;
+
+	SceneActions getRequestedAction() override;
 
 private:
+	sf::Font m_gameFont;
+	sf::Text m_areaText{m_gameFont};
 
+	SceneActions m_pendingAction;
 };

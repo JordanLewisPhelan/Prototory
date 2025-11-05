@@ -11,8 +11,7 @@
 /// load and setup the sounds
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ sf::Vector2u{800U, 600U}, 32U }, "Prototory" },
-	m_quitStatus{false} //when true game will exit
+	m_window{ sf::VideoMode{ sf::Vector2u{Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT}, 32U }, "Prototory" }
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture
@@ -64,30 +63,27 @@ void Game::processEvents()
 	{
 		if ( newEvent->is<sf::Event::Closed>()) // close window message 
 		{
-			m_quitStatus = true;
+			
 		}
-		if (newEvent->is<sf::Event::KeyPressed>()) //user pressed a key
-		{
-			processKeys(newEvent);
-		}
+		m_sceneManager.HandleEvent(newEvent, m_window);
 	}
 }
 
-
+/* -- Keeping for now but am likely to remove this later should it not have a place -- */
 /// <summary>
 /// deal with key presses from the user
 /// </summary>
 /// <param name="t_event">key press event</param>
-void Game::processKeys(const std::optional<sf::Event> t_event)
-{
-	const sf::Event::KeyPressed *newKeypress = t_event->getIf<sf::Event::KeyPressed>();
-
-	/// Reference - remove when adding more inputs
-	/*if (sf::Keyboard::Key::Escape == newKeypress->code)
-	{
-		m_quitStatus = true; 
-	}*/
-}
+//void Game::processKeys(const std::optional<sf::Event> t_event)
+//{
+//	const sf::Event::KeyPressed *newKeypress = t_event->getIf<sf::Event::KeyPressed>();
+//
+//	/// Reference - remove when adding more inputs
+//	/*if (sf::Keyboard::Key::Escape == newKeypress->code)
+//	{
+//		m_quitStatus = true; 
+//	}*/
+//}
 
 /// <summary>
 /// Check if any keys are currently pressed
@@ -96,7 +92,7 @@ void Game::checkKeyboardState()
 {
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 	{
-		m_quitStatus = true; 
+		
 	}
 }
 
@@ -108,11 +104,12 @@ void Game::update(sf::Time t_deltaTime)
 {
 	checkKeyboardState();
 
-	if (m_quitStatus)
+	m_sceneManager.Update(t_deltaTime);
+
+	if (m_sceneManager.isQuitRequested())
 	{
 		m_window.close();
 	}
-
 }
 
 /// <summary>
@@ -122,6 +119,8 @@ void Game::render()
 {
 	m_window.clear(ULTRAMARINE);
 	
+	m_sceneManager.Render(m_window);
+
 	m_window.display();
 }
 
