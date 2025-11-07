@@ -1,24 +1,24 @@
 {
   "main": {
-    "id": "2e3f48188e3eaa2b",
+    "id": "f758bc72d874a830",
     "type": "split",
     "children": [
       {
-        "id": "81a2603f1781f005",
+        "id": "fc25b2ff26b068af",
         "type": "tabs",
         "children": [
           {
-            "id": "e3deac5c2ea696b1",
+            "id": "a1d1ba522b2d204e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Miscellaneous/References.md",
+                "file": "Documents/Progression Document.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "References"
+              "title": "Progression Document"
             }
           }
         ]
@@ -27,15 +27,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "702eb15b1ae7c120",
+    "id": "b4f4756e9cc08848",
     "type": "split",
     "children": [
       {
-        "id": "50961d1e131af1c9",
+        "id": "d00f0f78c9383f96",
         "type": "tabs",
         "children": [
           {
-            "id": "320b9d563f1989c0",
+            "id": "404961dd1c9bc54d",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -48,7 +48,7 @@
             }
           },
           {
-            "id": "31bfec4aa66da05b",
+            "id": "9be94f364820f2b8",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -65,7 +65,7 @@
             }
           },
           {
-            "id": "a0eb2e5e49eee12e",
+            "id": "3cef1c46f518246a",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -81,20 +81,20 @@
     "width": 300
   },
   "right": {
-    "id": "63a285abd2761e40",
+    "id": "ce056fb46ce2a407",
     "type": "split",
     "children": [
       {
-        "id": "21413f254edf97ae",
+        "id": "3738203c515f21b4",
         "type": "tabs",
         "children": [
           {
-            "id": "df71002a74a5c068",
+            "id": "3e4bed1e8574199f",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Project Overview.md",
+                "file": "Documents/Progression Document.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,25 +104,25 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Project Overview"
+              "title": "Backlinks for Progression Document"
             }
           },
           {
-            "id": "519ef1f647de7345",
+            "id": "deb51f9afc5e1544",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Project Overview.md",
+                "file": "Documents/Progression Document.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Outgoing links from Project Overview"
+              "title": "Outgoing links from Progression Document"
             }
           },
           {
-            "id": "c45568502eba0e81",
+            "id": "22a019bc5fd366e8",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -137,34 +137,7 @@
             }
           },
           {
-            "id": "98da61e0161c8a06",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "Project Overview.md",
-                "followCursor": false,
-                "showSearch": false,
-                "searchQuery": ""
-              },
-              "icon": "lucide-list",
-              "title": "Outline of Project Overview"
-            }
-          },
-          {
-            "id": "3e0887f3df553a01",
-            "type": "leaf",
-            "state": {
-              "type": "footnotes",
-              "state": {
-                "file": "Project Overview.md"
-              },
-              "icon": "lucide-file",
-              "title": "Plugin no longer active"
-            }
-          },
-          {
-            "id": "0db75dd5247b5d95",
+            "id": "6397754ae833f95c",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -176,6 +149,21 @@
               "icon": "lucide-archive",
               "title": "All properties"
             }
+          },
+          {
+            "id": "7a9527c5cf0f9c45",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Documents/Progression Document.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Progression Document"
+            }
           }
         ]
       }
@@ -186,27 +174,20 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "markdown-importer:Open format converter": false
+      "markdown-importer:Open format converter": false,
+      "bases:Create new base": false
     }
   },
-  "active": "e3deac5c2ea696b1",
+  "active": "a1d1ba522b2d204e",
   "lastOpenFiles": [
-    "Research/Study Notes & Research.md",
-    "Research/Untitled.md",
-    "Research/Research Progress.md",
-    "Documents/Game Design Document.md",
     "Documents/Technical Design Document.md",
-    "Project Overview.md",
-    "Miscellaneous/References.md",
-    "Research",
-    "Miscellaneous",
-    "Documents"
+    "Documents/Game Design Document.md",
+    "Research/Research Progress.md"
   ]
 }
