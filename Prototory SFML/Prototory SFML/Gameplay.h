@@ -2,6 +2,8 @@
 #include "Scene.h"
 #include <iostream>
 #include "Globals.h"
+#include "TileMap.h"
+
 
 class Gameplay : public Scene
 {
@@ -18,6 +20,8 @@ public:
 private:
 	sf::Font m_gameFont;
 	sf::Text m_areaText{m_gameFont};
+
+	TileMap m_tileMap;
 
 	SceneActions m_pendingAction;
 };

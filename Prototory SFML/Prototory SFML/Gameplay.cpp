@@ -1,6 +1,7 @@
 #include "Gameplay.h"
 
-Gameplay::Gameplay() : m_pendingAction(SceneActions::None)
+Gameplay::Gameplay() 
+	: m_pendingAction(SceneActions::None), m_tileMap(128, 128, Globals::TILE_SIZE)
 {
 	if (!m_gameFont.openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
 	{
@@ -43,6 +44,8 @@ void Gameplay::Update(sf::Time t_dt)
 
 void Gameplay::Render(sf::RenderWindow& t_window)
 {
+	m_tileMap.render(t_window);
+
 	t_window.draw(m_areaText);
 }
 
