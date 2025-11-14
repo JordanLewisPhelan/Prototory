@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Documents/Progression Document.md",
+                "file": "Research/Research Progress.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Progression Document"
+              "title": "Research Progress"
             }
           }
         ]
@@ -187,9 +187,9 @@
   "active": "a1d1ba522b2d204e",
   "lastOpenFiles": [
     "Documents/Game Design Document.md",
-    "Documents/Technical Design Document.md",
     "Documents/Progression Document.md",
-    "Research/Study Notes & Research.md",
-    "Research/Research Progress.md"
+    "Research/Research Progress.md",
+    "Documents/Technical Design Document.md",
+    "Research/Study Notes & Research.md"
   ]
 }
