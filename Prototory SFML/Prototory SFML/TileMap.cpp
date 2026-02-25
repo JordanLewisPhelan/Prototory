@@ -39,7 +39,7 @@ void TileMap::render(sf::RenderWindow& t_window)
 	int minX = std::max(0, static_cast<int>((l_viewCenter.x - l_viewSize.x / 2.f) / m_tileSize) - 1);
 	int maxX = std::min(m_width, static_cast<int>((l_viewCenter.x + l_viewSize.x / 2.f) / m_tileSize) + 1);
 	int minY = std::max(0, static_cast<int>((l_viewCenter.y - l_viewSize.y / 2.f) / m_tileSize) - 1);
-	int maxY = std::min(m_height, static_cast<int>((l_viewCenter.y + l_viewSize.y / 2.f) / m_tileSize) - 1);
+	int maxY = std::min(m_height, static_cast<int>((l_viewCenter.y + l_viewSize.y / 2.f) / m_tileSize) + 1);
 
 
 	// Create a reusable drawable rectangle.

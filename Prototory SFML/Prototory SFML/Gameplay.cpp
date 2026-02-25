@@ -1,7 +1,9 @@
 #include "Gameplay.h"
 
 Gameplay::Gameplay() 
-	: m_pendingAction(SceneActions::None), m_tileMap(128, 128, Globals::TILE_SIZE)
+	: m_pendingAction(SceneActions::None)
+	, m_player(sf::Vector2f((64.f * 64.f, 64.f * 64.f), 16.f))
+	, m_tileMap(128, 128, Globals::TILE_SIZE)
 {
 	if (!m_gameFont.openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
 	{
@@ -16,6 +18,11 @@ Gameplay::Gameplay()
 		Globals::SCREEN_WIDTH / 2.5f, Globals::SCREEN_HEIGHT / 3.5f
 	));
 	m_areaText.setStyle(sf::Text::Underlined | sf::Text::Italic);	
+
+	// Setup camera
+	m_camera.setSize(sf::Vector2f(static_cast<float>(Globals::SCREEN_WIDTH),
+								  static_cast<float>(Globals::SCREEN_HEIGHT))); // Matches window size
+	m_camera.setCenter(m_player.getWorldPosition());
 }
 
 // Will be used to determine player key presses and click inputs during gameplay
@@ -30,6 +37,7 @@ void Gameplay::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWi
 		{
 			m_pendingAction = SceneActions::SwitchToMenu;
 		}
+		
 	}
 }
 
@@ -39,12 +47,21 @@ void Gameplay::Update(sf::Time t_dt)
 	ToDo: Separate Later on into Paused & Unpaused will help clarify operations
 	--*/
 
-	// Just general gameplay stuff for during gameplay, nothing to add just yet.
+	m_player.update(t_dt, m_tileMap);
+
+	// Update camera to follow player
+	updateCamera();
+
 }
 
 void Gameplay::Render(sf::RenderWindow& t_window)
 {
+	t_window.setView(m_camera);
+
 	m_tileMap.render(t_window);
+	m_player.render(t_window);
+
+	t_window.setView(t_window.getDefaultView());
 
 	t_window.draw(m_areaText);
 }
@@ -54,4 +71,31 @@ SceneActions Gameplay::getRequestedAction()
 	SceneActions action = m_pendingAction;
 	m_pendingAction = SceneActions::None;
 	return action;
+}
+
+
+void Gameplay::updateCamera()
+{
+	m_camera.setCenter(m_player.getWorldPosition());
+
+	// Clamping camera so it doesn't show outside world bounds
+	float l_halfWidth = m_camera.getSize().x / 2.f;
+	float l_halfHeight = m_camera.getSize().y / 2.f;
+
+	float l_worldWidth = m_tileMap.getWidth() * Globals::TILE_SIZE;
+	float l_worldHeight = m_tileMap.getHeight() * Globals::TILE_SIZE;
+
+	sf::Vector2f l_camPos = m_camera.getCenter();
+
+	// Clamp camera to world bounds
+	if (l_camPos.x - l_halfWidth < 0.f)
+		l_camPos.x = l_halfWidth;
+	if (l_camPos.x + l_halfWidth > l_worldWidth)
+		l_camPos.x = l_worldWidth - l_halfWidth;
+	if (l_camPos.y - l_halfHeight < 0.f)
+		l_camPos.y = l_halfHeight;
+	if (l_camPos.y + l_halfHeight > l_worldHeight)
+		l_camPos.y = l_worldHeight - l_halfHeight;
+
+	m_camera.setCenter(l_camPos);
 }

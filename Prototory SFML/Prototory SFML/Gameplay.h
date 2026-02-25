@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include <iostream>
 #include "Globals.h"
+#include "Player.h"
 #include "TileMap.h"
 
 
@@ -23,5 +24,10 @@ private:
 
 	TileMap m_tileMap;
 
+	Player m_player;
+	sf::View m_camera;
+
 	SceneActions m_pendingAction;
+
+	void updateCamera();
 };
