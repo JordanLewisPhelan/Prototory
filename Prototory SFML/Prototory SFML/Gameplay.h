@@ -4,6 +4,7 @@
 #include "Globals.h"
 #include "Player.h"
 #include "TileMap.h"
+#include "WorldGenerator.h"
 
 
 class Gameplay : public Scene
@@ -26,6 +27,7 @@ private:
 
 	Player m_player;
 	sf::View m_camera;
+	WorldGenerator m_worldGen;
 
 	SceneActions m_pendingAction;
 

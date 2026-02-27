@@ -22,6 +22,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Gameplay.cpp" />
+    <ClCompile Include="HashNoiseGenerator.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -29,12 +30,15 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Button.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gameplay.h" />
     <ClInclude Include="Globals.h" />
+    <ClInclude Include="HashNoiseGenerator.h" />
+    <ClInclude Include="INoiseGenerator.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
@@ -43,6 +47,7 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="WorldGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ASSETS\IMAGES\SFML-LOGO.png">

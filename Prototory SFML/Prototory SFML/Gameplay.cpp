@@ -10,6 +10,9 @@ Gameplay::Gameplay()
 		std::cout << "Gameplay: Font has not been loaded. \n";
 	}
 
+	// World Gen with FIXED SEED for debugging
+	m_worldGen.generateSeededWorld(m_tileMap, 123458532);
+
 	// default text for debugging - will refine later(intended to show key data later)
 	m_areaText.setString("Gameplay Screen");
 	m_areaText.setCharacterSize(36);

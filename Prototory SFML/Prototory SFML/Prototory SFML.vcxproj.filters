@@ -40,6 +40,15 @@
     <Filter Include="Source Files\Terrain">
       <UniqueIdentifier>{521b5de4-4a3e-4929-af23-601819f13440}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Terrain\Generation">
+      <UniqueIdentifier>{cb7d6109-1b08-4bd5-a27d-4d357681b0b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Terrain\Generation">
+      <UniqueIdentifier>{a253ae37-937e-4365-828c-1bfee8be3132}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Interfaces">
+      <UniqueIdentifier>{ea01f58f-d24b-4592-8c99-64b07418d1b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,6 +80,12 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HashNoiseGenerator.cpp">
+      <Filter>Source Files\Terrain\Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldGenerator.cpp">
+      <Filter>Source Files\Terrain\Generation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="INoiseGenerator.h">
+      <Filter>Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="HashNoiseGenerator.h">
+      <Filter>Header Files\Terrain\Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="WorldGenerator.h">
+      <Filter>Header Files\Terrain\Generation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-
+ 
 #### ***Progress Report***
 ##### Note 1: Written on 7/11/25
 
@@ -20,3 +20,16 @@ One additional thing I have decided on today too, I wanted a fleshed out procedu
 Connection of Systems, automations and resource acquisition and lifetime - acquire, or harvest, deposit, manually or automatically to a set point and flourish from there.
 
 Goal is always automation, even if what is done with the automation is simple or the reason we gather is not fleshed out for this demo, I will be certain to focus and target the Automation and Systemic nature of the games Roots, that's always been the end-goal, i just really wanted a game from this, but plans change, maybe ill even get a game out of this if circumstance allows.
+
+
+##### Note 3: Written on 27/2/26
+
+Added in Seeded Generation and an Interface to apply Noise Generation. Currently only HashNoise is implemented and functioning but it is scoped for the future.
+
+Seeds are deterministic, ideal for debugging later on. 
+
+Forward looking:
+- Loading the Noise makes the game take a few seconds to open after clicking start, Debating pausing the implementation to add visual feedback to let the user know how far loading is or if it got stuck without use of the console. 
+- Continuing the Procedural side of work, e.g. Adding more types or Noise for generation and combining them to form Procedural generation.
+- To further boost Procedural Work I also aim to add in some details and Biomes so hat there is a system in place that can be outwardly progressed, we can influence and control the rules that will tie tiles together and adding additional attributes to the World - e.g. Water is not walkable by the player so you must go around. 
+- Invest in Resource & Inventory work to allow Resource Acquisition. NOTE: this requires a few pre-existing systems and while could be added there is far too much of greater important(structurally) to do before adding in these systems.
