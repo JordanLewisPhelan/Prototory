@@ -1,22 +1,20 @@
-﻿  Gameplay.cpp
+﻿  WorldGenerator.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'Gameplay.cpp')
+  (compiling source file 'WorldGenerator.cpp')
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
       see declaration of 'std::runtime_error'
       C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
       see declaration of 'sf::Exception'
   
 C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-  (compiling source file 'Gameplay.cpp')
+  (compiling source file 'WorldGenerator.cpp')
   
 C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-  (compiling source file 'Gameplay.cpp')
+  (compiling source file 'WorldGenerator.cpp')
   
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(32,87): warning C4100: 't_window': unreferenced parameter
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(88,21): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(89,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.cpp(13,11): warning C4189: 'l_progress': local variable is initialized but not referenced
 C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9): warning C5205: delete of an abstract class 'INoiseGenerator' that has a non-virtual destructor results in undefined behavior
-  (compiling source file 'Gameplay.cpp')
+  (compiling source file 'WorldGenerator.cpp')
       C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\INoiseGenerator.h(6,7):
       see declaration of 'INoiseGenerator'
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9):
@@ -33,7 +31,8 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.3520
           ]
               C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3427,33):
               see the first reference to 'std::default_delete<INoiseGenerator>::operator ()' in 'std::unique_ptr<INoiseGenerator,std::default_delete<INoiseGenerator>>::~unique_ptr'
-              C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.h(36,1):
-              see the first reference to 'std::unique_ptr<INoiseGenerator,std::default_delete<INoiseGenerator>>::~unique_ptr' in 'WorldGenerator::~WorldGenerator'
+              C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.cpp(5,12):
+              see the first reference to 'std::unique_ptr<INoiseGenerator,std::default_delete<INoiseGenerator>>::~unique_ptr' in 'WorldGenerator::WorldGenerator'
   
+  LINK : C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Debug\Prototory SFML.exe not found or not built by the last incremental link; performing full link
   Prototory SFML.vcxproj -> C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Debug\Prototory SFML.exe
