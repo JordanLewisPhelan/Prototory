@@ -24,6 +24,7 @@
     <ClCompile Include="Gameplay.cpp" />
     <ClCompile Include="HashNoiseGenerator.cpp" />
     <ClCompile Include="Items.cpp" />
+    <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="HashNoiseGenerator.h" />
     <ClInclude Include="INoiseGenerator.h" />
     <ClInclude Include="Items.h" />
+    <ClInclude Include="LoadingScreen.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />

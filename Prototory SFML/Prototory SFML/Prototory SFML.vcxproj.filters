@@ -49,6 +49,12 @@
     <Filter Include="Header Files\Interfaces">
       <UniqueIdentifier>{ea01f58f-d24b-4592-8c99-64b07418d1b0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Modals">
+      <UniqueIdentifier>{43de17e5-c421-4dd5-a131-efcf1f81bb5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Modals">
+      <UniqueIdentifier>{3c0731ad-3b41-4004-91ee-e058f7ea087a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -86,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="WorldGenerator.cpp">
       <Filter>Source Files\Terrain\Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadingScreen.cpp">
+      <Filter>Source Files\Components\Modals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="WorldGenerator.h">
       <Filter>Header Files\Terrain\Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadingScreen.h">
+      <Filter>Header Files\Components\Modals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

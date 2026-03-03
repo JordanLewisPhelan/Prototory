@@ -10,12 +10,24 @@ WorldGenerator::WorldGenerator() :
 
 void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed)
 {
-    float l_progress = 0.f;
+    generateSeededWorld(t_tileMap, t_seed, nullptr);
+}
+
+void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed, LoadingScreen* t_loadingScreen)
+{
+    int l_progress = 0.f;
     int l_tilesToEval = t_tileMap.getWidth() * t_tileMap.getHeight();
     int l_tilesCompleted = 0;
 
     m_currentSeed = t_seed;
     std::cout << "WorldGenerator: Generating world with seed: " << m_currentSeed << "\n\n";
+
+    if (t_loadingScreen)
+    {
+        t_loadingScreen->setTask("Generating Terrain..");
+        t_loadingScreen->setProgress(0.0f);
+        t_loadingScreen->render();
+    }
 
     // Iterate through each tile & generate noise
     for (int x = 0; x < t_tileMap.getWidth(); x++)
@@ -31,8 +43,32 @@ void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed)
             t_tileMap.setTileAt(x, y, t_type);
             
             l_tilesCompleted++;
-            std::cout << "WorldGenerator: Tiles to evaluate: " << l_tilesToEval << " Tiles evaluated: " << l_tilesCompleted << "\n";
+
+
+            int l_currentProgress = (l_tilesCompleted * 100) / l_tilesToEval;
+
+            if (l_currentProgress != l_progress && t_loadingScreen)
+            {
+                l_progress = l_currentProgress;
+
+                float l_percent = static_cast<float>(l_tilesCompleted) / static_cast<float>(l_tilesToEval);
+
+                t_loadingScreen->setProgress(l_percent);
+                t_loadingScreen->render();
+
+            }
         }
+    }
+
+    // TODO: REMOVE LATER OR COMMENT OUT FOR WHEN ADDING MORE PROCESSES ARE TO BE ADDED
+    if (t_loadingScreen)
+    {
+        t_loadingScreen->setTask("Generation Completed");
+        t_loadingScreen->setProgress(1.0f);
+        t_loadingScreen->render();
+
+        // Forced sleep to ensure it updates for debugging
+        sf::sleep(sf::milliseconds(200));
     }
 
     std::cout << "WorldGenerator: Map developed with noise. \n\n";

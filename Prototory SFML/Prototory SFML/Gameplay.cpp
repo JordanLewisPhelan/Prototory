@@ -1,6 +1,6 @@
 #include "Gameplay.h"
 
-Gameplay::Gameplay() 
+Gameplay::Gameplay(sf::RenderWindow& t_window) 
 	: m_pendingAction(SceneActions::None)
 	, m_player(sf::Vector2f((64.f * 64.f, 64.f * 64.f), 16.f))
 	, m_tileMap(128, 128, Globals::TILE_SIZE)
@@ -10,8 +10,10 @@ Gameplay::Gameplay()
 		std::cout << "Gameplay: Font has not been loaded. \n";
 	}
 
+	LoadingScreen l_loadingScreen(t_window, m_gameFont);
+
 	// World Gen with FIXED SEED for debugging
-	m_worldGen.generateSeededWorld(m_tileMap, 123458532);
+	m_worldGen.generateSeededWorld(m_tileMap, 123458532, &l_loadingScreen);
 
 	// default text for debugging - will refine later(intended to show key data later)
 	m_areaText.setString("Gameplay Screen");

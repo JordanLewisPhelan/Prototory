@@ -2,6 +2,7 @@
 
 #include "TileMap.h"
 #include "INoiseGenerator.h"
+#include "LoadingScreen.h"
 #include <iostream>
 #include <memory>
 #include <chrono>	//std::chrono
@@ -14,6 +15,9 @@ public:
 
 	// Generates a world based on an inputted seed
 	void generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed);
+
+	// Generates a world based on an inputted seed and transitions to the loading Screen Modal(Proof of concept attempt)
+	void generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed, LoadingScreen* t_loadingScreen);
 
 	// Generates a world off a random seed
 	void generateWorld(TileMap& t_tileMap);

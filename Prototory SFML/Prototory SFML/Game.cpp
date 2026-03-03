@@ -11,7 +11,8 @@
 /// load and setup the sounds
 /// </summary>
 Game::Game() :
-	m_window{ sf::VideoMode{ sf::Vector2u{Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT}, 32U }, "Prototory" }
+	m_window{ sf::VideoMode{ sf::Vector2u{Globals::SCREEN_WIDTH, Globals::SCREEN_HEIGHT}, 32U }, "Prototory" },
+	m_sceneManager(m_window)
 {
 	setupTexts(); // load font 
 	setupSprites(); // load texture

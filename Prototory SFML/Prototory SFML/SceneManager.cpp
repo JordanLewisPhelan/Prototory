@@ -2,7 +2,8 @@
 #include "MainMenu.h"
 #include "Gameplay.h"
 
-SceneManager::SceneManager()
+SceneManager::SceneManager(sf::RenderWindow& t_window)
+	: m_window(t_window)
 {
 	/*-- Start in main menu --*/
 	ChangeScene(SceneType::MainMenu);
@@ -23,7 +24,7 @@ void SceneManager::CreateScene(SceneType t_type)
 		m_currentScene = std::make_unique<MainMenu>();
 		break;
 	case SceneType::Gameplay:
-		m_currentScene = std::make_unique<Gameplay>();
+		m_currentScene = std::make_unique<Gameplay>(m_window);
 		break;
 	}
 }

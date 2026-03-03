@@ -5,12 +5,13 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "WorldGenerator.h"
+#include "LoadingScreen.h"
 
 
 class Gameplay : public Scene
 {
 public:
-	Gameplay();
+	Gameplay(sf::RenderWindow& t_window);
 	~Gameplay() override = default;
 
 	void HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWindow& t_window) override;

@@ -14,7 +14,7 @@ enum class SceneType
 class SceneManager
 {
 public:
-	SceneManager();
+	SceneManager(sf::RenderWindow& t_window);
 	~SceneManager() = default;
 
 	void ChangeScene(SceneType t_type);
@@ -29,6 +29,7 @@ public:
 	bool isQuitRequested();
 
 private:
+	sf::RenderWindow& m_window;
 	std::unique_ptr<Scene> m_currentScene;
 	bool m_isQuitRequested = false;
 
