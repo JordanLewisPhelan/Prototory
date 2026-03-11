@@ -8,3 +8,13 @@ Went on a little bit of a tangented search trying to seed efficiently - I am hon
 - [Chrono::Duration page - Tangent where I explored some inner elements](https://en.cppreference.com/w/cpp/chrono/duration.html)
 
 - [SFML Page that began the rabbit hole.](https://www.sfml-dev.org/documentation/3.0.0/classsf_1_1Time.html)
+
+
+### Perlin Noise Algorithm Influences
+This one was a weird one, there was a lot of visual showcases or apps using and showcasing perlin Noise which was useful - Just not initially when I needed more information about what goes into it not just how it looks. The following are some of the references I used.
+
+[NVIDIA(of all things) Developer Blog implementing improved Perlin Noise](https://developer.nvidia.com/gpugems/gpugems/part-i-natural-effects/chapter-5-implementing-improved-perlin-noise)
+
+[Fade function and Quintic Polynomial Implementation and proven](https://adrianb.io/2014/08/09/perlinnoise.html)
+
+[World Generation with Perlin & Permutation](https://www.gamegeniuslab.com/tutorial-post/introduction-to-procedural-generation-with-perlin-noise-for-game-development/)

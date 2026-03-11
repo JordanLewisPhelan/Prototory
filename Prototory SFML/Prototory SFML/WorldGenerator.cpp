@@ -1,11 +1,12 @@
 #include "WorldGenerator.h"
 #include "HashNoiseGenerator.h"
+#include "PerlinNoiseGenerator.h"
 
 WorldGenerator::WorldGenerator() : 
-	m_noiseGen(std::make_unique<HashNoiseGenerator>()),
+	m_noiseGen(std::make_unique<PerlinNoiseGenerator>()),
 	m_currentSeed(0)
 {
-	std::cout << "WorldGenerator: NoiseGenerator Defaulted to HashNoise.\n\n";
+	std::cout << "WorldGenerator: NoiseGenerator Defaulted to PerlinNoise.\n\n";
 }
 
 void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed)

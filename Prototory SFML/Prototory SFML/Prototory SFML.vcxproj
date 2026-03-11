@@ -27,6 +27,7 @@
     <ClCompile Include="LoadingScreen.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
+    <ClCompile Include="PerlinNoiseGenerator.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Settings.cpp" />
@@ -43,6 +44,7 @@
     <ClInclude Include="Items.h" />
     <ClInclude Include="LoadingScreen.h" />
     <ClInclude Include="MainMenu.h" />
+    <ClInclude Include="PerlinNoiseGenerator.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />

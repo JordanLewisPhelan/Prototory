@@ -96,6 +96,9 @@
     <ClCompile Include="LoadingScreen.cpp">
       <Filter>Source Files\Components\Modals</Filter>
     </ClCompile>
+    <ClCompile Include="PerlinNoiseGenerator.cpp">
+      <Filter>Source Files\Terrain\Generation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="LoadingScreen.h">
       <Filter>Header Files\Components\Modals</Filter>
+    </ClInclude>
+    <ClInclude Include="PerlinNoiseGenerator.h">
+      <Filter>Header Files\Terrain\Generation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

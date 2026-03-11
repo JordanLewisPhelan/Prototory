@@ -37,3 +37,21 @@ Forward looking:
 
 Inner Update:
 Not worth a large Note, but added in Loading Screen - Needed to update the sceneManager slightly - it now has a reference to a single Window, SceneManager takes it from Game and then it is delegated downwards - this is done as while there is local windows for scenes such as Gameplay - Modals are separate and will need this Later if I choose to add them - I had an interest to try make modals for reuse, this isn't critical for right now, but will save me exponential time later on.
+
+
+
+##### Note 4: Written on 11/3/26
+
+Added PerlinNoiseGenerator.
+
+This was a whole ordeal, the amount of elements that went into this is daunting. I am proud of how it came out, even if it not perfect or as I expected and took longer than anticipated this is a decent progression point.
+
+ToDo: Add details and specifics - Even just refer to New Folder [[Perlin Noise Application]]. 
+
+Plan of Action - Update as Progression Flows:
+1.  Add one more Noise Type; FBM(Fractal Brownian Motion).
+2.  Add ChunkManager; We need to begin making it procedural not just entirely PerlinNoise or Hash Randomization, they are valid, but they arent a Process, hence not Procedural.
+3.  When working on ChunkManager re-organize and refactor how Seeds are applied and called; Don't want seeds to be recalled constantly when they arent needed to be remade on each generation(issue for perlin noise only really).
+4. Begin on Player setup; Inventory addition. - General
+5. Construct Resources and ResourceAcquisition. - General
+6. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
