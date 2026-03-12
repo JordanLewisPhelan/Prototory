@@ -26,7 +26,7 @@ private:
 
 
     // Initialize permutation table with seed
-    void initializePermutation(uint32_t seed);
+    void initializePermutation(uint32_t t_seed);
 
     // Noise function for a single tile
     /// When adding FBM will need to be adjusted and updated to match

@@ -49,9 +49,11 @@ This was a whole ordeal, the amount of elements that went into this is daunting.
 ToDo: Add details and specifics - Even just refer to New Folder [[Perlin Noise Application]]. 
 
 Plan of Action - Update as Progression Flows:
-1.  Add one more Noise Type; FBM(Fractal Brownian Motion).
-2.  Add ChunkManager; We need to begin making it procedural not just entirely PerlinNoise or Hash Randomization, they are valid, but they arent a Process, hence not Procedural.
-3.  When working on ChunkManager re-organize and refactor how Seeds are applied and called; Don't want seeds to be recalled constantly when they arent needed to be remade on each generation(issue for perlin noise only really).
-4. Begin on Player setup; Inventory addition. - General
-5. Construct Resources and ResourceAcquisition. - General
-6. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
+
+1.  Add ChunkManager; We need to begin making it procedural not just entirely PerlinNoise or Hash Randomization, they are valid, but they arent a Process, hence not Procedural.
+2.  When working on ChunkManager re-organize and refactor how Seeds are applied and called; Don't want seeds to be recalled constantly when they arent needed to be remade on each generation(issue for perlin noise only really).
+3. Begin on Player setup; Inventory addition. - General
+4. Construct Resources and ResourceAcquisition. - General
+5. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
+
+Bonus 1.  Add one more Noise Type; FBM(Fractal Brownian Motion). 

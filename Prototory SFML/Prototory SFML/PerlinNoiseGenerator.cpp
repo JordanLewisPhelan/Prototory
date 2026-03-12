@@ -17,7 +17,7 @@ float PerlinNoiseGenerator::generate(int t_x, int t_y, uint32_t t_seed) const
     // Seed ownership should belong at WorldGenerator level, not here in generators.
     
     // Initialize permutation table if seed changed - Temporary
-    const_cast<PerlinNoiseGenerator*>(this)->initializePermutation(t_seed);
+     const_cast<PerlinNoiseGenerator*>(this)->initializePermutation(t_seed);
 
     // Apply frequency to scale coordinates
     float l_scaledX = t_x * m_frequency;
