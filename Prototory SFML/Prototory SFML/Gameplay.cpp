@@ -3,17 +3,22 @@
 Gameplay::Gameplay(sf::RenderWindow& t_window) 
 	: m_pendingAction(SceneActions::None)
 	, m_player(sf::Vector2f((64.f * 64.f, 64.f * 64.f), 16.f))
-	, m_tileMap(128, 128, Globals::TILE_SIZE)
+	, m_tileMap(Globals::WORLD_WIDTH, Globals::WORLD_HEIGHT, Globals::TILE_SIZE)
 {
 	if (!m_gameFont.openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
 	{
 		std::cout << "Gameplay: Font has not been loaded. \n";
 	}
 
+	// Used to Show progression of loading process 
 	LoadingScreen l_loadingScreen(t_window, m_gameFont);
 
 	// World Gen with FIXED SEED for debugging
-	m_worldGen.generateSeededWorld(m_tileMap, 123458532, &l_loadingScreen);
+	//m_worldGen.generateSeededWorld(m_tileMap, 5878514, &l_loadingScreen);
+	
+	// Random World Generation - as long as a "l_seed" is used
+	uint32_t l_seed = m_worldGen.generateSeed();
+	m_chunkManager.initialize(5878514, m_tileMap, &l_loadingScreen);	// debugging ; Const seed: 5878514
 
 	// default text for debugging - will refine later(intended to show key data later)
 	m_areaText.setString("Gameplay Screen");

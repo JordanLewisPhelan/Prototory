@@ -1,5 +1,4 @@
- #pragma once
-#include "Tile.h"
+#pragma once
 #include <SFML/Graphics.hpp>
 
 // Simple list of what is available 
@@ -18,6 +17,14 @@ struct Tile {
 	sf::Vector2i m_gridPosition;	// Vector of where in the TileMap will this be housed
 	int m_elevation;			// Unused right now, goal is to try use this later for determining height of a map tile ( 0 is for the ground )
 
+
+	// Default constructor for grid initialisation
+	Tile()
+		: m_type(TileType::Grass)
+		, m_gridPosition(0, 0)
+		, m_elevation(0)
+	{
+	}
 
 	Tile(TileType t_type, sf::Vector2i t_gridPos, int t_elevation = 0)
 		: m_type(t_type), m_gridPosition(t_gridPos), m_elevation(t_elevation) {}

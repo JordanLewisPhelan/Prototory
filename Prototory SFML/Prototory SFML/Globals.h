@@ -8,5 +8,9 @@ struct Globals
 	static unsigned constexpr SCREEN_HEIGHT = 800.f;
 
 	static const int TILE_SIZE = 64;
+	static const int WORLD_WIDTH = 128;
+	static const int WORLD_HEIGHT = 128;
+	static const int CHUNK_SIZE = 16;
+
 };
 

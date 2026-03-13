@@ -1,2 +1,40 @@
-﻿  PerlinNoiseGenerator.cpp
+﻿  Gameplay.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Gameplay.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'Gameplay.cpp')
+  
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'Gameplay.cpp')
+  
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(19,11): warning C4189: 'l_seed': local variable is initialized but not referenced
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(38,87): warning C4100: 't_window': unreferenced parameter
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(94,21): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(95,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9): warning C5205: delete of an abstract class 'INoiseGenerator' that has a non-virtual destructor results in undefined behavior
+  (compiling source file 'Gameplay.cpp')
+      C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\INoiseGenerator.h(6,7):
+      see declaration of 'INoiseGenerator'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3309,9):
+      the template instantiation context (the oldest one first) is
+          C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.h(39,35):
+          see reference to class template instantiation 'std::unique_ptr<INoiseGenerator,std::default_delete<INoiseGenerator>>' being compiled
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3352,92):
+          see reference to class template instantiation 'std::default_delete<INoiseGenerator>' being compiled
+          C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3307,23):
+          while compiling class template member function 'void std::default_delete<INoiseGenerator>::operator ()(_Ty *) noexcept const'
+          with
+          [
+              _Ty=INoiseGenerator
+          ]
+              C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\memory(3427,33):
+              see the first reference to 'std::default_delete<INoiseGenerator>::operator ()' in 'std::unique_ptr<INoiseGenerator,std::default_delete<INoiseGenerator>>::~unique_ptr'
+              C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.h(46,1):
+              see the first reference to 'std::unique_ptr<INoiseGenerator,std::default_delete<INoiseGenerator>>::~unique_ptr' in 'WorldGenerator::~WorldGenerator'
+  
   Prototory SFML.vcxproj -> C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Debug\Prototory SFML.exe

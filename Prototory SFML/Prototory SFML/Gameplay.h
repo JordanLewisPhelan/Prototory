@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "TileMap.h"
 #include "WorldGenerator.h"
+#include "ChunkManager.h"
 #include "LoadingScreen.h"
 
 
@@ -28,7 +29,9 @@ private:
 
 	Player m_player;
 	sf::View m_camera;
-	WorldGenerator m_worldGen;
+
+	WorldGenerator m_worldGen;		// Leftovers and general use
+	ChunkManager m_chunkManager;	// Current implementation 
 
 	SceneActions m_pendingAction;
 

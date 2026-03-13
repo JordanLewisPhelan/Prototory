@@ -16,19 +16,21 @@ void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed)
 
 void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed, LoadingScreen* t_loadingScreen)
 {
-    int l_progress = 0.f;
-    int l_tilesToEval = t_tileMap.getWidth() * t_tileMap.getHeight();
-    int l_tilesCompleted = 0;
+    //int l_progress = 0.f;
+    //int l_tilesToEval = t_tileMap.getWidth() * t_tileMap.getHeight();
+    //int l_tilesCompleted = 0;
 
-    m_currentSeed = t_seed;
-    std::cout << "WorldGenerator: Generating world with seed: " << m_currentSeed << "\n\n";
+    //m_currentSeed = t_seed;
+    //std::cout << "WorldGenerator: Generating world with seed: " << m_currentSeed << "\n\n";
 
-    if (t_loadingScreen)
-    {
-        t_loadingScreen->setTask("Generating Terrain..");
-        t_loadingScreen->setProgress(0.0f);
-        t_loadingScreen->render();
-    }
+    //if (t_loadingScreen)
+    //{
+    //    t_loadingScreen->setTask("Generating Terrain..");
+    //    t_loadingScreen->setProgress(0.0f);
+    //    t_loadingScreen->render();
+    //}
+    /// ^ Currently redundant, logic moved to ChunkManager
+
 
     // Iterate through each tile & generate noise
     for (int x = 0; x < t_tileMap.getWidth(); x++)
@@ -43,7 +45,8 @@ void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed, Lo
 
             t_tileMap.setTileAt(x, y, t_type);
             
-            l_tilesCompleted++;
+            // Initial implementation, unused but retaining in case want to debug 
+     /*       l_tilesCompleted++;
 
 
             int l_currentProgress = (l_tilesCompleted * 100) / l_tilesToEval;
@@ -57,7 +60,7 @@ void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed, Lo
                 t_loadingScreen->setProgress(l_percent);
                 t_loadingScreen->render();
 
-            }
+            }*/
         }
     }
 
@@ -81,6 +84,30 @@ void WorldGenerator::generateWorld(TileMap& t_tileMap)
 
 	generateSeededWorld(t_tileMap, l_seed);
 }
+
+
+void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
+{
+    ChunkPosition l_chunkPos = t_chunk.getPosition();
+
+    for (int x = 0; x < Globals::CHUNK_SIZE; x++)
+    {
+        for (int y = 0; y < Globals::CHUNK_SIZE; y++)
+        {
+            // Convert Chunk Space into area for Noise to be applied
+            int l_worldX = (l_chunkPos.x * Globals::CHUNK_SIZE) + x;
+            int l_worldY = (l_chunkPos.y * Globals::CHUNK_SIZE) + y;
+
+            float l_noiseVal = m_noiseGen->generate(l_worldX, l_worldY, t_seed);
+            TileType l_tileType = determineTileType(l_noiseVal);
+
+            t_chunk.getTile(x, y).m_type = l_tileType;
+            t_chunk.getTile(x, y).m_gridPosition = sf::Vector2i(l_worldX, l_worldY);
+
+        }
+    }
+}
+
 
 void WorldGenerator::setNoiseGenerator(std::unique_ptr<INoiseGenerator> t_generator)
 {
