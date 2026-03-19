@@ -62,6 +62,7 @@ void Gameplay::Update(sf::Time t_dt)
 	// Update camera to follow player
 	updateCamera();
 
+	m_areaText.setString("Biome " + getCurrentBiome());
 }
 
 void Gameplay::Render(sf::RenderWindow& t_window)
@@ -108,4 +109,31 @@ void Gameplay::updateCamera()
 		l_camPos.y = l_worldHeight - l_halfHeight;
 
 	m_camera.setCenter(l_camPos);
+}
+
+std::string Gameplay::getCurrentBiome() 
+{
+	sf::Vector2f l_playerPos = m_player.getWorldPosition();
+	int l_chunkX = static_cast<int>(l_playerPos.x / Globals::TILE_SIZE) / Globals::CHUNK_SIZE;
+	int l_chunkY = static_cast<int>(l_playerPos.y / Globals::TILE_SIZE) / Globals::CHUNK_SIZE;
+
+	if (!m_chunkManager.isValidChunkPos(l_chunkX, l_chunkY))
+		return "Unknown";
+
+	switch (m_chunkManager.getChunk(l_chunkX, l_chunkY).getBiome())
+	{
+	case BiomeType::Plains:
+		return "Plains";
+	case BiomeType::Forest:
+		return "Forest";
+	case BiomeType::Mountains:
+		return "Mountains";
+	case BiomeType::Ocean:
+		return "Ocean";
+	case BiomeType::Desert:
+		return "Desert";
+	default: 
+		return "Unassigned";
+	}
+
 }

@@ -5,9 +5,10 @@
 enum class TileType
 {
 	Grass,
-	Forest,
+	Trees,
 	Stone,
 	IronOre,
+	Sand,
 	Water
 };
 

@@ -33,7 +33,9 @@ private:
 	WorldGenerator m_worldGen;		// Leftovers and general use
 	ChunkManager m_chunkManager;	// Current implementation 
 
+
 	SceneActions m_pendingAction;
 
 	void updateCamera();
+	std::string getCurrentBiome();
 };

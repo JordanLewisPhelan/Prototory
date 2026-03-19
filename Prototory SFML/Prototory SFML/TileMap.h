@@ -18,6 +18,7 @@ public:
 
 	// - Adjustors -
 	void setTileAt(int t_x, int t_y, TileType t_type);
+	void setTileAt(int t_x, int t_y, TileType t_type, int t_elevation);
 
 	// - World & Grid conversions -
 	sf::Vector2f gridToWorld(const sf::Vector2i& t_gridPos) const;
@@ -35,6 +36,13 @@ private:
 	/* - Private Functions - */
 	// Helper for determining tile colour based on type
 	sf::Color getTileColour(TileType t_type) const;
+
+	// Adjust the hue of the tiles based on elevations in a biome
+	sf::Color applyElevationShade(sf::Color t_base, int t_elevation, int t_minElevation, int t_maxElevation) const;
+
+	// Max and Mins - Refactor mins and maxs to be constants
+	int getMinElevation(TileType t_type) const;
+	int getMaxElevation(TileType t_type) const;
 
 	// Bound checker
 	bool isInBounds(int t_x, int t_y) const;

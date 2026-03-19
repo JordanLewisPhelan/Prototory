@@ -1,12 +1,11 @@
 #include "WorldGenerator.h"
-#include "HashNoiseGenerator.h"
-#include "PerlinNoiseGenerator.h"
+
 
 WorldGenerator::WorldGenerator() : 
-	m_noiseGen(std::make_unique<PerlinNoiseGenerator>()),
 	m_currentSeed(0)
 {
 	std::cout << "WorldGenerator: NoiseGenerator Defaulted to PerlinNoise.\n\n";
+    std::cout << "WorldGenerator: BiomeNoiseGenerator Defaulted to HashNoise.\n\n";
 }
 
 void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed)
@@ -16,63 +15,19 @@ void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed)
 
 void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed, LoadingScreen* t_loadingScreen)
 {
-    //int l_progress = 0.f;
-    //int l_tilesToEval = t_tileMap.getWidth() * t_tileMap.getHeight();
-    //int l_tilesCompleted = 0;
-
-    //m_currentSeed = t_seed;
-    //std::cout << "WorldGenerator: Generating world with seed: " << m_currentSeed << "\n\n";
-
-    //if (t_loadingScreen)
-    //{
-    //    t_loadingScreen->setTask("Generating Terrain..");
-    //    t_loadingScreen->setProgress(0.0f);
-    //    t_loadingScreen->render();
-    //}
-    /// ^ Currently redundant, logic moved to ChunkManager
-
-
     // Iterate through each tile & generate noise
     for (int x = 0; x < t_tileMap.getWidth(); x++)
     {
         for (int y = 0; y < t_tileMap.getHeight(); y++)
         {
             // Get noise for this grid position
-            float l_noiseValue = m_noiseGen->generate(x, y, m_currentSeed);
+            float l_noiseValue = m_terrainGen.generate(x, y, m_currentSeed);
 
             // Affirm the type of tile it will be
-            TileType t_type = determineTileType(l_noiseValue);
+            TileType t_type = determineTileType(l_noiseValue, BiomeType::Plains);
 
             t_tileMap.setTileAt(x, y, t_type);
-            
-            // Initial implementation, unused but retaining in case want to debug 
-     /*       l_tilesCompleted++;
-
-
-            int l_currentProgress = (l_tilesCompleted * 100) / l_tilesToEval;
-
-            if (l_currentProgress != l_progress && t_loadingScreen)
-            {
-                l_progress = l_currentProgress;
-
-                float l_percent = static_cast<float>(l_tilesCompleted) / static_cast<float>(l_tilesToEval);
-
-                t_loadingScreen->setProgress(l_percent);
-                t_loadingScreen->render();
-
-            }*/
         }
-    }
-
-    // TODO: REMOVE LATER OR COMMENT OUT FOR WHEN ADDING MORE PROCESSES ARE TO BE ADDED
-    if (t_loadingScreen)
-    {
-        t_loadingScreen->setTask("Generation Completed");
-        t_loadingScreen->setProgress(1.0f);
-        t_loadingScreen->render();
-
-        // Forced sleep to ensure it updates for debugging
-        sf::sleep(sf::milliseconds(200));
     }
 
     std::cout << "WorldGenerator: Map developed with noise. \n\n";
@@ -89,6 +44,7 @@ void WorldGenerator::generateWorld(TileMap& t_tileMap)
 void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
 {
     ChunkPosition l_chunkPos = t_chunk.getPosition();
+    BiomeType l_biome = t_chunk.getBiome();
 
     for (int x = 0; x < Globals::CHUNK_SIZE; x++)
     {
@@ -98,21 +54,46 @@ void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
             int l_worldX = (l_chunkPos.x * Globals::CHUNK_SIZE) + x;
             int l_worldY = (l_chunkPos.y * Globals::CHUNK_SIZE) + y;
 
-            float l_noiseVal = m_noiseGen->generate(l_worldX, l_worldY, t_seed);
-            TileType l_tileType = determineTileType(l_noiseVal);
+            float l_elevationVal = m_terrainGen.generate(l_worldX, l_worldY, t_seed + ELEVATION_SEED_OFFSET);
+            // The same generation Logic - But Elevation uses an offset to break away from the pattern
+            float l_terrainVal = m_terrainGen.generate(l_worldX, l_worldY, t_seed);
 
-            t_chunk.getTile(x, y).m_type = l_tileType;
-            t_chunk.getTile(x, y).m_gridPosition = sf::Vector2i(l_worldX, l_worldY);
+            int l_elevation = calculateElevation(l_elevationVal, l_biome);
+
+            TileType l_tileType = determineTileType(l_terrainVal, l_biome);
+
+            Tile& l_tile = t_chunk.getTile(x, y);
+            l_tile.m_type = l_tileType;
+            l_tile.m_gridPosition = sf::Vector2i(l_worldX, l_worldY);
+            l_tile.m_elevation = l_elevation;
 
         }
     }
 }
 
-
-void WorldGenerator::setNoiseGenerator(std::unique_ptr<INoiseGenerator> t_generator)
+int WorldGenerator::calculateElevation(float t_noiseVal, BiomeType t_biome) const
 {
-	m_noiseGen = std::move(t_generator);
-	std::cout << "WorldGenerator: Generation type has changed.\n\n";
+    // Each biome has a min and max elevation — noise [0,1] is scaled into that range
+    int l_min = 0;
+    int l_max = 0;
+
+    switch (t_biome)
+    {
+    case BiomeType::Ocean:      l_min = 0;  l_max = 3;  break;
+    case BiomeType::Plains:     l_min = 4;  l_max = 13; break;
+    case BiomeType::Forest:     l_min = 5;  l_max = 12; break;
+    case BiomeType::Mountains:  l_min = 14; l_max = 25; break;
+    case BiomeType::Desert:     l_min = 7;  l_max = 11; break;
+    default:                    l_min = 4;  l_max = 8;  break;
+    }
+
+    return l_min + static_cast<int>(t_noiseVal * static_cast<float>(l_max - l_min));
+}
+
+
+float WorldGenerator::getBiomeValue(int t_x, int t_y, uint32_t t_seed)
+{
+    return m_biomeGen.generate(t_x, t_y, t_seed);
 }
 
 uint32_t WorldGenerator::generateSeed()
@@ -124,19 +105,52 @@ uint32_t WorldGenerator::generateSeed()
 	return static_cast<uint32_t>(l_duration.count());
 }
 
-TileType WorldGenerator::determineTileType(float t_value) const
+TileType WorldGenerator::determineTileType(float t_value, BiomeType t_biome) const
 {
-    // Map noise value [0.0, 1.0] to tile types
-    // These thresholds determine tile distribution
+    switch (t_biome)
+    {
+    case BiomeType::Ocean:
+        if (t_value < 0.85f)        return TileType::Water;
+        else                        return TileType::Sand;
 
-    if (t_value < 0.2f)          // e.g 20% of tiles
-        return TileType::Water;
-    else if (t_value < 0.5f)     // e.g 30% of tiles
+    case BiomeType::Plains:
+        if (t_value < 0.15f)        return TileType::Water;
+        else if (t_value < 0.80f)   return TileType::Grass;
+        else if (t_value < 0.93f)   return TileType::Stone;
+        else                        return TileType::IronOre;
+
+    case BiomeType::Forest:
+        if (t_value < 0.20f)        return TileType::Grass;
+        else if (t_value < 0.82f)   return TileType::Trees;
+        else                        return TileType::Stone;
+
+    case BiomeType::Mountains:
+        if (t_value < 0.20f)        return TileType::Grass;
+        else if (t_value < 0.60f)   return TileType::Stone;
+        else if (t_value < 0.85f)   return TileType::IronOre;
+        else                        return TileType::Stone;
+
+    case BiomeType::Desert:
+        if (t_value < 0.75f)        return TileType::Sand;
+        else if (t_value < 0.92f)   return TileType::Stone;
+        else                        return TileType::IronOre;
+
+    default:
         return TileType::Grass;
-    else if (t_value < 0.75f)    
-        return TileType::Forest;
-    else if (t_value < 0.95f)    
-        return TileType::Stone;
-    else                             
-        return TileType::IronOre;
+    }
 }
+
+
+
+
+//void WorldGenerator::setNoiseGenerator(std::unique_ptr<INoiseGenerator> t_generator)
+//{
+//	m_noiseGen = std::move(t_generator);
+//	std::cout << "WorldGenerator: Generation type has changed.\n\n";
+//}
+//
+//void WorldGenerator::setBiomeNoiseGeneratro(std::unique_ptr<INoiseGenerator> t_generator)
+//{
+//    m_biomeNoiseGen = std::move(t_generator);
+//    std::cout << "WorldGenerator: Biome Generation type has changed.\n\n";
+//}

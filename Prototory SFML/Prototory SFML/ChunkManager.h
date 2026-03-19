@@ -8,6 +8,12 @@
 #include <stdexcept>	
 
 
+struct BorderRule {
+	BiomeType sourceBiome;
+	BiomeType neighbourBiome;
+	TileType overrideTile;
+};
+
 class ChunkManager
 {
 public:
@@ -25,11 +31,29 @@ public:
 	int getChunkWidth() { return m_chunkCountX; }
 	int getChunkHeight() { return m_chunkCountY; }
 
+	BiomeType determineBiomeType(float t_value) const;
+
 private:
 	std::vector<std::vector<Chunk>> m_chunks;
 	WorldGenerator m_worldGen;
 	int m_chunkCountX;	int m_chunkCountY;
 	uint32_t m_seed;
 
+	static constexpr int OCEAN_MAX_ELEVATION = 3;
+
+	// Returns a simple int value set of what is the allowance for Chunks
+	// to allow their heights to be to prevent steep inclines-declines
+	int getBiomeElevationDelta(BiomeType t_biome) const;
+
+	// Iterates over the Elevations <iterations> number of times to
+	// smooth out and alleviate the steepness issues 
+	void smoothElevationBorders(int t_iterations);
+
+	// Uses BorderRule struct to determine how to transfer from one biome
+	// to another biome more cohesively.
+	/// ToDo: Refactor after project deadline to be more cohesive overall
+	/// and apply this concept and a larger class/struct to other shameful
+	/// code slots that could use it, e.g. BiomeElevationDelta rules
+	void applyBorderBlending();
 
 };
