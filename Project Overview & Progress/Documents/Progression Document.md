@@ -57,3 +57,24 @@ Plan of Action - Update as Progression Flows:
 5. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
 
 Bonus 1.  Add one more Noise Type; FBM(Fractal Brownian Motion). 
+
+
+
+##### Note 5: Written on 19/3/26
+
+This note took a little longer than expected - took 3 days to iron out this commit - i can't in good faith push busted content.
+
+In this addition I went back and refactored and cleared up some things - I have more to refactor - nothing major just cohesive code structuring nothing from the ground up. Some elements from the World Generation and the flow of setting up the world, e.g. Noise Generators were not used with the interface due to different tasks being performed under different rules - hence mmultiple were needed, not swapped out. 
+This led to just having them explicitly be called and leaving in the interfaces for my post project work on this. 
+
+I added Elevation attribute to the tiles and this is reflected in the Tiles darkening or lightening based on their elevation in their associated biome, makes them pop differently. 
+
+There is so much here and it is late, this will be one of the few times im going to cut to the chase and say - A LOT changed.. But a healthy portion was done.
+
+
+Plan of Action - Update as Progression Flows:
+Yes cleared off the whole thing while refactoring other elements - i have neglected documentation due to working.
+
+1. Begin on Player setup; Inventory addition & Movement prevention when relevant. 2 hour~ job
+2. Construct Resources and ResourceAcquisition. - General. more nuanced, this will need implementation and alterations to Tiles or rather additions, so will expand on that and will take either 3-4~ hours or a day or 2, this one has me a little strapped for time, but the actual logic implementation will be easy due to our refactors today! We can just slot it into a tile assignment.
+3. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
