@@ -71,10 +71,12 @@ I added Elevation attribute to the tiles and this is reflected in the Tiles dark
 
 There is so much here and it is late, this will be one of the few times im going to cut to the chase and say - A LOT changed.. But a healthy portion was done.
 
+Update 1: Added in Elevation movement restrictions to the player, done some fine tuning and have made noted plans for after the project, currently feedback is simple and rudimentary - changes player square colour to be a different colour to show that movement stopping and the colour change are significant.
+ToDo: Add in tile visibility of this process, currently this is sufficient, but the larger issue here it is hard to know where to go after realizing your path is blocked by the elevation. Small but important, this is something for the post project or refinement stage because of time restrictions and this being not a large element of the project specifications and larger plan, just a very inconvenient player awareness issue.
 
 Plan of Action - Update as Progression Flows:
 Yes cleared off the whole thing while refactoring other elements - i have neglected documentation due to working.
 
-1. Begin on Player setup; Inventory addition & Movement prevention when relevant. 2 hour~ job
+1. Begin on Player setup; Inventory addition 2 hour~ job
 2. Construct Resources and ResourceAcquisition. - General. more nuanced, this will need implementation and alterations to Tiles or rather additions, so will expand on that and will take either 3-4~ hours or a day or 2, this one has me a little strapped for time, but the actual logic implementation will be easy due to our refactors today! We can just slot it into a tile assignment.
 3. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.

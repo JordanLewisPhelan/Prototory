@@ -47,6 +47,10 @@ void Gameplay::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWi
 		{
 			m_pendingAction = SceneActions::SwitchToMenu;
 		}
+		if (keyPress && keyPress->code == sf::Keyboard::Key::F1)
+		{
+			m_tileMap.toggleDebugElevation();
+		}
 		
 	}
 }
@@ -70,6 +74,10 @@ void Gameplay::Render(sf::RenderWindow& t_window)
 	t_window.setView(m_camera);
 
 	m_tileMap.render(t_window);
+
+	if (m_tileMap.getDebugElevation())
+		m_tileMap.renderDebugElevation(t_window, m_gameFont);
+
 	m_player.render(t_window);
 
 	t_window.setView(t_window.getDefaultView());

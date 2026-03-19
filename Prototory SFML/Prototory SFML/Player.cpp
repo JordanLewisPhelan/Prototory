@@ -78,7 +78,19 @@ void Player::update(sf::Time t_dt, const TileMap& t_tileMap)
 {
     handleInput(t_dt);
 
+    checkElevationMovement(t_tileMap, t_dt);
+
     m_position += m_velocity * t_dt.asSeconds();
+
+    if (m_blockTimer > 0.f)
+    {
+        m_blockTimer -= t_dt.asSeconds();
+        m_playerSprite.setFillColor(BLOCKED_COLOUR);
+    }
+    else
+    {
+        m_playerSprite.setFillColor(sf::Color::Red);
+    }
 
 	constrainToWorldBounds(t_tileMap);
 
@@ -156,4 +168,32 @@ void Player::constrainToWorldBounds(const TileMap& t_tileMap)
         m_position.y = l_halfHeight;
     if (m_position.y + l_halfHeight > l_worldHeight)
         m_position.y = l_worldHeight - l_halfHeight;
+}
+
+void Player::checkElevationMovement(const TileMap& t_tileMap, sf::Time t_dt)
+{
+    sf::Vector2i l_currentGridPos = t_tileMap.worldToGrid(m_position);
+    int l_currentElevation = t_tileMap.getElevationAt(l_currentGridPos.x, l_currentGridPos.y);
+
+    // X axis checks
+    sf::Vector2f l_targetX = m_position + sf::Vector2f(m_velocity.x * t_dt.asSeconds(), 0.f);
+    sf::Vector2i l_targetGridX = t_tileMap.worldToGrid(l_targetX);
+    int l_elevationX = t_tileMap.getElevationAt(l_targetGridX.x, l_targetGridX.y);
+
+    if (std::abs(l_elevationX - l_currentElevation) > MAX_ELEVATION_DELTA)
+    {
+        m_velocity.x = 0.f;
+        m_blockTimer = BLOCKED_FLASH_DURATION;
+    }
+
+    // Y axis checks
+    sf::Vector2f l_targetY = m_position + sf::Vector2f(0.f, m_velocity.y * t_dt.asSeconds());
+    sf::Vector2i l_targetGridY = t_tileMap.worldToGrid(l_targetY);
+    int l_elevationY = t_tileMap.getElevationAt(l_targetGridY.x, l_targetGridY.y);
+
+    if (std::abs(l_elevationY - l_currentElevation) > MAX_ELEVATION_DELTA)
+    {
+        m_velocity.y = 0.f;
+        m_blockTimer = BLOCKED_FLASH_DURATION;
+    }
 }

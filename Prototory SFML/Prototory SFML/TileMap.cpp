@@ -53,9 +53,9 @@ void TileMap::render(sf::RenderWindow& t_window)
 			const Tile& l_tile = m_tiles[x][y];
 
 			sf::Color l_baseColour = getTileColour(l_tile.m_type);
-			sf::Color l_finalColour = applyElevationShade(l_baseColour, l_tile.m_elevation, 
-															getMinElevation(l_tile.m_type),
-															getMaxElevation(l_tile.m_type));
+			sf::Color l_finalColour = applyElevationShade(l_baseColour, l_tile.m_elevation,
+				getMinElevation(l_tile.m_type),
+				getMaxElevation(l_tile.m_type));
 
 			// ToDo: Refactor to a more scalable model later should it be required.
 			l_tileRectangle.setPosition(sf::Vector2f(x * m_tileSize, y * m_tileSize));
@@ -89,6 +89,16 @@ int TileMap::getWidth() const
 int TileMap::getHeight() const
 {
 	return m_height;
+}
+
+int TileMap::getElevationAt(int t_x, int t_y) const
+{
+	if (!isInBounds(t_x, t_y))
+	{
+		return 0;
+	}
+
+	return m_tiles[t_x][t_y].m_elevation;
 }
 
 
@@ -159,15 +169,15 @@ sf::Color TileMap::getTileColour(TileType t_type) const
 sf::Color TileMap::applyElevationShade(sf::Color t_base, int t_elevation, int t_minElevation, int t_maxElevation) const
 {
 
-	float l_dark = 0.75f;
-	float l_light = 1.3f;
+	float l_dark = 0.85f;
+	float l_light = 1.5f;
 
 	// Normalizing the value based on Biome ranges
 	float l_t = static_cast<float>(t_elevation - t_minElevation) /
 				static_cast<float>(t_maxElevation - t_minElevation);
 
 	// Scalar value to lighten or deepen the shade of the colour of the tile
-	float l_scalar = l_dark + (l_t * (l_dark - l_light));
+	float l_scalar = l_light + (l_t * (l_light - l_dark));
 
 	return sf::Color(
 		static_cast<uint8_t>(std::clamp(static_cast<float>(t_base.r) * l_scalar, 0.f, 255.f)),
@@ -184,8 +194,8 @@ int TileMap::getMinElevation(TileType t_type) const
 	{
 	case TileType::Water:   return 0;
 	case TileType::Grass:   return 4;
-	case TileType::Trees:   return 5;
-	case TileType::Sand:    return 7;
+	case TileType::Trees:   return 6;
+	case TileType::Sand:    return 4;
 	case TileType::Stone:   return 7;
 	case TileType::IronOre: return 7;
 	default:                return 0;
@@ -199,8 +209,8 @@ int TileMap::getMaxElevation(TileType t_type) const
 	{
 	case TileType::Water:   return 3;
 	case TileType::Grass:   return 13;
-	case TileType::Trees:   return 10;
-	case TileType::Sand:    return 11;
+	case TileType::Trees:   return 14;
+	case TileType::Sand:    return 8;
 	case TileType::Stone:   return 25;
 	case TileType::IronOre: return 25;
 	default:                return 10;
@@ -211,4 +221,36 @@ int TileMap::getMaxElevation(TileType t_type) const
 bool TileMap::isInBounds(int t_x, int t_y) const
 {
 	return t_x >= 0 && t_x < m_width && t_y >= 0 && t_y < m_height;
+}
+
+void TileMap::renderDebugElevation(sf::RenderWindow& t_window, const sf::Font& t_font)
+{
+	sf::View l_view = t_window.getView();
+	sf::Vector2f l_viewSize = l_view.getSize();
+	sf::Vector2f l_viewCenter = l_view.getCenter();
+
+	int minX = std::max(0, static_cast<int>((l_viewCenter.x - l_viewSize.x / 2.f) / m_tileSize) - 1);
+	int maxX = std::min(m_width, static_cast<int>((l_viewCenter.x + l_viewSize.x / 2.f) / m_tileSize) + 1);
+	int minY = std::max(0, static_cast<int>((l_viewCenter.y - l_viewSize.y / 2.f) / m_tileSize) - 1);
+	int maxY = std::min(m_height, static_cast<int>((l_viewCenter.y + l_viewSize.y / 2.f) / m_tileSize) + 1);
+
+	sf::Text l_text(t_font);
+	l_text.setCharacterSize(10);
+	l_text.setFillColor(sf::Color::White);
+	l_text.setOutlineColor(sf::Color::Black);
+	l_text.setOutlineThickness(1.f);
+
+	for (int x = minX; x < maxX; ++x)
+	{
+		for (int y = minY; y < maxY; ++y)
+		{
+			const Tile& l_tile = m_tiles[x][y];
+			l_text.setString(std::to_string(l_tile.m_elevation));
+			l_text.setPosition(sf::Vector2f(
+				x * m_tileSize + 2.f,
+				y * m_tileSize + 2.f
+			));
+			t_window.draw(l_text);
+		}
+	}
 }

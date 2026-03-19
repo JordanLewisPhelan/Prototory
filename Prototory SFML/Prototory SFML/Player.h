@@ -25,11 +25,24 @@ private:
 	float m_walkSpeed;
 	float m_acceleration;
 	float m_deceleration;
+	float m_blockTimer = 0.f;	
+
+	/* - Consts - sectioned off due to following - */
+	// ToDo: Move into globals or like a playerData struct later for post project work
+	// Idea is to expand this into a limitation the player can progress through or 
+	// circumvent with structures and pre-effort to make traversal feel earned not cheap
+	static constexpr int MAX_ELEVATION_DELTA = 2;
+
+	const float BLOCKED_FLASH_DURATION = 0.2f;
+	const sf::Color BLOCKED_COLOUR = sf::Color(255, 120, 10);
+
 
 	sf::RectangleShape m_playerSprite;
 
 	sf::Vector2f getInputDirection() const;
 	void constrainToWorldBounds(const TileMap& t_tileMap);
-	float clampMagnitude(float t_value, float t_maxMag);
+	
+	// Prevents player movement up inclines in the world that are too steep
+	void checkElevationMovement(const TileMap& t_tileMap, sf::Time t_dt);
 
 };

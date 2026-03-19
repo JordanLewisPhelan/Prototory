@@ -10,7 +10,7 @@ ChunkManager::ChunkManager()
 }
 
 
-/// ToDo: Refactor Passes into functions later or during downtime - very large Initialize function
+/// ToDo: Refactor Passes into functions later or during downtime - very large Initialize function, no good
 void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen)
 {
 	m_seed = t_seed;
@@ -298,9 +298,9 @@ int ChunkManager::getBiomeElevationDelta(BiomeType t_biome) const
 	switch (t_biome)
 	{
 	case BiomeType::Ocean:      return 1;
-	case BiomeType::Plains:     return 2;
-	case BiomeType::Forest:     return 2;
-	case BiomeType::Mountains:  return 4;
+	case BiomeType::Plains:     return 3;
+	case BiomeType::Forest:     return 4;
+	case BiomeType::Mountains:  return 5;
 	case BiomeType::Desert:     return 2;
 	default:                    return 2;
 	}

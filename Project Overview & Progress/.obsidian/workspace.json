@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Documents/Progression Document.md",
+                "file": "Documentation/Map Generation/Hash Noise Application.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Progression Document"
+              "title": "Hash Noise Application"
             }
           }
         ]
@@ -186,20 +186,20 @@
   },
   "active": "a1d1ba522b2d204e",
   "lastOpenFiles": [
-    "Miscellaneous/References.md",
-    "Documents/Game Design Document.md",
-    "Research/Research Progress.md",
-    "Documents/Progression Document.md",
-    "Documents/Technical Design Document.md",
-    "Documentation/Map Generation/Perlin Noise Application.md",
-    "Documentation/Map Generation/Noise Generation & Applications.md",
-    "Documentation/Map Generation/Map Implementation.md",
-    "Documentation/Map Generation/Hash Noise Application.md",
     "Documentation/Map Generation/Fractal Brownian Motion(FBM) Noise Application.md",
+    "Documentation/Map Generation/Map Implementation.md",
+    "Documentation/Map Generation/Noise Generation & Applications.md",
+    "Documentation/Map Generation/Perlin Noise Application.md",
+    "Documents/Progression Document.md",
+    "Documents/Game Design Document.md",
+    "Documents/Technical Design Document.md",
+    "Research/Study Notes & Research.md",
+    "Research/Research Progress.md",
+    "Miscellaneous/References.md",
+    "Documentation/Map Generation/Hash Noise Application.md",
     "Documentation/Untitled.md",
     "Documentation/Map Generation",
     "Documentation",
-    "Project Overview.md",
-    "Research/Study Notes & Research.md"
+    "Project Overview.md"
   ]
 }

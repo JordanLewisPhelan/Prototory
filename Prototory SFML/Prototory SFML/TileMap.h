@@ -15,6 +15,7 @@ public:
 	Tile* getTileAt(int t_x, int t_y);
 	int getWidth() const;
 	int getHeight() const;
+	int getElevationAt(int t_x, int t_y) const;
 
 	// - Adjustors -
 	void setTileAt(int t_x, int t_y, TileType t_type);
@@ -23,6 +24,11 @@ public:
 	// - World & Grid conversions -
 	sf::Vector2f gridToWorld(const sf::Vector2i& t_gridPos) const;
 	sf::Vector2i worldToGrid(const sf::Vector2f& t_worldPos) const;
+
+	// - Debuggers -
+	bool getDebugElevation() { return m_debugElevation; }
+	bool toggleDebugElevation() { return m_debugElevation = !m_debugElevation; }
+	void renderDebugElevation(sf::RenderWindow& t_window, const sf::Font& t_font);
 
 private:
 	/* - local TileMap usage variables - */
@@ -46,4 +52,8 @@ private:
 
 	// Bound checker
 	bool isInBounds(int t_x, int t_y) const;
+
+
+	/* - Debug Settings - */
+	bool m_debugElevation = false;
 };

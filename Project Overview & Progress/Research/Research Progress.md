@@ -13,3 +13,7 @@ Why did this become an idea? Well i wanted some dynamism with my options. This s
 
 This has Been a Notice to explain what happened research wise - Trying to organise scenes, I investigated a lot of random dead ends. Modal application of re-usable options will prevent needing to make a new element for each scene or even recreate them if i set this up correctly.
 To traverse them I investigated Lambdas & callbacks and have tried to apply them; there could be a better way but this way is customizable and extensible, which will be crucial if I go to make more. 
+
+
+ #### ***Note 2: Written on 19/3/26***
+Note taking for research has stagnated due to time - Overall anything important will be shown some work process logic or elements through [[References]] to prevent a complete flow loss of Research Reporting for the project.
