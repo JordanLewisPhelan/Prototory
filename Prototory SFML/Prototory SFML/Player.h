@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "TileMap.h"
+#include "Inventory.h"
 #include <cmath>
 #include <iostream>
 
@@ -19,7 +20,10 @@ public:
 	sf::Vector2i getGridPosition(const TileMap& t_tileMap) const;
 	void setPosition(const sf::Vector2f& t_setPos) { m_position = t_setPos; }
 
+	Inventory& getInventory() { return m_inventory; }
+
 private:
+	Inventory m_inventory;
 	sf::Vector2f m_position, m_velocity;
 	sf::Vector2f m_playerSize;
 	float m_walkSpeed;

@@ -80,3 +80,20 @@ Yes cleared off the whole thing while refactoring other elements - i have neglec
 1. Begin on Player setup; Inventory addition 2 hour~ job
 2. Construct Resources and ResourceAcquisition. - General. more nuanced, this will need implementation and alterations to Tiles or rather additions, so will expand on that and will take either 3-4~ hours or a day or 2, this one has me a little strapped for time, but the actual logic implementation will be easy due to our refactors today! We can just slot it into a tile assignment.
 3. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
+
+
+##### Note 6: Written on 20/3/26
+
+Began adding in basics of the systems, resources are assigned as a struct to Tiles and  resources can be added to inventories and there has been setup for passing between inventories for either later on when adding machines and automation or inventory pop ups to let players move 1 item set from inventory A to Inventory B.
+
+There is no Visual Inventory UI it is just remembered in the Background - This is something i want to fix and make clearer. Inventories can be different sizes too!
+
+Began work on resources as mentioned and they can be applied to  tiles now, but i need to implement the mining and acquiring of these resources. 
+
+Plan of Action - Update as Progression Flows:
+Yes cleared off the whole thing while refactoring other elements - i have neglected documentation due to working.
+
+1. Begin on Player setup; Inventory addition - Added : MUST MAKE VISUAL AND INTERACTABLE.
+2. Construct Resources and ResourceAcquisition. - General. more nuanced, this will need implementation and alterations to Tiles or rather additions, so will expand on that and will take either 3-4~ hours or a day or 2, this one has me a little strapped for time, but the actual logic implementation will be easy due to our refactors today! We can just slot it into a tile assignment.
+   Added Resources : Must implement Resource Acquisitions.
+3. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.

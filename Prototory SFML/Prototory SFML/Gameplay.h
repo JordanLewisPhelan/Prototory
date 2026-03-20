@@ -7,6 +7,7 @@
 #include "WorldGenerator.h"
 #include "ChunkManager.h"
 #include "LoadingScreen.h"
+#include "ResourceRegistry.h"
 
 
 class Gameplay : public Scene
@@ -33,6 +34,7 @@ private:
 	WorldGenerator m_worldGen;		// Leftovers and general use
 	ChunkManager m_chunkManager;	// Current implementation 
 
+	ResourceRegistry m_resourceRegistry;
 
 	SceneActions m_pendingAction;
 

@@ -7,6 +7,7 @@ Player::Player(const sf::Vector2f& t_startPos, const sf::Vector2f& t_size)
 	, m_walkSpeed(250.f)
     , m_acceleration(750.f)
     , m_deceleration(600.f)
+    , m_inventory(21)
 {
 	// Sprite Creation
 	m_playerSprite.setSize(m_playerSize);

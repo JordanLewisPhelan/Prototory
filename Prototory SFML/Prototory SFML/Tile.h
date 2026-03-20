@@ -1,32 +1,48 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 
+
+
+enum class InteractionType
+{
+	None, Chop, Mine, Shovel
+};
+
+
 // Simple list of what is available 
 enum class TileType
 {
-	Grass,
-	Trees,
-	Stone,
-	IronOre,
-	Sand,
-	Water
+	Grass, Trees,
+	Stone, IronOre,
+	Sand, Water
+};
+
+struct TileResource
+{
+	uint32_t m_resourceID = { 0 };
+	int m_currentQuantity = { 0 };
+	int m_maxQuantity = { 0 };
+	InteractionType m_interactionType = { InteractionType::None };
+
+	bool isHarvestable() const { return m_currentQuantity > 0; }
 };
 
 // Simple struct will only be a constructor with some variables
 struct Tile {
 	TileType m_type;		// The type associated with the tile.
 	sf::Vector2i m_gridPosition;	// Vector of where in the TileMap will this be housed
-	int m_elevation;			// Unused right now, goal is to try use this later for determining height of a map tile ( 0 is for the ground )
-
+	int m_elevation;			// determining height of a map tile
+	TileResource m_resource;	// Resource and its attributes associated with this tile
 
 	// Default constructor for grid initialisation
 	Tile()
 		: m_type(TileType::Grass)
 		, m_gridPosition(0, 0)
 		, m_elevation(0)
+		, m_resource()
 	{
 	}
 
 	Tile(TileType t_type, sf::Vector2i t_gridPos, int t_elevation = 0)
-		: m_type(t_type), m_gridPosition(t_gridPos), m_elevation(t_elevation) {}
+		: m_type(t_type), m_gridPosition(t_gridPos), m_elevation(t_elevation), m_resource() {}
 };

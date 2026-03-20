@@ -56,4 +56,8 @@ private:
 	/// code slots that could use it, e.g. BiomeElevationDelta rules
 	void applyBorderBlending();
 
+	// Does a pass based on Biome to assign Resource Spawns
+	// Will be updated later as a pass to enforce a resource average per chunk
+	void assignTileResources();
+
 };

@@ -55,6 +55,12 @@
     <Filter Include="Source Files\Components\Modals">
       <UniqueIdentifier>{3c0731ad-3b41-4004-91ee-e058f7ea087a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Resources &amp; Items">
+      <UniqueIdentifier>{155e2097-5ae6-4994-895c-d5b521f28c95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Resources &amp; Items">
+      <UniqueIdentifier>{65b94de6-b8d8-4446-b8b0-a0db4a25578f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -71,9 +77,6 @@
     </ClCompile>
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Items.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="Settings.cpp">
       <Filter>Source Files</Filter>
@@ -105,6 +108,15 @@
     <ClCompile Include="Chunk.cpp">
       <Filter>Source Files\Terrain</Filter>
     </ClCompile>
+    <ClCompile Include="Items.cpp">
+      <Filter>Source Files\Components\Resources &amp; Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceRegistry.cpp">
+      <Filter>Source Files\Components\Resources &amp; Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Source Files\Components\Resources &amp; Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -121,9 +133,6 @@
     </ClInclude>
     <ClInclude Include="Globals.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Items.h">
-      <Filter>Header Files\Components</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Header Files\Scenes</Filter>
@@ -163,6 +172,18 @@
     </ClInclude>
     <ClInclude Include="ChunkManager.h">
       <Filter>Header Files\Terrain\Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="Items.h">
+      <Filter>Header Files\Components\Resources &amp; Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceRegistry.h">
+      <Filter>Header Files\Components\Resources &amp; Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceDefinition.h">
+      <Filter>Header Files\Components\Resources &amp; Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Header Files\Components\Resources &amp; Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

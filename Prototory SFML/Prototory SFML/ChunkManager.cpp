@@ -247,6 +247,16 @@ void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen
 		}
 	}
 
+	// Sixth Pass - Assign Tile Resources
+	if (t_loadingScreen)
+	{
+		t_loadingScreen->setTask("Populating Resources...");
+		t_loadingScreen->setProgress(0.0f);
+		t_loadingScreen->render();
+	}
+
+	assignTileResources();
+
 	if (t_loadingScreen)
 	{
 		t_loadingScreen->setTask("Generation Completed");
@@ -459,6 +469,72 @@ void ChunkManager::applyBorderBlending()
 
 						if (l_noise >= l_threshold)
 							l_tile.m_type = l_rule->overrideTile;
+					}
+				}
+			}
+		}
+	}
+}
+
+void ChunkManager::assignTileResources()
+{
+	for (int chunkX = 0; chunkX < m_chunkCountX; chunkX++)
+	{
+		for (int chunkY = 0; chunkY < m_chunkCountY; chunkY++)
+		{
+			Chunk& l_chunk = m_chunks[chunkX][chunkY];
+			BiomeType l_biome = l_chunk.getBiome();
+
+			for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
+			{
+				for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
+				{
+					Tile& l_tile = l_chunk.getTile(localX, localY);
+
+					/// ToDo: Overhaul to limit resource availability - e.g. Mountains
+					/// can only have 6 tiles in a whole chunk - May be a larger refactor 
+					/// but its what i want post project to make the land feel more natural or limited
+					// Based on tile and biome altered quantities
+					switch (l_tile.m_type)
+					{
+					case TileType::Trees:
+						l_tile.m_resource.m_resourceID = 1; // Wood
+						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Forest) ? 50 : 25;
+						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
+						l_tile.m_resource.m_interactionType = InteractionType::Chop;
+						break;
+
+					case TileType::Stone:
+						l_tile.m_resource.m_resourceID = 2; // Stone
+						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Mountains) ? 80 : 40;
+						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
+						l_tile.m_resource.m_interactionType = InteractionType::Mine;
+						break;
+
+					case TileType::IronOre:
+						l_tile.m_resource.m_resourceID = 3; // Iron Ore
+						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Mountains) ? 40 : 15;
+						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
+						l_tile.m_resource.m_interactionType = InteractionType::Mine;
+						break;
+
+					case TileType::Sand:
+						l_tile.m_resource.m_resourceID = 2; // Sand
+						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Desert) ? 100 : 60;
+						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
+						l_tile.m_resource.m_interactionType = InteractionType::Shovel;
+						break;
+
+					case TileType::Grass:
+						l_tile.m_resource.m_resourceID = 3; // Grass
+						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Plains) ? 60 : 25;
+						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
+						l_tile.m_resource.m_interactionType = InteractionType::Shovel;
+						break;
+
+					default:
+						// Quantity stays 0 == not harvestable
+						break;
 					}
 				}
 			}

@@ -33,6 +33,18 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	m_camera.setSize(sf::Vector2f(static_cast<float>(Globals::SCREEN_WIDTH),
 								  static_cast<float>(Globals::SCREEN_HEIGHT))); // Matches window size
 	m_camera.setCenter(m_player.getWorldPosition());
+
+	m_resourceRegistry.initializeResources();
+
+	// Debug Remove Later
+	const ResourceDefinition* l_woodDef = m_resourceRegistry.getResource(1);
+
+	if (l_woodDef)
+	{
+		int l_leftOver = m_player.getInventory().addResources(1, 200, l_woodDef->m_maxInStack);
+		std::cout << "Gameplay: Added " << l_woodDef->m_name << " to player inventory. Leftover: " << l_leftOver << "\n";
+		std::cout << "Gameplay: Player wood count: " << m_player.getInventory().getResourceCount(1) << "\n";
+	}
 }
 
 // Will be used to determine player key presses and click inputs during gameplay
