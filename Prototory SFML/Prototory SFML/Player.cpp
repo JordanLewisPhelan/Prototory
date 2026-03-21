@@ -5,15 +5,21 @@ Player::Player(const sf::Vector2f& t_startPos, const sf::Vector2f& t_size)
 	, m_playerSize(t_size)
 	, m_velocity(0.f, 0.f)
 	, m_walkSpeed(250.f)
+    , m_blockTimer(0.f)
+    , m_harvestTimer(0.f)
     , m_acceleration(750.f)
     , m_deceleration(600.f)
     , m_inventory(21)
+    , m_directionIndicator(4.f)
 {
 	// Sprite Creation
 	m_playerSprite.setSize(m_playerSize);
 	m_playerSprite.setFillColor(sf::Color::Red);
 	m_playerSprite.setOrigin(sf::Vector2f(m_playerSize.x / 2.f, m_playerSize.y / 2.f));
 	m_playerSprite.setPosition(m_position);
+
+    m_directionIndicator.setFillColor(sf::Color::Magenta);
+    m_directionIndicator.setOrigin(sf::Vector2f(4.f, 4.f));
 
 	std::cout << "Player created at: (" << m_position.x << ", " << m_position.y << ")\n";
 }
@@ -26,6 +32,8 @@ void Player::handleInput(sf::Time t_dt)
     // Accelerator force
     if (l_direction.x != 0.f || l_direction.y != 0)
     {
+        m_playerFacing = l_direction;
+
         sf::Vector2f l_desiredVelocity = l_direction * m_walkSpeed;
 
         // Aimed velocity difference to current velocity
@@ -75,7 +83,7 @@ void Player::handleInput(sf::Time t_dt)
 }
 
 
-void Player::update(sf::Time t_dt, const TileMap& t_tileMap)
+void Player::update(sf::Time t_dt, TileMap& t_tileMap, const ResourceRegistry& t_resourceRegistry)
 {
     handleInput(t_dt);
 
@@ -93,6 +101,20 @@ void Player::update(sf::Time t_dt, const TileMap& t_tileMap)
         m_playerSprite.setFillColor(sf::Color::Red);
     }
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E))
+    {
+        m_harvestTimer -= t_dt.asSeconds();
+        if (m_harvestTimer <= 0)
+        {
+            tryHarvest(t_tileMap, t_resourceRegistry);
+            m_harvestTimer = HARVEST_INTERVAL;
+        }
+    }
+    else
+    {
+        m_harvestTimer = 0.f;   // Player stopped trying to harvest
+    }
+
 	constrainToWorldBounds(t_tileMap);
 
 	m_playerSprite.setPosition(m_position);
@@ -103,6 +125,7 @@ void Player::update(sf::Time t_dt, const TileMap& t_tileMap)
 void Player::render(sf::RenderWindow& t_window)
 {
 	t_window.draw(m_playerSprite);
+    renderDirectionalIndicator(t_window);
 }
 
 
@@ -197,4 +220,56 @@ void Player::checkElevationMovement(const TileMap& t_tileMap, sf::Time t_dt)
         m_velocity.y = 0.f;
         m_blockTimer = BLOCKED_FLASH_DURATION;
     }
+}
+
+
+/// <summary>
+/// This cobblepot of a function seems logical - but it is genuinely an architectural
+/// disgrace I am not proud to even test, the coupling, the fake definitions to query
+/// are ALL WRONG, this is ARCHITECTURAL GORE AND I WILL SOLVE IT PROPERLY. At a later date..
+/// TLDR; if you push this and are reading this and dont feel shame you have failed as a programmer.
+/// </summary>
+
+void Player::tryHarvest(TileMap& t_tileMap, const ResourceRegistry& t_resourceRegistry)
+{   
+    sf::Vector2f l_harvestPoint = m_position + (m_playerFacing * Globals::HARVEST_REACH);
+    sf::Vector2i l_targetGrid = t_tileMap.worldToGrid(l_harvestPoint);
+    sf::Vector2i l_currentGrid = t_tileMap.worldToGrid(m_position);
+
+    // Getting a tile to alter Resource data
+    Tile* l_tile = t_tileMap.getTileAt(l_targetGrid.x, l_targetGrid.y);
+
+
+    const ResourceDefinition* l_def = t_resourceRegistry.getResource(l_tile->m_resource.m_resourceID);
+
+    if (!l_def)
+        return;
+
+    if (std::abs(
+        t_tileMap.getElevationAt(l_targetGrid.x, l_targetGrid.y) -
+        t_tileMap.getElevationAt(l_currentGrid.x, l_currentGrid.y)) > MAX_ELEVATION_DELTA)
+        return;
+    
+    // Prep testing for multiple resources being accrued at once - Defaulting to 1 initially
+    int l_harvested = std::min(1, l_tile->m_resource.m_currentQuantity);
+    l_tile->m_resource.m_currentQuantity -= l_harvested;
+
+    int l_leftOver = m_inventory.addResources(
+        l_tile->m_resource.m_resourceID,
+        l_harvested,
+        l_def->m_maxInStack);
+
+    if (l_leftOver > 0)
+    {
+        std::cout << "Player: Inventory full — could not store " << l_leftOver << " units.\n";
+    }
+    else
+        std::cout << "Player: Harvested " << l_def->m_name
+        << " — tile has " << l_tile->m_resource.m_currentQuantity << " remaining.\n";
+}
+
+void Player::renderDirectionalIndicator(sf::RenderWindow& t_window)
+{
+    m_directionIndicator.setPosition(m_position + (m_playerFacing * Globals:: HARVEST_REACH));
+    t_window.draw(m_directionIndicator);
 }

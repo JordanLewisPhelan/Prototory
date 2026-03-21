@@ -29,6 +29,13 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	));
 	m_areaText.setStyle(sf::Text::Underlined | sf::Text::Italic);	
 
+	m_inventoryText.setCharacterSize(18);
+	m_inventoryText.setFillColor(sf::Color::White);
+	m_inventoryText.setPosition(sf::Vector2f(10.f, 10.f));
+
+	m_promptText.setCharacterSize(22);
+	m_promptText.setFillColor(sf::Color::Yellow);
+
 	// Setup camera
 	m_camera.setSize(sf::Vector2f(static_cast<float>(Globals::SCREEN_WIDTH),
 								  static_cast<float>(Globals::SCREEN_HEIGHT))); // Matches window size
@@ -73,7 +80,7 @@ void Gameplay::Update(sf::Time t_dt)
 	ToDo: Separate Later on into Paused & Unpaused will help clarify operations
 	--*/
 
-	m_player.update(t_dt, m_tileMap);
+	m_player.update(t_dt, m_tileMap, m_resourceRegistry);
 
 	// Update camera to follow player
 	updateCamera();
@@ -95,6 +102,8 @@ void Gameplay::Render(sf::RenderWindow& t_window)
 	t_window.setView(t_window.getDefaultView());
 
 	t_window.draw(m_areaText);
+	renderInventory(t_window);
+	renderInteractionPrompt(t_window);
 }
 
 SceneActions Gameplay::getRequestedAction()
@@ -156,4 +165,57 @@ std::string Gameplay::getCurrentBiome()
 		return "Unassigned";
 	}
 
+}
+
+void Gameplay::renderInventory(sf::RenderWindow& t_window)
+{
+	const std::vector<InventorySlot>& l_slots = m_player.getInventory().getSlots();
+	std::string l_display = "-- Inventory --\n\n";
+
+	for (const InventorySlot& l_slot : l_slots)
+	{
+		if (l_slot.m_isEmpty)
+			continue;
+
+		const ResourceDefinition* l_def = m_resourceRegistry.getResource(l_slot.m_resourceID);
+		if (!l_def)
+			continue;
+
+		l_display += l_def->m_name + " x" + std::to_string(l_slot.m_stackCount) + "\n";
+	}
+
+	m_inventoryText.setString(l_display);
+	t_window.draw(m_inventoryText);
+
+}
+
+void Gameplay::renderInteractionPrompt(sf::RenderWindow& t_window)
+{
+	// Get the tile the player is facing
+	sf::Vector2f l_harvestPoint = m_player.getWorldPosition() +
+		(m_player.getFacing() * Globals::HARVEST_REACH);
+
+	sf::Vector2i l_targetGrid = m_tileMap.worldToGrid(l_harvestPoint);
+	Tile* l_tile = m_tileMap.getTileAt(l_targetGrid.x, l_targetGrid.y);
+
+	if (!l_tile || !l_tile->m_resource.isHarvestable())
+		return;
+
+	std::string l_prompt;
+	switch (l_tile->m_resource.m_interactionType)
+	{
+		case InteractionType::Chop:  l_prompt = "[E] Chop";  break;
+		case InteractionType::Mine:  l_prompt = "[E] Mine";  break;
+		case InteractionType::Shovel: l_prompt = "[E] Dig"; break;
+		default: return;
+	}
+
+	// Position prompt at center bottom of screen
+	m_promptText.setString(l_prompt);
+	m_promptText.setPosition(sf::Vector2f(
+		Globals::SCREEN_WIDTH / 2.f - m_promptText.getGlobalBounds().size.x / 2.f,
+		Globals::SCREEN_HEIGHT - 80.f
+	));
+
+	t_window.draw(m_promptText);
 }

@@ -25,6 +25,8 @@ public:
 private:
 	sf::Font m_gameFont;
 	sf::Text m_areaText{m_gameFont};
+	sf::Text m_inventoryText{ m_gameFont };
+	sf::Text m_promptText{ m_gameFont };
 
 	TileMap m_tileMap;
 
@@ -40,4 +42,10 @@ private:
 
 	void updateCamera();
 	std::string getCurrentBiome();
+
+	/// ToDo: replace with an actual placement for these - Inventory needs to 
+	/// but not in Gameplay, this is sacreligious - but added for testing
+	void renderInventory(sf::RenderWindow& t_window);
+	/// Displays when facing and hovering over a harvestable tile
+	void renderInteractionPrompt(sf::RenderWindow& t_window);
 };

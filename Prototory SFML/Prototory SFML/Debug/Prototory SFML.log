@@ -1,19 +1,4 @@
-﻿  Gameplay.cpp
-C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
-  (compiling source file 'Gameplay.cpp')
-      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.44.35207\include\stdexcept(100,30):
-      see declaration of 'std::runtime_error'
-      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
-      see declaration of 'sf::Exception'
-  
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-  (compiling source file 'Gameplay.cpp')
-  
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
-  (compiling source file 'Gameplay.cpp')
-  
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(20,11): warning C4189: 'l_seed': local variable is initialized but not referenced
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(51,87): warning C4100: 't_window': unreferenced parameter
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(116,21): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(117,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  Prototory SFML.vcxproj -> C:\Users\c00287898\Documents\ProjectWork\Prototory\Prototory SFML\Debug\Prototory SFML.exe
+﻿  Inventory.cpp
+  Prototory SFML.vcxproj -> C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Debug\Prototory SFML.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.

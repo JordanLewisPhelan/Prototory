@@ -12,5 +12,8 @@ struct Globals
 	static const int WORLD_HEIGHT = 128;
 	static const int CHUNK_SIZE = 16;
 
+
+	/* - Player Globals/Adjsutables - */
+	static constexpr float HARVEST_REACH = 48.f;
 };
 

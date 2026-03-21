@@ -257,6 +257,28 @@ void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen
 
 	assignTileResources();
 
+	// Sync border blending changes back to TileMap
+	for (int chunkX = 0; chunkX < m_chunkCountX; chunkX++)
+	{
+		for (int chunkY = 0; chunkY < m_chunkCountY; chunkY++)
+		{
+			Chunk& l_chunk = m_chunks[chunkX][chunkY];
+			for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
+			{
+				for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
+				{
+					Tile& l_tile = l_chunk.getTile(localX, localY);
+					Tile* l_mapTile = t_tileMap.getTileAt(
+						l_tile.m_gridPosition.x,
+						l_tile.m_gridPosition.y
+					);
+					if (l_mapTile)
+						l_mapTile->m_resource = l_tile.m_resource;
+				}
+			}
+		}
+	}
+
 	if (t_loadingScreen)
 	{
 		t_loadingScreen->setTask("Generation Completed");
@@ -494,6 +516,8 @@ void ChunkManager::assignTileResources()
 					/// ToDo: Overhaul to limit resource availability - e.g. Mountains
 					/// can only have 6 tiles in a whole chunk - May be a larger refactor 
 					/// but its what i want post project to make the land feel more natural or limited
+					/// Also add in some visual artifacts to signify interactability clearly - maybe
+					/// not something to add here specifically but a note all the same
 					// Based on tile and biome altered quantities
 					switch (l_tile.m_type)
 					{
@@ -519,14 +543,14 @@ void ChunkManager::assignTileResources()
 						break;
 
 					case TileType::Sand:
-						l_tile.m_resource.m_resourceID = 2; // Sand
+						l_tile.m_resource.m_resourceID = 5; // Sand
 						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Desert) ? 100 : 60;
 						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
 						l_tile.m_resource.m_interactionType = InteractionType::Shovel;
 						break;
 
 					case TileType::Grass:
-						l_tile.m_resource.m_resourceID = 3; // Grass
+						l_tile.m_resource.m_resourceID = 6; // Dirt
 						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Plains) ? 60 : 25;
 						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
 						l_tile.m_resource.m_interactionType = InteractionType::Shovel;

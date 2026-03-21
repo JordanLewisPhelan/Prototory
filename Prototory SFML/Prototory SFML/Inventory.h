@@ -10,7 +10,7 @@ struct InventorySlot
 {
 	uint32_t m_resourceID{ 0 };
 	int m_stackCount{ 0 };
-	bool isEmpty{ true };
+	bool m_isEmpty{ true };
 };
 
 

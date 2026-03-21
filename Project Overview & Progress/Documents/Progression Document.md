@@ -97,3 +97,31 @@ Yes cleared off the whole thing while refactoring other elements - i have neglec
 2. Construct Resources and ResourceAcquisition. - General. more nuanced, this will need implementation and alterations to Tiles or rather additions, so will expand on that and will take either 3-4~ hours or a day or 2, this one has me a little strapped for time, but the actual logic implementation will be easy due to our refactors today! We can just slot it into a tile assignment.
    Added Resources : Must implement Resource Acquisitions.
 3. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
+
+
+##### Note 7: Written on 21/3/26
+
+Minor update, adding mining and inventory additions - need to add in the visual components to this but i am taking this note as there is something i have noticed and want to refactor properly at a later date because it recursively appearing due to the nature of separating concerns.
+
+Adding a Sync feature to chunkManager, currently the majority of the tile influences is done through chunk manager as we delegate it to who runs the management; but TileMap owns the Tiles and retains their info and state;
+Process is; 
+Setup->ChunkManager->Influences Tiles->Tiles reflect this update based on information given as they are just structs-> Updates NOT reflected in TileMap management natively, must be explicitly linked->Updated data is correct and added but not matching
+
+Refactor is simple, have a realistic but encompassing function that will link these 2 so that the Chunks have rules that Tiles represent;
+Without conflicting with the TileMap management.
+
+TLDR;
+Chunks Manage chunks and biomes and influence Tiles based on rules
+TileMap manages tiles
+
+Issue; Influences are not always translated without explicitly ensuring so, minor hiccups occur - FIX.
+
+
+Plan of Action - Update as Progression Flows:
+Yes cleared off the whole thing while refactoring other elements - i have neglected documentation due to working.
+
+{
+1. Begin on Player setup; Inventory addition - Basic Visuals present, want to overhaul post project
+2. Construct Resources and ResourceAcquisition. - Added : But must display prompt to act and reactive messaging - e.g. Inventory full.
+} -> Gracefully basically done but just hard to showcase IN-GAME, more backend. 
+3. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.

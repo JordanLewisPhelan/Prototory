@@ -11,18 +11,25 @@ int Inventory::addResources(uint32_t t_resourceID, int t_amount, int t_maxStack)
 {
 	int l_remaining = t_amount;
 
-	// Attempt to fill up existing slots
-	int l_existingSlot = findSlotWithResource(t_resourceID);
-
-	if (l_existingSlot != -1)
+	// Find all existing slots with this resource that have space
+	for (int i = 0; i < static_cast<int>(m_slots.size()); i++)
 	{
-		InventorySlot& l_slot = m_slots[l_existingSlot];
+		if (l_remaining <= 0)
+			break;
+
+		InventorySlot& l_slot = m_slots[i];
+
+		if (l_slot.m_isEmpty || l_slot.m_resourceID != t_resourceID)
+			continue;
+
 		int l_spaceInSlot = t_maxStack - l_slot.m_stackCount;
-		int l_toAdd = std::min(l_spaceInSlot, l_remaining);
+		if (l_spaceInSlot <= 0)
+			continue;
+
+		int l_toAdd = std::min(l_remaining, l_spaceInSlot);
 		l_slot.m_stackCount += l_toAdd;
 		l_remaining -= l_toAdd;
 	}
-
 	// Handle leftovers / Need for more slots
 	while (l_remaining > 0)
 	{
@@ -38,7 +45,7 @@ int Inventory::addResources(uint32_t t_resourceID, int t_amount, int t_maxStack)
 		int l_toAdd = std::min(l_remaining, t_maxStack);
 		l_slot.m_stackCount += l_toAdd;
 		l_slot.m_resourceID = t_resourceID;
-		l_slot.isEmpty = false;
+		l_slot.m_isEmpty = false;
 		l_remaining -= l_toAdd;
 	}
 
@@ -51,7 +58,7 @@ int Inventory::removeResources(uint32_t t_resourceID, int t_amount)
 
 	for (InventorySlot& l_slot : m_slots)
 	{
-		if (l_slot.isEmpty || l_slot.m_resourceID != t_resourceID)
+		if (l_slot.m_isEmpty || l_slot.m_resourceID != t_resourceID)
 			continue;
 		
 		int l_toRemove = std::min(l_remaining, l_slot.m_stackCount);
@@ -61,7 +68,7 @@ int Inventory::removeResources(uint32_t t_resourceID, int t_amount)
 		if (l_slot.m_stackCount == 0)
 		{
 			l_slot.m_resourceID = 0;
-			l_slot.isEmpty = true;
+			l_slot.m_isEmpty = true;
 		}
 
 		if (l_remaining == 0)
@@ -77,7 +84,7 @@ int Inventory::getResourceCount(uint32_t t_resourceID) const
 
 	for (const InventorySlot& l_slot : m_slots)
 	{
-		if (!l_slot.isEmpty && l_slot.m_resourceID == t_resourceID)
+		if (!l_slot.m_isEmpty && l_slot.m_resourceID == t_resourceID)
 			l_total += l_slot.m_stackCount;
 	}
 
@@ -105,7 +112,7 @@ bool Inventory::isEmpty() const
 {
 	for (const InventorySlot& l_slot : m_slots)
 	{
-		if (!l_slot.isEmpty)
+		if (!l_slot.m_isEmpty)
 			return false;
 	}
 
@@ -126,7 +133,7 @@ int Inventory::findSlotWithResource(uint32_t t_resourceID) const
 {
 	for (int i = 0; i < static_cast<int>(m_slots.size()); i++)
 	{
-		if (!m_slots[i].isEmpty && m_slots[i].m_resourceID == t_resourceID)
+		if (!m_slots[i].m_isEmpty && m_slots[i].m_resourceID == t_resourceID)
 			return i;
 	}
 	return -1;
@@ -136,7 +143,7 @@ int Inventory::findEmptySlot() const
 {
 	for (int i = 0; i < static_cast<int>(m_slots.size()); i++)
 	{
-		if (m_slots[i].isEmpty)
+		if (m_slots[i].m_isEmpty)
 			return i;
 	}
 	return -1;
