@@ -125,3 +125,13 @@ Yes cleared off the whole thing while refactoring other elements - i have neglec
 2. Construct Resources and ResourceAcquisition. - Added : But must display prompt to act and reactive messaging - e.g. Inventory full.
 } -> Gracefully basically done but just hard to showcase IN-GAME, more backend. 
 3. The meat; The Automation Sequencing and processes - Start AT LATEST, March 30th. As this will have its own spiral of content.
+
+
+##### Note 8: Written on 22/3/26
+
+Very mild update, refactored some things that bothered me;
+Const_cast on Perlin Noise generation replaced by a simple seed cache matching the set seed check, not massive but annoyed me.
+
+Bigger one, moved a lot of redundancies of Chunkmanager intialize into functions - this was to reduce initializes clutter. Because it was bad before hand. no initialize of a project this size should be 160 lines long... 
+
+Forgot to update yesterdays message but got a rudimentary inventory and resource acquisiton system set up now, not marked off fully as it is architecturally not positioned great and i'd like to fix that, but for the moment it is servicable and will work but will be changed - Next steps are to begin working on the Machines and Automation processes.

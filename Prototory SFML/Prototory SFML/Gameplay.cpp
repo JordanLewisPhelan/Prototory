@@ -18,7 +18,7 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	
 	// Random World Generation - as long as a "l_seed" is used
 	uint32_t l_seed = m_worldGen.generateSeed();
-	m_chunkManager.initialize(5878514, m_tileMap, &l_loadingScreen);	// debugging ; Const seed: 5878514
+	m_chunkManager.initialize(l_seed, m_tileMap, &l_loadingScreen);	// debugging ; Const seed: 5878514
 
 	// default text for debugging - will refine later(intended to show key data later)
 	m_areaText.setString("Gameplay Screen");
@@ -167,6 +167,7 @@ std::string Gameplay::getCurrentBiome()
 
 }
 
+// ToDo: Refactor into a proper space - not gameplay
 void Gameplay::renderInventory(sf::RenderWindow& t_window)
 {
 	const std::vector<InventorySlot>& l_slots = m_player.getInventory().getSlots();
@@ -188,6 +189,8 @@ void Gameplay::renderInventory(sf::RenderWindow& t_window)
 	t_window.draw(m_inventoryText);
 
 }
+
+
 
 void Gameplay::renderInteractionPrompt(sf::RenderWindow& t_window)
 {

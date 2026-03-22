@@ -13,11 +13,10 @@ PerlinNoiseGenerator::PerlinNoiseGenerator()
 
 float PerlinNoiseGenerator::generate(int t_x, int t_y, uint32_t t_seed) const
 {
-    // *ToDo: Remove seed parameter when Scaling Systems up; e.g. ChunkManager is implemented.
-    // Seed ownership should belong at WorldGenerator level, not here in generators.
-    
-    // Initialize permutation table if seed changed - Temporary
-     const_cast<PerlinNoiseGenerator*>(this)->initializePermutation(t_seed);
+    if (!m_permutationInitialized || m_cachedSeed != t_seed)
+    {
+        initializePermutation(t_seed);
+    }
 
     // Apply frequency to scale coordinates
     float l_scaledX = t_x * m_frequency;
@@ -30,7 +29,7 @@ float PerlinNoiseGenerator::generate(int t_x, int t_y, uint32_t t_seed) const
     return (l_noiseVal + 1.f) / 2.f;
 }
 
-void PerlinNoiseGenerator::initializePermutation(uint32_t t_seed)
+void PerlinNoiseGenerator::initializePermutation(uint32_t t_seed) const
 {
     // Create base array
     std::vector<int> l_permTable(PERM_SIZE);
@@ -49,6 +48,9 @@ void PerlinNoiseGenerator::initializePermutation(uint32_t t_seed)
         m_permutation[i] = l_permTable[i];
         m_permutation[PERM_SIZE + i] = l_permTable[i]; // Duplicate
     }
+
+    m_cachedSeed = t_seed;
+    m_permutationInitialized = true;
 }
 
 float PerlinNoiseGenerator::noise(float t_x, float t_y) const

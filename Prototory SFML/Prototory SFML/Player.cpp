@@ -101,6 +101,7 @@ void Player::update(sf::Time t_dt, TileMap& t_tileMap, const ResourceRegistry& t
         m_playerSprite.setFillColor(sf::Color::Red);
     }
 
+    // Hold to Harvest
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E))
     {
         m_harvestTimer -= t_dt.asSeconds();
@@ -112,7 +113,8 @@ void Player::update(sf::Time t_dt, TileMap& t_tileMap, const ResourceRegistry& t
     }
     else
     {
-        m_harvestTimer = 0.f;   // Player stopped trying to harvest
+        /// Debate if player should be able to spam tap to harvest faster
+       // m_harvestTimer = 0.f;   // Player stopped trying to harvest
     }
 
 	constrainToWorldBounds(t_tileMap);

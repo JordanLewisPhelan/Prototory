@@ -1,14 +1,12 @@
 #include "ChunkManager.h"
 
 
-
 ChunkManager::ChunkManager() 
 	: m_chunkCountX(0),
 	  m_chunkCountY(0),
 	  m_seed(0)
 {
 }
-
 
 /// ToDo: Refactor Passes into functions later or during downtime - very large Initialize function, no good
 void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen)
@@ -19,277 +17,28 @@ void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen
 	m_chunkCountX = Globals::WORLD_WIDTH / Globals::CHUNK_SIZE;
 	m_chunkCountY = Globals::WORLD_HEIGHT / Globals::CHUNK_SIZE;
 
-	int l_progress = 0.f;
-	int l_chunksCompleted = 0;
-	int l_chunksToEval = m_chunkCountX * m_chunkCountY;
+	// Updates to world
+	buildChunkGrid(t_loadingScreen);
+	assignBiomes(t_seed, t_loadingScreen);
+	generateTerrain(t_seed, t_tileMap, t_loadingScreen);
+	adjustOceanDepth(t_loadingScreen);
+	smoothElevation(3, t_loadingScreen);
 
-
-	std::cout << "ChunkManager: Generating world with seed: " << m_seed << "\n\n";
-
-	if (t_loadingScreen)
-	{
-		t_loadingScreen->setTask("Generating Chunks..");
-		t_loadingScreen->setProgress(0.0f);
-		t_loadingScreen->render();
-	}
-
-
-	m_chunks.resize(m_chunkCountX);
-
-	for (int x = 0; x < m_chunkCountX; x++)
-	{
-		for (int y = 0; y < m_chunkCountY; y++)
-		{
-			m_chunks[x].emplace_back(ChunkPosition{ x , y });
-		}
-	}
-
-	// First pass - Biome Setup and Assignments
-
-	if (t_loadingScreen)
-	{
-		t_loadingScreen->setTask("Assigning Biomes...");
-		t_loadingScreen->setProgress(0.0f);
-		t_loadingScreen->render();
-	}
-
-	for (int x = 0; x < m_chunkCountX; x++)
-	{
-		for (int y = 0; y < m_chunkCountY; y++)
-		{
-			float BIOME_SAMPLE_SCALE = 127.3f;
-
-			float l_biomeValue = m_worldGen.getBiomeValue(
-				static_cast<int>(x * BIOME_SAMPLE_SCALE),
-				static_cast<int>(y * BIOME_SAMPLE_SCALE),
-				t_seed
-			);
-			m_chunks[x][y].setBiomeType(determineBiomeType(l_biomeValue));
-
-			l_chunksCompleted++;
-
-			int l_currentProgress = (l_chunksCompleted * 100) / l_chunksToEval;
-
-			if (l_currentProgress != l_progress && t_loadingScreen)
-			{
-				l_progress = l_currentProgress;
-
-				float l_percent = static_cast<float>(l_chunksCompleted) / static_cast<float>(l_chunksToEval);
-
-				t_loadingScreen->setProgress(l_percent);
-				t_loadingScreen->render();
-			}
-		}
-	}
-
-
-	// Second pass - Tile Sync & Generation 
-	l_chunksCompleted = 0;
-	l_progress = 0;
-
-	if (t_loadingScreen)
-	{
-		t_loadingScreen->setTask("Generating Terrain...");
-		t_loadingScreen->setProgress(0.0f);
-		t_loadingScreen->render();
-	}
-
-	// Generate each chunk and sync to TileMap
-	for (int x = 0; x < m_chunkCountX; x++)
-	{
-		for (int y = 0; y < m_chunkCountY; y++)
-		{
-			Chunk& l_chunk = m_chunks[x][y];
-			m_worldGen.generateChunk(l_chunk, m_seed);
-
-			// Sync chunk tiles into TileMap for rendering
-			for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
-			{
-				for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
-				{
-					Tile& l_tile = l_chunk.getTile(localX, localY);
-					t_tileMap.setTileAt(l_tile.m_gridPosition.x, l_tile.m_gridPosition.y, l_tile.m_type, l_tile.m_elevation);
-				}
-
-				l_chunksCompleted++;
-
-
-				int l_currentProgress = (l_chunksCompleted * 100) / l_chunksToEval;
-
-				if (l_currentProgress != l_progress && t_loadingScreen)
-				{
-					l_progress = l_currentProgress;
-
-					float l_percent = static_cast<float>(l_chunksCompleted) / static_cast<float>(l_chunksToEval);
-
-					t_loadingScreen->setProgress(l_percent);
-					t_loadingScreen->render();
-				}
-
-			}
-		}
-	}
-
-	// Third Pass - Adjusting and Assigning and correcting Tile Elevation
-	if (t_loadingScreen)
-	{
-		t_loadingScreen->setTask("Elevation Alignment...");
-		t_loadingScreen->setProgress(0.0f);
-		t_loadingScreen->render();
-	}
-
-	for (int chunkX = 0; chunkX < m_chunkCountX; chunkX++)
-	{
-		for (int chunkY = 0; chunkY < m_chunkCountY; chunkY++)
-		{
-			Chunk& l_chunk = m_chunks[chunkX][chunkY];
-
-			// Determines depth logic for water in Oceans so colour gradienting works
-			// Currently unused in other biomes like this
-			if (l_chunk.getBiome() != BiomeType::Ocean)
-				continue;
-
-			for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
-			{
-				for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
-				{
-					Tile& l_tile = l_chunk.getTile(localX, localY);
-
-					if (l_tile.m_type != TileType::Water)
-						continue;
-
-					// Check all 8 neighbours — count how many are also water
-					int l_waterNeighbours = 0;
-
-					for (int dx = -1; dx <= 1; dx++)
-					{
-						for (int dy = -1; dy <= 1; dy++)
-						{
-							if (dx == 0 && dy == 0)
-								continue;
-
-							int l_worldX = l_tile.m_gridPosition.x + dx;
-							int l_worldY = l_tile.m_gridPosition.y + dy;
-
-							// Skip if world position is out of bounds entirely
-							if (l_worldX < 0 || l_worldY < 0 ||
-								l_worldX >= Globals::WORLD_WIDTH ||
-								l_worldY >= Globals::WORLD_HEIGHT)
-								continue;
-
-							// Convert world coords back to chunk + local coords
-							int l_neighbourChunkX = l_worldX / Globals::CHUNK_SIZE;
-							int l_neighbourChunkY = l_worldY / Globals::CHUNK_SIZE;
-
-							if (!isValidChunkPos(l_neighbourChunkX, l_neighbourChunkY))
-								continue;
-
-							int l_localX = l_worldX % Globals::CHUNK_SIZE;
-							int l_localY = l_worldY % Globals::CHUNK_SIZE;
-
-							Tile& l_neighbour = m_chunks[l_neighbourChunkX][l_neighbourChunkY].getTile(l_localX, l_localY);
-
-							if (l_neighbour.m_type == TileType::Water)
-								l_waterNeighbours++;
-						}
-					}
-
-					// 0 water neighbours = elevation 3 (shallow, near land)
-					// 8 water neighbours = elevation 0 (deep, fully enclosed)
-					l_tile.m_elevation = OCEAN_MAX_ELEVATION - static_cast<int>((l_waterNeighbours / 8.0f) * static_cast<float>(OCEAN_MAX_ELEVATION));
-				}
-			}
-		}
-	}
-
-		// Fourth pass - Biome Borders and Elevation smoothing
-	if (t_loadingScreen)
-	{
-		t_loadingScreen->setTask("Terrain Smoothing...");
-		t_loadingScreen->setProgress(0.0f);
-		t_loadingScreen->render();
-	}
-
-	// 3 is default iterations but can be brought up for alignments or down for performance
-	smoothElevationBorders(3);
-
-
-	// Fifth Pass - Border Blending
-	if (t_loadingScreen)
-	{
-		t_loadingScreen->setTask("Biome Blending...");
-		t_loadingScreen->setProgress(0.0f);
-		t_loadingScreen->render();
-	}
-
+	// Smoothing / Application assurance
 	applyBorderBlending();
-
-
-	// Sync border blending changes back to TileMap
-	for (int chunkX = 0; chunkX < m_chunkCountX; chunkX++)
-	{
-		for (int chunkY = 0; chunkY < m_chunkCountY; chunkY++)
-		{
-			Chunk& l_chunk = m_chunks[chunkX][chunkY];
-			for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
-			{
-				for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
-				{
-					Tile& l_tile = l_chunk.getTile(localX, localY);
-					t_tileMap.setTileAt(
-						l_tile.m_gridPosition.x,
-						l_tile.m_gridPosition.y,
-						l_tile.m_type,
-						l_tile.m_elevation
-					);
-				}
-			}
-		}
-	}
-
-	// Sixth Pass - Assign Tile Resources
-	if (t_loadingScreen)
-	{
-		t_loadingScreen->setTask("Populating Resources...");
-		t_loadingScreen->setProgress(0.0f);
-		t_loadingScreen->render();
-	}
-
 	assignTileResources();
+	syncToTileMap(t_tileMap);
 
-	// Sync border blending changes back to TileMap
-	for (int chunkX = 0; chunkX < m_chunkCountX; chunkX++)
-	{
-		for (int chunkY = 0; chunkY < m_chunkCountY; chunkY++)
-		{
-			Chunk& l_chunk = m_chunks[chunkX][chunkY];
-			for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
-			{
-				for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
-				{
-					Tile& l_tile = l_chunk.getTile(localX, localY);
-					Tile* l_mapTile = t_tileMap.getTileAt(
-						l_tile.m_gridPosition.x,
-						l_tile.m_gridPosition.y
-					);
-					if (l_mapTile)
-						l_mapTile->m_resource = l_tile.m_resource;
-				}
-			}
-		}
-	}
 
 	if (t_loadingScreen)
 	{
 		t_loadingScreen->setTask("Generation Completed");
 		t_loadingScreen->setProgress(1.0f);
 		t_loadingScreen->render();
-
-		// Forced sleep to ensure it updates for debugging
 		sf::sleep(sf::milliseconds(200));
 	}
 
-	std::cout << "ChunkManager: World Generation Finalized. \n\n";
+	std::cout << "ChunkManager: World Generation Finalized.\n\n";
 }
 
 Chunk& ChunkManager::getChunk(int t_x, int t_y)
@@ -335,6 +84,152 @@ int ChunkManager::getBiomeElevationDelta(BiomeType t_biome) const
 	case BiomeType::Mountains:  return 5;
 	case BiomeType::Desert:     return 2;
 	default:                    return 2;
+	}
+}
+
+void ChunkManager::updateLoadingProgress(LoadingScreen* t_loadingScreen, const std::string& t_task, int t_completed, int t_total)
+{
+	if (!t_loadingScreen)
+		return;
+
+	t_loadingScreen->setTask(t_task);
+	t_loadingScreen->setProgress(static_cast<float>(t_completed) /
+								 static_cast<float>(t_total));
+	t_loadingScreen->render();
+}
+
+/* - Generation Pass Functions - */
+
+
+void ChunkManager::buildChunkGrid(LoadingScreen* t_loadingScreen)
+{
+	updateLoadingProgress(t_loadingScreen, "Generating Chunks...", 0, 1);
+
+	m_chunks.resize(m_chunkCountX);
+	for (int x = 0; x < m_chunkCountX; x++)
+		for (int y = 0; y < m_chunkCountY; y++)
+			m_chunks[x].emplace_back(ChunkPosition{ x, y });
+
+	updateLoadingProgress(t_loadingScreen, "Generating Chunks...", 1, 1);
+}
+
+void ChunkManager::assignBiomes(uint32_t t_seed, LoadingScreen* t_loadingScreen)
+{
+	int l_total = m_chunkCountX * m_chunkCountY;
+	int l_completed = 0;
+
+	updateLoadingProgress(t_loadingScreen, "Assigning Biomes...", 0, l_total);
+
+	for (int x = 0; x < m_chunkCountX; x++)
+	{
+		for (int y = 0; y < m_chunkCountY; y++)
+		{
+			float l_biomeValue = m_worldGen.getBiomeValue(
+				static_cast<int>(x * BIOME_SAMPLE_SCALE),
+				static_cast<int>(y * BIOME_SAMPLE_SCALE),
+				t_seed
+			);
+			m_chunks[x][y].setBiomeType(determineBiomeType(l_biomeValue));
+			updateLoadingProgress(t_loadingScreen, "Assigning Biomes...", ++l_completed, l_total);
+		}
+	}
+}
+
+void ChunkManager::generateTerrain(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen)
+{
+	int l_total = m_chunkCountX * m_chunkCountY;
+	int l_completed = 0;
+
+	updateLoadingProgress(t_loadingScreen, "Generating Terrain...", 0, l_total);
+
+	for (int x = 0; x < m_chunkCountX; x++)
+	{
+		for (int y = 0; y < m_chunkCountY; y++)
+		{
+			Chunk& l_chunk = m_chunks[x][y];
+			m_worldGen.generateChunk(l_chunk, t_seed);
+			updateLoadingProgress(t_loadingScreen, "Generating Terrain...", ++l_completed, l_total);
+		}
+	}
+
+	// Initial sync so TileMap reflects base terrain before further passes
+	syncToTileMap(t_tileMap);
+}
+
+void ChunkManager::adjustOceanDepth(LoadingScreen* t_loadingScreen)
+{
+	int l_total = m_chunkCountX * m_chunkCountY;
+	int l_completed = 0;
+
+	updateLoadingProgress(t_loadingScreen, "Adjusting Ocean Depth...", 0, l_total);
+
+	for (int chunkX = 0; chunkX < m_chunkCountX; chunkX++)
+	{
+		for (int chunkY = 0; chunkY < m_chunkCountY; chunkY++)
+		{
+			Chunk& l_chunk = m_chunks[chunkX][chunkY];
+
+			if (l_chunk.getBiome() == BiomeType::Ocean)
+			{
+				for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
+				{
+					for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
+					{
+						Tile& l_tile = l_chunk.getTile(localX, localY);
+
+						if (l_tile.m_type != TileType::Water)
+							continue;
+
+						int l_waterNeighbours = 0;
+
+						for (int dx = -1; dx <= 1; dx++)
+						{
+							for (int dy = -1; dy <= 1; dy++)
+							{
+								if (dx == 0 && dy == 0) continue;
+
+								int l_worldX = l_tile.m_gridPosition.x + dx;
+								int l_worldY = l_tile.m_gridPosition.y + dy;
+
+								if (l_worldX < 0 || l_worldY < 0 ||
+									l_worldX >= Globals::WORLD_WIDTH ||
+									l_worldY >= Globals::WORLD_HEIGHT)
+									continue;
+
+								int l_neighbourChunkX = l_worldX / Globals::CHUNK_SIZE;
+								int l_neighbourChunkY = l_worldY / Globals::CHUNK_SIZE;
+
+								if (!isValidChunkPos(l_neighbourChunkX, l_neighbourChunkY))
+									continue;
+
+								Tile& l_neighbour = m_chunks[l_neighbourChunkX][l_neighbourChunkY]
+									.getTile(l_worldX % Globals::CHUNK_SIZE,
+										l_worldY % Globals::CHUNK_SIZE);
+
+								if (l_neighbour.m_type == TileType::Water)
+									l_waterNeighbours++;
+							}
+						}
+
+						l_tile.m_elevation = OCEAN_MAX_ELEVATION - static_cast<int>(
+							(l_waterNeighbours / 8.0f) * static_cast<float>(OCEAN_MAX_ELEVATION));
+					}
+				}
+			}
+
+			updateLoadingProgress(t_loadingScreen, "Adjusting Ocean Depth...", ++l_completed, l_total);
+		}
+	}
+}
+
+void ChunkManager::smoothElevation(int t_iterations, LoadingScreen* t_loadingScreen)
+{
+	updateLoadingProgress(t_loadingScreen, "Smoothing Terrain...", 0, t_iterations);
+
+	for (int i = 0; i < t_iterations; i++)
+	{
+		smoothElevationBorders(1);
+		updateLoadingProgress(t_loadingScreen, "Smoothing Terrain...", i + 1, t_iterations);
 	}
 }
 
@@ -560,6 +455,36 @@ void ChunkManager::assignTileResources()
 						// Quantity stays 0 == not harvestable
 						break;
 					}
+				}
+			}
+		}
+	}
+}
+
+void ChunkManager::syncToTileMap(TileMap& t_tileMap)
+{
+	for (int chunkX = 0; chunkX < m_chunkCountX; chunkX++)
+	{
+		for (int chunkY = 0; chunkY < m_chunkCountY; chunkY++)
+		{
+			Chunk& l_chunk = m_chunks[chunkX][chunkY];
+			for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
+			{
+				for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
+				{
+					Tile& l_tile = l_chunk.getTile(localX, localY);
+					Tile* l_mapTile = t_tileMap.getTileAt(
+						l_tile.m_gridPosition.x,
+						l_tile.m_gridPosition.y
+					);
+
+					// TileMap version of checked data so reflections are accurate
+					if (!l_mapTile)
+						continue;
+
+					l_mapTile->m_type = l_tile.m_type;
+					l_mapTile->m_elevation = l_tile.m_elevation;
+					l_mapTile->m_resource = l_tile.m_resource;
 				}
 			}
 		}

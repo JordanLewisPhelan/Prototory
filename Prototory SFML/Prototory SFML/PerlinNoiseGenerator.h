@@ -16,7 +16,10 @@ public:
     void setOctaves(int t_octaves) { m_octaves = t_octaves; }
 
 private:
-    std::vector<int> m_permutation; // Permutation table (512 elements)
+    mutable std::vector<int> m_permutation; // Permutation table (512 elements)
+    mutable bool m_permutationInitialized{ false };
+    mutable uint32_t m_cachedSeed{ 0 };
+
     float m_frequency;              // Default (0.05): Scalar for tile type frequency which is applied to the Tiles
     int m_octaves;                  // Default (1): Layer of octaves for when FBM or layered noise is introduced
 
@@ -26,7 +29,7 @@ private:
 
 
     // Initialize permutation table with seed
-    void initializePermutation(uint32_t t_seed);
+    void initializePermutation(uint32_t t_seed) const;
 
     // Noise function for a single tile
     /// When adding FBM will need to be adjusted and updated to match
