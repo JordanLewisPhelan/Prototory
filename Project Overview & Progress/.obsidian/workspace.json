@@ -20,8 +20,21 @@
               "icon": "lucide-file",
               "title": "Progression Document"
             }
+          },
+          {
+            "id": "d0ca022b03957205",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.12.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.12.7"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -184,7 +197,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "a1d1ba522b2d204e",
+  "active": "d0ca022b03957205",
   "lastOpenFiles": [
     "Project Overview.md",
     "Documents/Progression Document.md",

@@ -1,12 +1,9 @@
 #pragma once
+
+#include <optional>
 #include <SFML/Graphics.hpp>
-
-
-
-enum class InteractionType
-{
-	None, Chop, Mine, Shovel
-};
+#include "Globals.h"
+#include "MachineComponent.h"
 
 
 // Simple list of what is available 
@@ -33,6 +30,7 @@ struct Tile {
 	sf::Vector2i m_gridPosition;	// Vector of where in the TileMap will this be housed
 	int m_elevation;			// determining height of a map tile
 	TileResource m_resource;	// Resource and its attributes associated with this tile
+	std::optional<MachineComponent> m_machine;		// What piece of machinery occupies this tile
 
 	// Default constructor for grid initialisation
 	Tile()
@@ -40,9 +38,9 @@ struct Tile {
 		, m_gridPosition(0, 0)
 		, m_elevation(0)
 		, m_resource()
-	{
-	}
+		, m_machine(std::nullopt)
+	{}
 
 	Tile(TileType t_type, sf::Vector2i t_gridPos, int t_elevation = 0)
-		: m_type(t_type), m_gridPosition(t_gridPos), m_elevation(t_elevation), m_resource() {}
+		: m_type(t_type), m_gridPosition(t_gridPos), m_elevation(t_elevation), m_resource(), m_machine(std::nullopt) {}
 };

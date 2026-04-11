@@ -17,3 +17,9 @@ struct Globals
 	static constexpr float HARVEST_REACH = 48.f;
 };
 
+
+
+enum class InteractionType
+{
+	None, Chop, Mine, Shovel
+};

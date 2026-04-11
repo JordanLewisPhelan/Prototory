@@ -2,8 +2,11 @@
 
 Gameplay::Gameplay(sf::RenderWindow& t_window) 
 	: m_pendingAction(SceneActions::None)
-	, m_player(sf::Vector2f((64.f * 64.f, 64.f * 64.f), 16.f))
+	, m_player(sf::Vector2f(64.f * 64.f, 64.f * 64.f))
 	, m_tileMap(Globals::WORLD_WIDTH, Globals::WORLD_HEIGHT, Globals::TILE_SIZE)
+	, m_tileAccessor(m_chunkManager)
+	, m_machineSystem(m_tileAccessor, m_machineRegistry, m_resourceRegistry)
+	, m_placementController(m_machineRegistry, m_tileAccessor, m_gameFont)
 {
 	if (!m_gameFont.openFromFile("ASSETS\\FONTS\\Jersey20-Regular.ttf"))
 	{
@@ -32,9 +35,13 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	m_inventoryText.setCharacterSize(18);
 	m_inventoryText.setFillColor(sf::Color::White);
 	m_inventoryText.setPosition(sf::Vector2f(10.f, 10.f));
-
+		
 	m_promptText.setCharacterSize(22);
 	m_promptText.setFillColor(sf::Color::Yellow);
+
+	m_inspectorText.setCharacterSize(16);
+	m_inspectorText.setFillColor(sf::Color::Cyan);
+	m_inspectorText.setPosition(sf::Vector2f(Globals::SCREEN_WIDTH - 220.f, 10.f));
 
 	// Setup camera
 	m_camera.setSize(sf::Vector2f(static_cast<float>(Globals::SCREEN_WIDTH),
@@ -42,16 +49,7 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	m_camera.setCenter(m_player.getWorldPosition());
 
 	m_resourceRegistry.initializeResources();
-
-	// Debug Remove Later
-	const ResourceDefinition* l_woodDef = m_resourceRegistry.getResource(1);
-
-	if (l_woodDef)
-	{
-		int l_leftOver = m_player.getInventory().addResources(1, 200, l_woodDef->m_maxInStack);
-		std::cout << "Gameplay: Added " << l_woodDef->m_name << " to player inventory. Leftover: " << l_leftOver << "\n";
-		std::cout << "Gameplay: Player wood count: " << m_player.getInventory().getResourceCount(1) << "\n";
-	}
+	m_machineRegistry.initializeMachines();
 }
 
 // Will be used to determine player key presses and click inputs during gameplay
@@ -70,8 +68,56 @@ void Gameplay::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWi
 		{
 			m_tileMap.toggleDebugElevation();
 		}
-		
+		if (keyPress && keyPress->code == sf::Keyboard::Key::F2)
+		{
+			sf::Vector2f l_harvestPoint = m_player.getWorldPosition() +
+				(m_player.getFacing() * Globals::HARVEST_REACH);
+
+			sf::Vector2i l_targetGrid = m_tileMap.worldToGrid(l_harvestPoint);
+			MachineComponent* l_machine = m_machineSystem.getMachineAt(l_targetGrid);
+
+			if (l_machine)
+			{
+				std::cout << "=== Machine Debug ===\n";
+				std::cout << "Output target: "
+					<< (l_machine->getOutputTarget().has_value()
+						? std::to_string(l_machine->getOutputTarget()->x)
+						+ "," + std::to_string(l_machine->getOutputTarget()->y)
+						: "none") << "\n";
+				std::cout << "Input sources: " << l_machine->getInputSources().size() << "\n";
+				for (const auto& l_src : l_machine->getInputSources())
+				{
+					std::cout << "  source at " << l_src.x << "," << l_src.y << "\n";
+				}
+				std::cout << "Output inventory:\n";
+				for (const auto& l_slot : l_machine->getOutputInventory().getSlots())
+				{
+					if (!l_slot.m_isEmpty)
+						std::cout << "  resource " << l_slot.m_resourceID
+						<< " x" << l_slot.m_stackCount << "\n";
+				}
+				std::cout << "Input buffer count: "
+					<< l_machine->getInputBufferCount() << "\n";
+				std::cout << "Output target: "
+					<< (l_machine->getOutputTarget().has_value()
+						? std::to_string(l_machine->getOutputTarget()->x)
+						+ "," + std::to_string(l_machine->getOutputTarget()->y)
+						: "none") << "\n";
+				std::cout << "Facing direction: "
+					<< l_machine->getFacingDirection().x << ","
+					<< l_machine->getFacingDirection().y << "\n";
+				std::cout << "Idle: " << l_machine->isIdle() << "\n";
+				std::cout << "====================\n";
+			}
+			else
+			{
+				std::cout << "No machine at facing tile\n";
+			}
+		}
 	}
+
+	// We are investigating key releases here - i.e. out of loop
+	m_placementController.handleEvent(t_event.value());
 }
 
 void Gameplay::Update(sf::Time t_dt)
@@ -85,6 +131,37 @@ void Gameplay::Update(sf::Time t_dt)
 	// Update camera to follow player
 	updateCamera();
 
+	/// ToDo: Prevent constant checks, when we add in modes for this and not
+	/// keybinds we can do this a lot easier but for now it is constant
+	PlacementRequest l_request = m_placementController.update(
+		m_player.getWorldPosition(),
+		m_player.getFacing(),
+		m_machineSystem
+	);
+
+	// Check Intent for actions
+	switch (l_request.m_intent)
+	{
+	case PlacementIntent::Place:
+		if (l_request.m_valid)
+			m_machineSystem.placeMachine(
+				l_request.m_definitionID,
+				l_request.m_gridPos,
+				l_request.m_worldOffset,
+				l_request.m_facingDirection,
+				m_tileMap);
+		break;
+	case PlacementIntent::Remove:
+		if (l_request.m_valid)
+			m_machineSystem.removeMachine(l_request.m_gridPos, m_tileMap);
+		break;
+	case PlacementIntent::None:
+		break;
+	}
+
+
+	m_machineSystem.update(t_dt);
+
 	m_areaText.setString("Biome " + getCurrentBiome());
 }
 
@@ -92,17 +169,23 @@ void Gameplay::Render(sf::RenderWindow& t_window)
 {
 	t_window.setView(m_camera);
 
-	m_tileMap.render(t_window);
+	m_tileMap.render(t_window, m_tileAccessor);
 
 	if (m_tileMap.getDebugElevation())
 		m_tileMap.renderDebugElevation(t_window, m_gameFont);
 
 	m_player.render(t_window);
 
+	/// ToDo: Prevent constant checks, when we add in modes for this and not
+	/// keybinds we can do this a lot easier but for now it is constant
+	m_placementController.render(t_window);
+
 	t_window.setView(t_window.getDefaultView());
 
 	t_window.draw(m_areaText);
+
 	renderInventory(t_window);
+	renderMachineInspector(t_window); 
 	renderInteractionPrompt(t_window);
 }
 
@@ -221,4 +304,75 @@ void Gameplay::renderInteractionPrompt(sf::RenderWindow& t_window)
 	));
 
 	t_window.draw(m_promptText);
+}
+
+void Gameplay::renderMachineInspector(sf::RenderWindow& t_window)
+{
+	sf::Vector2f l_harvestPoint = m_player.getWorldPosition() + 
+		(m_player.getFacing() * Globals::HARVEST_REACH); 
+
+	sf::Vector2i l_targetGrid = m_tileMap.worldToGrid(l_harvestPoint); 
+
+	MachineComponent* l_machine = m_machineSystem.getMachineAt(l_targetGrid);
+
+	if (!l_machine)
+		return;
+
+	const MachineDefinition* l_def =
+		m_machineRegistry.getMachine(l_machine->getDefinitionId());
+
+	std::string l_display = "-- " +
+		(l_def ? l_def->m_name : "Machine") + " --\n";
+
+	l_display += l_machine->isIdle()
+		? "Status: Idle\n"
+		: "Status: Active\n";
+
+	l_display += "\nOutput:\n";
+
+	const auto& l_slots = l_machine->getOutputInventory().getSlots();
+	bool l_empty = true;
+
+	for (const auto& l_slot : l_slots) 
+	{
+		if (!l_slot.m_isEmpty) 
+		{
+			const ResourceDefinition* l_resDef = 
+				m_resourceRegistry.getResource(l_slot.m_resourceID); 
+			l_display += (l_resDef ? l_resDef->m_name : "Unknown") 
+				+ " x" + std::to_string(l_slot.m_stackCount) + "\n"; 
+			l_empty = false; 
+		}
+	}
+
+	if (l_empty)
+		l_display += "Empty\n";
+
+	if (l_machine->getInputBufferCount() > 0)
+	{
+		l_display += "\nInput buffers:\n";
+
+		for (int i = 0; i < l_machine->getInputBufferCount(); i++)
+		{
+			const auto& l_bufferSlots =
+				l_machine->getInputBuffer(i).getSlots();
+
+			for (const auto& l_slot : l_bufferSlots)
+			{
+				if (!l_slot.m_isEmpty)
+				{
+					const ResourceDefinition* l_resDef =
+						m_resourceRegistry.getResource(l_slot.m_resourceID);
+
+					l_display += "Ch" + std::to_string(i) + ": "
+						+ (l_resDef ? l_resDef->m_name : "Unknown")
+						+ " x" + std::to_string(l_slot.m_stackCount)
+						+ "\n";
+				}
+			}
+		}
+	}
+
+	m_inspectorText.setString(l_display);
+	t_window.draw(m_inspectorText);
 }

@@ -8,6 +8,11 @@
 #include "ChunkManager.h"
 #include "LoadingScreen.h"
 #include "ResourceRegistry.h"
+#include "MachineRegistry.h"
+#include "TileAccessor.h"
+#include "MachineSystem.h"
+#include "PlacementController.h"
+
 
 
 class Gameplay : public Scene
@@ -27,6 +32,7 @@ private:
 	sf::Text m_areaText{m_gameFont};
 	sf::Text m_inventoryText{ m_gameFont };
 	sf::Text m_promptText{ m_gameFont };
+	sf::Text m_inspectorText{ m_gameFont };
 
 	TileMap m_tileMap;
 
@@ -37,6 +43,11 @@ private:
 	ChunkManager m_chunkManager;	// Current implementation 
 
 	ResourceRegistry m_resourceRegistry;
+	MachineRegistry m_machineRegistry;
+
+	TileAccessor m_tileAccessor;	
+	MachineSystem m_machineSystem;
+	PlacementController m_placementController;
 
 	SceneActions m_pendingAction;
 
@@ -48,4 +59,6 @@ private:
 	void renderInventory(sf::RenderWindow& t_window);
 	/// Displays when facing and hovering over a harvestable tile
 	void renderInteractionPrompt(sf::RenderWindow& t_window);
+	/// Displays the Inventory or a machine we are hovering over - Debug to be removed/refined later
+	void renderMachineInspector(sf::RenderWindow& t_window);
 };

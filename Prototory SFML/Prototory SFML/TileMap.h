@@ -4,18 +4,21 @@
 #include "Globals.h"
 
 
+class TileAccessor;
+
 class TileMap
 {
 public:
 	TileMap(int t_width, int t_height, int t_tileSize);
 
-	void render(sf::RenderWindow& t_window);
+	void render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor);
 
 	// - Accessors -
 	Tile* getTileAt(int t_x, int t_y);
 	int getWidth() const;
 	int getHeight() const;
 	int getElevationAt(int t_x, int t_y) const;
+	TileResource& getTileResourceAt(int t_x, int t_y);
 
 	// - Adjustors -
 	void setTileAt(int t_x, int t_y, TileType t_type);

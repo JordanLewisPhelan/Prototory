@@ -105,7 +105,7 @@ void Inventory::transferTo(Inventory& t_targetInventory, uint32_t t_resourceID, 
 
 bool Inventory::isFull() const
 {
-	return findEmptySlot() != -1;
+	return findEmptySlot() == -1;
 }
 
 bool Inventory::isEmpty() const

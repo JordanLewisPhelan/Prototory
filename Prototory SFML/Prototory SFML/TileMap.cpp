@@ -1,5 +1,5 @@
 #include "TileMap.h"
-
+#include "TileAccessor.h"
 
 
 /// Notice: Due to 2D vector storage, going by width and then by height with reserve is best practice
@@ -28,7 +28,7 @@ TileMap::TileMap(int t_width, int t_height, int t_tileSize)
 }
 
 
-void TileMap::render(sf::RenderWindow& t_window)
+void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
 {
 	// This will determine what we can see on screen
 	sf::View l_view = t_window.getView();			// Effectively 2D camera 
@@ -65,6 +65,30 @@ void TileMap::render(sf::RenderWindow& t_window)
 
 			t_window.draw(l_tileRectangle);
 
+
+			// Draw machine if present
+			Tile* l_liveTile = t_tileAccessor.get(sf::Vector2i(x, y));
+			if (l_liveTile && l_liveTile->m_machine.has_value())
+			{
+				const MachineVisual& l_visual = l_liveTile->m_machine->getVisual();
+				sf::RectangleShape l_machineShape;
+
+				l_machineShape.setSize(l_visual.m_size);
+				l_machineShape.setFillColor(l_visual.m_idle
+					? sf::Color(120, 120, 120)
+					: l_visual.m_colour);
+				l_machineShape.setOutlineColor(sf::Color::Black);
+				l_machineShape.setOutlineThickness(1.f);
+
+				// Centre on tile then apply sub-tile offset
+				sf::Vector2f l_centre(
+					x * m_tileSize + (m_tileSize - l_visual.m_size.x) / 2.f,
+					y * m_tileSize + (m_tileSize - l_visual.m_size.y) / 2.f
+				);
+
+				l_machineShape.setPosition(l_centre + l_visual.m_offsetPos);
+				t_window.draw(l_machineShape);
+			}
 		}
 	}
 }
@@ -101,6 +125,11 @@ int TileMap::getElevationAt(int t_x, int t_y) const
 	return m_tiles[t_x][t_y].m_elevation;
 }
 
+
+TileResource& TileMap::getTileResourceAt(int t_x, int t_y)
+{
+	return m_tiles[t_y][t_x].m_resource;
+}
 
 /* - Public Setter - */
 // Sets a tile at a specified Tile[x][y] index to a specified tileType
