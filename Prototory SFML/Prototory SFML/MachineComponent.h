@@ -20,8 +20,7 @@ struct MachineVisual {
 class MachineComponent
 {
 public:
-	MachineComponent(uint32_t t_defID, 
-		const MachineDefinition& t_definition,
+	MachineComponent(const MachineDefinition& t_definition,
 		sf::Vector2f t_worldOffset,
 		sf::Vector2f t_facingDirection);
 

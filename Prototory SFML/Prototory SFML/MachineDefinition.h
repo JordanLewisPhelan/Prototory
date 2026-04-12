@@ -4,6 +4,7 @@
 #include <cstdint>
 #include "Globals.h"
 
+
 enum class MachinePurpose
 {
     Harvester,

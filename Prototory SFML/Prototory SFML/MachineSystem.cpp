@@ -96,7 +96,7 @@ bool MachineSystem::placeMachine(uint32_t t_machineID, sf::Vector2i t_gridPos, s
 	}
 
 	// Make the Machine and assign to tile directly
-	l_tile->m_machine = MachineComponent(t_machineID, *l_def, t_worldOffset, t_facingDirection);
+	l_tile->m_machine = MachineComponent(*l_def, t_worldOffset, t_facingDirection);
 
 	Tile* l_mapTile = t_tileMap.getTileAt(t_gridPos.x, t_gridPos.y);
 
@@ -642,73 +642,6 @@ void MachineSystem::notifyNeighbours(sf::Vector2i t_gridPos)
 		}
 	}
 
-}
-
-
-
-bool MachineSystem::brokerTransfer(MachineComponent& t_source, MachineComponent& t_reciever, const MachineDefinition& t_sourceDef, const ResourceRegistry& t_resourceRegistry)
-{
-	// Source has nothing to send
-	if (t_source.getOutputInventory().isEmpty())
-	{
-		t_source.setIdle(true);
-		return false;
-	}
-
-	// Finding input channel with space
-	int l_availableChannel = -1;
-
-	for (int i = 0; i < t_reciever.getInputBufferCount(); i++)
-	{
-		if (!t_reciever.getInputBuffer(i).isFull())
-		{
-			l_availableChannel = i;
-			break;
-		}
-	}
-
-	// No available channel - target is full, source goes idle
-	if (l_availableChannel == -1)
-	{
-		t_source.setIdle(true);
-		return false;
-	}
-
-
-	const auto& l_slots = t_source.getOutputInventory().getSlots();
-	uint32_t l_resourceID = 0;
-	int l_amount = 0;
-
-	for (const auto& l_slot : l_slots)
-	{
-		if (!l_slot.m_isEmpty)
-		{
-			l_resourceID = l_slot.m_resourceID;
-			l_amount = t_sourceDef.m_transferAmount; // move one unit per transfer tick
-			break;
-		}
-	}
-
-	// Safety Check 
-	if (l_resourceID == 0)
-		return false;
-
-	// Get max stack from Resource Definition - smidge awkward maybe true middle-men classes are a ToDo?
-	const ResourceDefinition* l_resDef =
-		t_resourceRegistry.getResource(l_resourceID);
-
-	int l_maxStack = l_resDef ? l_resDef->m_maxInStack : 99;
-
-	// Attempt transfer - move from source output to target input buffer
-	t_source.getOutputInventory().transferTo(
-		t_reciever.getInputBuffer(l_availableChannel),
-		l_resourceID,
-		l_amount,
-		l_maxStack
-	);
-
-	t_source.setIdle(false);
-	return true;
 }
 
 void MachineSystem::drainInputBuffers(MachineComponent& t_component, const MachineDefinition& t_definition)

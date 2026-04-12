@@ -18,8 +18,10 @@ void MachineRegistry::registerMachine(MachineDefinition t_machine)
 const MachineDefinition* MachineRegistry::getMachine(uint32_t t_id) const
 {
     auto l_it = m_machineDefinitions.find(t_id);
+
     if (l_it == m_machineDefinitions.end())
         return nullptr;
+
     return &l_it->second;
 }
 

@@ -28,7 +28,6 @@
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="LoadingScreen.cpp" />
-    <ClCompile Include="Machine.cpp" />
     <ClCompile Include="MachineComponent.cpp" />
     <ClCompile Include="MachineRegistry.cpp" />
     <ClCompile Include="MachineSystem.cpp" />
@@ -42,7 +41,6 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="TileAccessor.cpp" />
     <ClCompile Include="TileMap.cpp" />
-    <ClCompile Include="TreeChopper.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +55,6 @@
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="LoadingScreen.h" />
-    <ClInclude Include="Machine.h" />
     <ClInclude Include="MachineComponent.h" />
     <ClInclude Include="MachineDefinition.h" />
     <ClInclude Include="MachineRegistry.h" />
@@ -74,7 +71,6 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileAccessor.h" />
     <ClInclude Include="TileMap.h" />
-    <ClInclude Include="TreeChopper.h" />
     <ClInclude Include="WorldGenerator.h" />
   </ItemGroup>
   <ItemGroup>

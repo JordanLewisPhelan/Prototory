@@ -68,52 +68,6 @@ void Gameplay::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWi
 		{
 			m_tileMap.toggleDebugElevation();
 		}
-		if (keyPress && keyPress->code == sf::Keyboard::Key::F2)
-		{
-			sf::Vector2f l_harvestPoint = m_player.getWorldPosition() +
-				(m_player.getFacing() * Globals::HARVEST_REACH);
-
-			sf::Vector2i l_targetGrid = m_tileMap.worldToGrid(l_harvestPoint);
-			MachineComponent* l_machine = m_machineSystem.getMachineAt(l_targetGrid);
-
-			if (l_machine)
-			{
-				std::cout << "=== Machine Debug ===\n";
-				std::cout << "Output target: "
-					<< (l_machine->getOutputTarget().has_value()
-						? std::to_string(l_machine->getOutputTarget()->x)
-						+ "," + std::to_string(l_machine->getOutputTarget()->y)
-						: "none") << "\n";
-				std::cout << "Input sources: " << l_machine->getInputSources().size() << "\n";
-				for (const auto& l_src : l_machine->getInputSources())
-				{
-					std::cout << "  source at " << l_src.x << "," << l_src.y << "\n";
-				}
-				std::cout << "Output inventory:\n";
-				for (const auto& l_slot : l_machine->getOutputInventory().getSlots())
-				{
-					if (!l_slot.m_isEmpty)
-						std::cout << "  resource " << l_slot.m_resourceID
-						<< " x" << l_slot.m_stackCount << "\n";
-				}
-				std::cout << "Input buffer count: "
-					<< l_machine->getInputBufferCount() << "\n";
-				std::cout << "Output target: "
-					<< (l_machine->getOutputTarget().has_value()
-						? std::to_string(l_machine->getOutputTarget()->x)
-						+ "," + std::to_string(l_machine->getOutputTarget()->y)
-						: "none") << "\n";
-				std::cout << "Facing direction: "
-					<< l_machine->getFacingDirection().x << ","
-					<< l_machine->getFacingDirection().y << "\n";
-				std::cout << "Idle: " << l_machine->isIdle() << "\n";
-				std::cout << "====================\n";
-			}
-			else
-			{
-				std::cout << "No machine at facing tile\n";
-			}
-		}
 	}
 
 	// We are investigating key releases here - i.e. out of loop

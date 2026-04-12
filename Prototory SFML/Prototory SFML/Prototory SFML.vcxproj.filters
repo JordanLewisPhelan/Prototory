@@ -67,12 +67,6 @@
     <Filter Include="Source Files\Components\Machinery &amp; Automation">
       <UniqueIdentifier>{cb7e6b49-d623-4e9f-9b32-3e64604f4f4e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Components\Machinery &amp; Automation\Harvesters">
-      <UniqueIdentifier>{99dd7dae-0193-485e-ba22-e4b50cabb081}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Components\Machinery &amp; Automation\Harvesters">
-      <UniqueIdentifier>{edfec94d-f947-4bda-aea4-158c93755776}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -131,12 +125,6 @@
     </ClCompile>
     <ClCompile Include="MachineRegistry.cpp">
       <Filter>Source Files\Components\Machinery &amp; Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="Machine.cpp">
-      <Filter>Source Files\Components\Machinery &amp; Automation</Filter>
-    </ClCompile>
-    <ClCompile Include="TreeChopper.cpp">
-      <Filter>Source Files\Components\Machinery &amp; Automation\Harvesters</Filter>
     </ClCompile>
     <ClCompile Include="MachineComponent.cpp">
       <Filter>Source Files\Components\Machinery &amp; Automation</Filter>
@@ -224,23 +212,17 @@
     <ClInclude Include="MachineRegistry.h">
       <Filter>Header Files\Components\Machinery &amp; Automation</Filter>
     </ClInclude>
-    <ClInclude Include="Machine.h">
-      <Filter>Header Files\Components\Machinery &amp; Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="TreeChopper.h">
-      <Filter>Header Files\Components\Machinery &amp; Automation\Harvesters</Filter>
-    </ClInclude>
     <ClInclude Include="MachineComponent.h">
       <Filter>Header Files\Components\Machinery &amp; Automation</Filter>
-    </ClInclude>
-    <ClInclude Include="TileAccessor.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MachineSystem.h">
       <Filter>Header Files\Components\Machinery &amp; Automation</Filter>
     </ClInclude>
     <ClInclude Include="PlacementController.h">
       <Filter>Header Files\Components\Machinery &amp; Automation</Filter>
+    </ClInclude>
+    <ClInclude Include="TileAccessor.h">
+      <Filter>Header Files\Terrain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

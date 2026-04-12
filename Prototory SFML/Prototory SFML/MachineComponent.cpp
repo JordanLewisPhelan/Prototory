@@ -3,8 +3,8 @@
 
 
 
-MachineComponent::MachineComponent(uint32_t t_defID, const MachineDefinition& t_definition, sf::Vector2f t_worldOffset, sf::Vector2f t_facingDirection)
-	: m_defID(t_defID)
+MachineComponent::MachineComponent(const MachineDefinition& t_definition, sf::Vector2f t_worldOffset, sf::Vector2f t_facingDirection)
+	: m_defID(t_definition.m_id)
 	, m_worldOffset(t_worldOffset)
 	, m_facingDirection(t_facingDirection)
 	, m_tickTimer(0.f)

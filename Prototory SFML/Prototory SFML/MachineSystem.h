@@ -51,9 +51,10 @@ private:
 
 	/// - Neighbour Influenced logic -
 
-	// Checks available and valid neighbours - ToDo: Uses Definition as a directional allowance flag
+	// Checks available and valid neighbours - ToDo: Use Definition as a directional allowance flag
 	std::vector<sf::Vector2i> getDirectionalOffsets(const MachineDefinition& t_def) const;
 
+	// Returns the direction closest to the direction the machine is facing
 	sf::Vector2i dominantTileStep(sf::Vector2f t_direction) const;
 
 	// Checks its positional neighbours and determines whether connections should be made when a machine is placed
@@ -62,12 +63,6 @@ private:
 	// Tells neighbours re-evaluate their connections - primary use is when a given machine is removed
 	void notifyNeighbours(sf::Vector2i t_gridPos);
 
-
-	/// - Data Transferral -
-	bool brokerTransfer(MachineComponent& t_source,
-						MachineComponent& t_reciever,
-						const MachineDefinition& t_sourceDef,
-						const ResourceRegistry& t_resourceRegistry);
 
 	// Transfers buffer content into inventories of components
 	void drainInputBuffers(MachineComponent& t_component,

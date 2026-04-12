@@ -7,7 +7,6 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\H
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Inventory.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\Inventory.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Items.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\Items.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\LoadingScreen.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\LoadingScreen.obj
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Machine.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\Machine.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MachineComponent.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\MachineComponent.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MachineRegistry.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\MachineRegistry.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MachineSystem.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\MachineSystem.obj
@@ -21,5 +20,4 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\S
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Settings.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\Settings.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileAccessor.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\TileAccessor.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\TileMap.obj
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TreeChopper.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\TreeChopper.obj
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.cpp;C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Debug\WorldGenerator.obj
