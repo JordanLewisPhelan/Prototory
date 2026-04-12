@@ -135,3 +135,19 @@ Const_cast on Perlin Noise generation replaced by a simple seed cache matching t
 Bigger one, moved a lot of redundancies of Chunkmanager intialize into functions - this was to reduce initializes clutter. Because it was bad before hand. no initialize of a project this size should be 160 lines long... 
 
 Forgot to update yesterdays message but got a rudimentary inventory and resource acquisiton system set up now, not marked off fully as it is architecturally not positioned great and i'd like to fix that, but for the moment it is servicable and will work but will be changed - Next steps are to begin working on the Machines and Automation processes.
+
+
+
+##### Note 8: Written on 12/4/26
+
+The note has been written today; 
+But this is work over the past 2 and a half weeks. 
+
+
+1. Added in the The Automation Basics - Constructed Registry for Machines. Machines are all data.
+2. Machines consist of MachineComponents with make up their data definition, their local variables and state that are used to update them and perform actions.
+3. A Tile Accessor that was used to bridge the gap betyween ChunkManager and TileMap syncing in other classes. Could make clearer in retrospect.
+4. Added Manager/System for machines that updates and ticks all active machines in the world. Would like to update to be better and more ordered - currently designed as an unordered update system and is fine, but not something im super proud of - inner perfectionist is upset but as a proof of concept it works.
+5. Placement Logic, A new function that is designed to permit or deny a world interaction from the player with visual feedback based on whether we permit the action the player is trying to do.
+
+This is the cliffnotes version..

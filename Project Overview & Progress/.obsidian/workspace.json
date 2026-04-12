@@ -25,12 +25,14 @@
             "id": "d0ca022b03957205",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.12.7"
+                "file": "Research/Study Notes & Research.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.12.7"
+              "icon": "lucide-file",
+              "title": "Study Notes & Research"
             }
           }
         ],
@@ -199,20 +201,20 @@
   },
   "active": "d0ca022b03957205",
   "lastOpenFiles": [
-    "Project Overview.md",
-    "Documents/Progression Document.md",
-    "Documents/Technical Design Document.md",
-    "Documents/Game Design Document.md",
-    "Documentation/Map Generation/Noise Generation & Applications.md",
-    "Miscellaneous/References.md",
     "Research/Research Progress.md",
+    "Project Overview.md",
+    "Research/Study Notes & Research.md",
+    "Documents/Game Design Document.md",
+    "Documents/Technical Design Document.md",
+    "Documents/Progression Document.md",
+    "Miscellaneous/References.md",
+    "Documentation/Map Generation/Noise Generation & Applications.md",
     "Documentation/Map Generation/Perlin Noise Application.md",
     "Documentation/Map Generation/Map Implementation.md",
     "Documentation/Map Generation/Hash Noise Application.md",
     "Documentation/Map Generation/Fractal Brownian Motion(FBM) Noise Application.md",
     "Documentation/Untitled.md",
     "Documentation/Map Generation",
-    "Documentation",
-    "Research/Study Notes & Research.md"
+    "Documentation"
   ]
 }

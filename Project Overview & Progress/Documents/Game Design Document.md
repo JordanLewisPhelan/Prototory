@@ -5,6 +5,11 @@
 In short the game will be a simple orthographic top down game so that visuals are distinct but not a priority. It will show off interconnected systems and the ability to micro & macro manage a chain of different systems while still having them distinct.
 These systems, will moving different minerals or resources - some may be unable to be moved the same as others, this will be the beginning or the players choices.
 
+
+==(#**- Notice -**#)==
+The concepts below are the flow of the game and vision still - However a lot of this is not added, the roots are added. Please read with a grain of salt that this is not what you will load into. Just the project plan.
+
+
 **Gameplay :**
 The gameplay(This will discuss the background too, need to have a direction to layout this long term);
 Will consist of being an early terraformer on recently discovered world can sustain life, so you are tasked with setting up the initial foundation work with the assistance of a Company Satellite which will drop in supplies when the Station between this planet and the Satellite recieve the resources necessary to construct these devices. The Goal is making a minimally viable environment for people to live, so to meet these ends;
@@ -31,6 +36,8 @@ Player Will control where the direction of where a funnel will flow, this way it
 But this covers the progression and flow, it is not up to me as the Developer to choose the Players path, they work with what they have to make the world their own. To mold it to be as optimal or as grindy as they so see fit, at their own Pace.  
 
 
+
+==(#**- Pushed back due to lack of importance -**#)==
   **Art Style**
 
 Will be 2D functionally, art could be varied but overall will be quite simple, if i work with sprites i can simply change them later into something more pretty than coloured boxes or tiles.

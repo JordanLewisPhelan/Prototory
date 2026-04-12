@@ -13,7 +13,15 @@ Should the output not have anywhere to go once it is full the machine will stop 
 If it has a connected output - e.g. a valid transporter such as a conveyor, it will begin depositing it periodically on a delay - this delay could be based on a few things, could be the conveyor, it could be the Mining Machine, it could be the resource, possibilities are open and thats fun. 
 -
 Conveyor will update to move along the item, this will go back to the base and be dropped off the conveyor onto the floor or if there is an Input, such as a box or crate or the Home Base Rift Box(uncapped storage name pending) will deposit it, if the base box, will auto update the system, Other boxes are up in the air, should storage be allowed? or should they automatically filter into the main base box and become attached, this is something I'd like to mull over and experiment on when the time comes.
-- Inventories will be added, just not crafting system I'd like to flesh it out
+- Inventories are added. They have functionality to move items between Inventory A and Inventory B. 
+- Conveyors/Machines added. They pull items from nearby machines and push into the next machine. Some things like harvesters into chests need to be allowed but that is Post project work.
+- Procedural World Generation added. I do want to flesh it out more and add Octaves or layered noise and some rules, but the actual Procedural Side of the process is started and there in a light layer. Worlds are random.
+- Data Driven Approach for machines and Rendering - Rendering is separate to operations and that is distinctively clear with ChunkManager and TileMap logics
+- Player can interact with the world via the machines easily. 
+
+
+==(#**- Pushed back to post project work -**#)==
+just not crafting system I'd like to flesh it out
 Base inventory is tied to the Crafting System - crafting will use those component quantities to allow you to requisition gear - blueprints and certain amounts of useful or high end gear should you be able to afford the material cost of the resources needed to acquire them.
 - ==(#**- Pushed back to post project work -**#)==
 Crafting System will be small in grand scheme, but will open up further progression to explore and manage this worlds resources into a tangible form you can utilize.
