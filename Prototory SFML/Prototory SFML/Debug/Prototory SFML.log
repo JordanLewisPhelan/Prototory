@@ -1,4 +1,12 @@
-﻿  Chunk.cpp
+﻿  Button.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Button.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+  Chunk.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'Chunk.cpp')
       C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
@@ -26,6 +34,20 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'ChunkManager.cpp')
   
+  Game.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'Game.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'Game.cpp')
+  
   Gameplay.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'Gameplay.cpp')
@@ -40,9 +62,32 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'Gameplay.cpp')
   
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(56,87): warning C4100: 't_window': unreferenced formal parameter
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(162,21): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(163,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(55,87): warning C4100: 't_window': unreferenced formal parameter
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(157,21): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Gameplay.cpp(158,22): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  HashNoiseGenerator.cpp
+  Inventory.cpp
+  Items.cpp
+  LoadingScreen.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'LoadingScreen.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'LoadingScreen.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'LoadingScreen.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\LoadingScreen.cpp(14,53): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\LoadingScreen.cpp(14,47): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\LoadingScreen.cpp(14,41): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\LoadingScreen.cpp(99,39): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\LoadingScreen.cpp(99,33): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\LoadingScreen.cpp(99,27): warning C4244: 'argument': conversion from 'float' to 'uint8_t', possible loss of data
   MachineComponent.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'MachineComponent.cpp')
@@ -56,6 +101,20 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
   
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'MachineComponent.cpp')
+  
+  MachineRegistry.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'MachineRegistry.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'MachineRegistry.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'MachineRegistry.cpp')
   
   MachineSystem.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
@@ -71,8 +130,24 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'MachineSystem.cpp')
   
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MachineSystem.cpp(308,137): warning C4100: 't_pos': unreferenced formal parameter
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MachineSystem.cpp(451,89): warning C4100: 't_def': unreferenced formal parameter
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MachineSystem.cpp(289,137): warning C4100: 't_pos': unreferenced formal parameter
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MachineSystem.cpp(429,89): warning C4100: 't_def': unreferenced formal parameter
+  MainMenu.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'MainMenu.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'MainMenu.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'MainMenu.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\MainMenu.cpp(34,32): warning C4100: 't_dt': unreferenced formal parameter
+  PerlinNoiseGenerator.cpp
   PlacementController.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'PlacementController.cpp')
@@ -87,8 +162,8 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'PlacementController.cpp')
   
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\PlacementController.cpp(129,28): warning C4456: declaration of 'l_def' hides previous local declaration
-      C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\PlacementController.cpp(89,27):
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\PlacementController.cpp(121,28): warning C4456: declaration of 'l_def' hides previous local declaration
+      C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\PlacementController.cpp(82,27):
       see declaration of 'l_def'
   
   Player.cpp
@@ -105,8 +180,22 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'Player.cpp')
   
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Player.cpp(181,24): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Player.cpp(182,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Player.cpp(176,24): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Player.cpp(177,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  ResourceRegistry.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'ResourceRegistry.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'ResourceRegistry.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'ResourceRegistry.cpp')
+  
   SceneManager.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'SceneManager.cpp')
@@ -121,6 +210,7 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'SceneManager.cpp')
   
+  Settings.cpp
   TileAccessor.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'TileAccessor.cpp')
@@ -135,6 +225,9 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'TileAccessor.cpp')
   
+  Generating Code...
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\ChunkManager.cpp(70,1): warning C4702: unreachable code
+  Compiling...
   TileMap.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'TileMap.cpp')
@@ -149,27 +242,27 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'TileMap.cpp')
   
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(7,35): warning C4100: 't_height': unreferenced formal parameter
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,62): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,62): warning C4244:         with
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,62): warning C4244:         [
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,62): warning C4244:             T=float
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,62): warning C4244:         ]
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,50): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,50): warning C4244:         with
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,50): warning C4244:         [
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,50): warning C4244:             T=float
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(46,50): warning C4244:         ]
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,63): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,63): warning C4244:         with
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,63): warning C4244:         [
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,63): warning C4244:             T=float
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,63): warning C4244:         ]
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,47): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,47): warning C4244:         with
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,47): warning C4244:         [
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,47): warning C4244:             T=float
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(61,47): warning C4244:         ]
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(4,35): warning C4100: 't_height': unreferenced formal parameter
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,62): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,62): warning C4244:         with
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,62): warning C4244:         [
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,62): warning C4244:             T=float
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,62): warning C4244:         ]
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,50): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,50): warning C4244:         with
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,50): warning C4244:         [
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,50): warning C4244:             T=float
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(41,50): warning C4244:         ]
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,63): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,63): warning C4244:         with
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,63): warning C4244:         [
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,63): warning C4244:             T=float
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,63): warning C4244:         ]
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,47): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,47): warning C4244:         with
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,47): warning C4244:         [
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,47): warning C4244:             T=float
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileMap.cpp(56,47): warning C4244:         ]
   WorldGenerator.cpp
 C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
   (compiling source file 'WorldGenerator.cpp')
@@ -184,10 +277,25 @@ C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\G
 C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
   (compiling source file 'WorldGenerator.cpp')
   
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.cpp(16,94): warning C4100: 't_loadingScreen': unreferenced formal parameter
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.cpp(16,71): warning C4100: 't_seed': unreferenced formal parameter
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.cpp(15,94): warning C4100: 't_loadingScreen': unreferenced formal parameter
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\WorldGenerator.cpp(15,71): warning C4100: 't_seed': unreferenced formal parameter
+  main.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'main.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\main.cpp(22,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
   Generating Code...
-C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\ChunkManager.cpp(73,1): warning C4702: unreachable code
+  LINK : C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Debug\Prototory SFML.exe not found or not built by the last incremental link; performing full link
   Prototory SFML.vcxproj -> C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Debug\Prototory SFML.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

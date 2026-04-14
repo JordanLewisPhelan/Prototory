@@ -5,8 +5,6 @@
 #include "Globals.h"
 #include "MachineComponent.h"
 
-
-// Simple list of what is available 
 enum class TileType
 {
 	Grass, Trees,
@@ -24,15 +22,14 @@ struct TileResource
 	bool isHarvestable() const { return m_currentQuantity > 0; }
 };
 
-// Simple struct will only be a constructor with some variables
 struct Tile {
-	TileType m_type;		// The type associated with the tile.
-	sf::Vector2i m_gridPosition;	// Vector of where in the TileMap will this be housed
-	int m_elevation;			// determining height of a map tile
-	TileResource m_resource;	// Resource and its attributes associated with this tile
-	std::optional<MachineComponent> m_machine;		// What piece of machinery occupies this tile
+	TileType m_type;		
+	sf::Vector2i m_gridPosition;	
+	int m_elevation;			
+	TileResource m_resource;	
+	std::optional<MachineComponent> m_machine;		
 
-	// Default constructor for grid initialisation
+	
 	Tile()
 		: m_type(TileType::Grass)
 		, m_gridPosition(0, 0)

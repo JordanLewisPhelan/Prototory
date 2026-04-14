@@ -5,17 +5,17 @@ Button::Button(const sf::Vector2f& t_pos, const sf::Vector2f& t_size,
 	: m_idleColour(sf::Color::Red), m_hoverColour(sf::Color::Green),
 	m_isHovered(false), m_buttonText(t_font)
 {
-	// Button visuals
+	
 	m_buttonShape.setPosition(t_pos);
 	m_buttonShape.setSize(t_size);
 	m_buttonShape.setFillColor(m_idleColour);
 
-	// Button Text
+	
 	m_buttonText.setCharacterSize(20);
 	m_buttonText.setString(t_text);
 	m_buttonText.setFillColor(sf::Color::Black);
 
-	// Centering
+	
 	sf::FloatRect textBounds = m_buttonText.getLocalBounds();
 	m_buttonText.setOrigin(sf::Vector2f(
 		textBounds.size.x / 2.f, textBounds.size.y / 2.f
@@ -26,17 +26,16 @@ Button::Button(const sf::Vector2f& t_pos, const sf::Vector2f& t_size,
 	));
 }
 
-
 void Button::HandleEvent(const sf::Event& t_event, const sf::Vector2f& t_mousePos)
 {
-	// Updates only as the mouse moves
+	
 	if (t_event.is<sf::Event::MouseMoved>())
 	{
 		m_isHovered = MouseOver(t_mousePos);
 		m_buttonShape.setFillColor(m_isHovered ? m_hoverColour : m_idleColour);
 	}
 
-	// ensures there is a function attached and the button is hovered over before trying to call its function
+	
 	if (t_event.is<sf::Event::MouseButtonReleased>())
 	{
 		if (m_isHovered && m_functionCalled)
@@ -52,7 +51,6 @@ void Button::Render(sf::RenderWindow& t_window)
 	t_window.draw(m_buttonText);
 }
 
-
 void Button::setCallback(std::function<void()> t_functionCalled)
 {
 	m_functionCalled = t_functionCalled;
@@ -62,7 +60,7 @@ void Button::setIdleColour(const sf::Color& t_colour)
 {
 	m_idleColour = t_colour;
 
-	// Update immediately if not hovered
+	
 	if (!m_isHovered)
 	{
 		m_buttonShape.setFillColor(m_idleColour);
@@ -73,7 +71,7 @@ void Button::setHoverColour(const sf::Color& t_colour)
 {
 	m_hoverColour = t_colour;
 
-	// Update immediately if hovered
+	
 	if (m_isHovered) 
 	{
 		m_buttonShape.setFillColor(m_hoverColour);
@@ -84,7 +82,6 @@ void Button::setTextColour(const sf::Color& t_colour)
 {
 	m_buttonText.setFillColor(t_colour);
 }
-
 
 bool Button::MouseOver(const sf::Vector2f& t_mousePos) const
 {

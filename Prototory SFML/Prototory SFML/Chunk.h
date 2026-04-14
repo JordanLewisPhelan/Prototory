@@ -5,24 +5,21 @@
 #include <cstdint>
 #include <vector>
 
-
 enum class BiomeType {
 	Unassigned, Plains, Forest, Mountains, Ocean, Desert
 };
-
 
 struct ChunkPosition {
 	int x;
 	int y;
 };
 
-
 class Chunk
 {
 public:
 	Chunk(ChunkPosition t_position);
 
-	// Accessors
+	
 	ChunkPosition getPosition() { return m_position; }
 	BiomeType getBiome() { return m_biomeType; }
 	std::vector<std::vector<Tile>>& getTiles() { return m_tiles; }

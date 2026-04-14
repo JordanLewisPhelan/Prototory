@@ -1,6 +1,5 @@
 #include "ResourceRegistry.h"
 
-
 void ResourceRegistry::registerResource(ResourceDefinition t_definition)
 {
 	if (isRegistered(t_definition.m_id))
@@ -37,9 +36,9 @@ int ResourceRegistry::getCount() const
 
 void ResourceRegistry::initializeResources()
 {
-	/// ToDo: Automate this process in some way, e.g. a Database that reads these in and
-	/// constructs them automatically to prevent manual additions later on
-	// General Rule for making resources: ID, Name,		Description(Generic),  MaxStack,  Resource Type
+	
+	
+	
 	registerResource({ 1, "Wood", "Simply wood, seems sturdy.", 99, ResourceCategory::untapped });
 	registerResource({ 2, "Stone", "Either these are pebbles or you are strong.", 99, ResourceCategory::untapped });
 	registerResource({ 3, "Iron Ore", "Iron, a useful crafting material", 64, ResourceCategory::raw });

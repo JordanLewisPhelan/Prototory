@@ -1,6 +1,5 @@
 #include "Inventory.h"
 
-
 Inventory::Inventory(int t_slotCount)
 {
 	m_slots.resize(t_slotCount);
@@ -11,7 +10,7 @@ int Inventory::addResources(uint32_t t_resourceID, int t_amount, int t_maxStack)
 {
 	int l_remaining = t_amount;
 
-	// Find all existing slots with this resource that have space
+	
 	for (int i = 0; i < static_cast<int>(m_slots.size()); i++)
 	{
 		if (l_remaining <= 0)
@@ -30,7 +29,7 @@ int Inventory::addResources(uint32_t t_resourceID, int t_amount, int t_maxStack)
 		l_slot.m_stackCount += l_toAdd;
 		l_remaining -= l_toAdd;
 	}
-	// Handle leftovers / Need for more slots
+	
 	while (l_remaining > 0)
 	{
 		int l_emptySlot = findEmptySlot();

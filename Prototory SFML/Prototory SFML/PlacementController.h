@@ -7,13 +7,10 @@
 #include "MachineDefinition.h"
 #include "MachineSystem.h"
 
-
-
 enum class PlacementIntent
 {
 	None, Place, Remove
 };
-
 
 struct PlacementRequest
 {
@@ -25,24 +22,23 @@ struct PlacementRequest
 	bool m_valid{ false };
 };
 
-
 class PlacementController
 {
 public:
 	PlacementController(const MachineRegistry& t_registry, TileAccessor& t_tileAccessor, const sf::Font& t_font);
 
-	// Called each frame to update the intent for Gameplay
+	
 	PlacementRequest update(const sf::Vector2f& t_playerPos,
 							const sf::Vector2f& t_playerFacing,
 							const MachineSystem& t_machineSystem);
 
-	// Called by Gameplay to forward input events
-	/// ToDo: Refactor and replace with a larger input system we can query anywhere
-	/// Would also tie into keybinds and settings actually so this was postponed work having a backlog effect 
-	/// Gameplay could do this but would have to organize passing back and forth - this is temporary and disgusting
+	
+	
+	
+	
 	void handleEvent(const sf::Event& t_event);
 
-	// Renders ghost preview at target tile
+	
 	void render(sf::RenderWindow& t_window);
 
 	bool hasSelection() const;
@@ -62,14 +58,14 @@ private:
 
 	sf::Text m_selectionLabel;
 
-	// Used to figure out where we are projecting the machine placement highlighter - Tile
+	
 	sf::Vector2i determineHighlightTile(const sf::Vector2f& t_playerPos,
 										const sf::Vector2f& t_playerFacing) const;
 
-	// Used to figure out where we are projecting the machine placement highlighter - Tile inner Positional Offset 
+	
 	sf::Vector2f determineHighlightOffset(const sf::Vector2f& t_playerFacing) const;
 
-	// Checks to see what our options are for whether we can or cannot place at a given position
+	
 	bool checkValidity(sf::Vector2i t_gridPos,
 					  const MachineDefinition& t_def,
 					  const MachineSystem& t_machineSystem) const;

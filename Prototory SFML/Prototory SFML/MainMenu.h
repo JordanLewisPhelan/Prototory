@@ -20,7 +20,7 @@ private:
 	sf::Font m_menuFont;
 	sf::Text m_titleText{m_menuFont};
 
-	// Allows me to later extend how many buttons are in the scene later should i need to
+	
 	std::vector<Button> m_sceneButtons;
 
 	SceneActions m_pendingAction;

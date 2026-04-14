@@ -1,7 +1,5 @@
 #include "Chunk.h"
 
-
-
 Chunk::Chunk(ChunkPosition t_position)
 	: m_position(t_position)
 	, m_biomeType(BiomeType::Unassigned)

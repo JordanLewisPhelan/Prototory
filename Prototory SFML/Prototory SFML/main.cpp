@@ -1,10 +1,3 @@
-/// <summary>
-/// simple game loop for SFML[3.0]
-/// 
-/// author Pete Lowe May 2025
-/// you need to change the above line or lose marks
-/// </summary>
-
 
 
 #ifdef _DEBUG 
@@ -24,10 +17,6 @@
 #include <iostream>
 #include "Game.h"
 
-/// <summary>
-/// main enrtry point
-/// </summary>
-/// <returns>success or failure</returns>
 int main()
 {
 	srand(time(NULL));
@@ -37,5 +26,5 @@ int main()
 	
 		
 	
-	return EXIT_SUCCESS; // 0
+	return EXIT_SUCCESS; 
 }

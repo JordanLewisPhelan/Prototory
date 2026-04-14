@@ -3,8 +3,6 @@
 #include <memory>
 #include <vector>
 
-
-// Houses types of Scenes : Note: Options will be an overlay not a scene directly
 enum class SceneType
 {
 	MainMenu,
@@ -24,8 +22,8 @@ public:
 	void Render(sf::RenderWindow& t_window);
 	void HandleSceneAction(SceneActions t_action);
 
-	// Adding to effectively fully remove Game class outside of setting up game content
-	// i want to delegate with these new scene classes as it is more controllable and under 1 banner
+	
+	
 	bool isQuitRequested();
 
 private:

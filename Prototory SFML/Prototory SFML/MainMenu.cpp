@@ -7,7 +7,7 @@ MainMenu::MainMenu() : m_pendingAction(SceneActions::None)
 		std::cout << "MainMenu: font has not been loaded. \n";
 	}
 
-	// Setup title text - will refine later when buttons are added
+	
 	m_titleText.setString("Main Menu");
 	m_titleText.setCharacterSize(48);
 	m_titleText.setFillColor(sf::Color::White);
@@ -17,7 +17,6 @@ MainMenu::MainMenu() : m_pendingAction(SceneActions::None)
 	GenerateButtons();
 }
 
-// Checks for mouse input and passes down into button should a button be clicked
 void MainMenu::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWindow& t_window)
 {
 	if (!t_event.has_value()) return;
@@ -34,9 +33,9 @@ void MainMenu::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWi
 
 void MainMenu::Update(sf::Time t_dt)
 {
-	// Stylizing-animating the menu
-	// SideNote: Options will be available here and in game, may make overlay stylized but will need to make that first of course.
-	/// Reason for Note: Maybe making it(options) globally accessible is worth considering - prevents changing the call too much - perhaps do it in Game?
+	
+	
+	
 }
 
 void MainMenu::Render(sf::RenderWindow& t_window)
@@ -49,17 +48,13 @@ void MainMenu::Render(sf::RenderWindow& t_window)
 	}
 }
 
-
 SceneActions MainMenu::getRequestedAction()
 {
 	SceneActions action = m_pendingAction;
-	m_pendingAction = SceneActions::None; // Reset after query
+	m_pendingAction = SceneActions::None; 
 	return action;
 }
 
-
-// Generates buttons with specific constructor requests and attaches a function to them via a lambda 
-// Adds that Button to a vector list to call later - ensures we can add onto it easily - may refactor for cleanliness later but its pretty compact
 void MainMenu::GenerateButtons()
 {
 	m_sceneButtons.emplace_back(
@@ -84,7 +79,7 @@ void MainMenu::GenerateButtons()
 
 	m_sceneButtons.back().setCallback([this]()
 		{
-			// TODO: Tell SceneManager to open Settings modal - Follow up; TODO: make Setting Modal
+			
 			std::cout << "Settings clicked!\n";
 		});
 

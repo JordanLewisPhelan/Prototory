@@ -2,13 +2,12 @@
 #include "Globals.h"
 #include <algorithm>
 
-
 LoadingScreen::LoadingScreen(sf::RenderWindow& t_window, sf::Font& t_font)
 	: m_window(t_window)
 	, m_font(t_font)
 	, m_currentProgress(0.0f)
 {
-	/* - Progression Bar Container Details - */
+	
 	m_backgroundBar.setSize(sf::Vector2f(300.0f, 150.f));
 	m_backgroundBar.setPosition(sf::Vector2f((Globals::SCREEN_WIDTH - 300.0f) / 2.f,
 											(Globals::SCREEN_HEIGHT - 60.f) / 2.f));
@@ -16,7 +15,7 @@ LoadingScreen::LoadingScreen(sf::RenderWindow& t_window, sf::Font& t_font)
 	m_backgroundBar.setOutlineThickness(2.f);
 	m_backgroundBar.setOutlineColor(sf::Color::White);
 
-	/* - Progression Bar Details | Will fill left to right - */
+	
 	float l_padding = 10.f;
 
 	m_progressBar.setSize(sf::Vector2f(20.f, 60.f - (l_padding * 2)));
@@ -28,7 +27,7 @@ LoadingScreen::LoadingScreen(sf::RenderWindow& t_window, sf::Font& t_font)
 	m_progressBar.setOutlineThickness(2.f);
 	m_progressBar.setOutlineColor(sf::Color::Black);
 
-	/* - Task we are performing when loading - */
+	
 	m_taskText.setFont(m_font);
 	m_taskText.setCharacterSize(24u);
 	m_taskText.setFillColor(sf::Color::White);
@@ -56,7 +55,7 @@ void LoadingScreen::setTask(const std::string t_taskText)
 {
 	m_taskText.setString(t_taskText);
 
-	// Recenter text
+	
 	sf::FloatRect l_taskBounds = m_taskText.getLocalBounds();
 
 	m_taskText.setPosition(sf::Vector2f(
@@ -71,7 +70,7 @@ void LoadingScreen::setTask(const std::string t_taskText)
 
 void LoadingScreen::setProgress(float t_progress)
 {
-	// Clamp value between 0 and 1
+	
 	m_currentProgress = std::clamp(t_progress, 0.f, 1.f);
 
 	updateProgressBar();
@@ -94,7 +93,6 @@ void LoadingScreen::updateProgressBar()
 
 	m_progressBar.setSize(sf::Vector2f(l_currentWidth, m_backgroundBar.getSize().y - 20.f));
 }
-
 
 void LoadingScreen::render()
 {

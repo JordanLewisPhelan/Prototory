@@ -1,23 +1,20 @@
 #include "TileMap.h"
 #include "TileAccessor.h"
 
-
-/// Notice: Due to 2D vector storage, going by width and then by height with reserve is best practice
-// Constructor
 TileMap::TileMap(int t_width, int t_height, int t_tileSize)
 	: m_width(t_width), m_height(t_width), m_tileSize(t_tileSize)
 {
-	// Creates outer vector - one vector per row (x-axis)
+	
 	m_tiles.resize(m_width);
 
 	for (int x = 0; x < m_width; ++x)
 	{
-		// reserve space vertically as we move to a new row
+		
 		m_tiles[x].reserve(m_height);
 
 		for (int y = 0; y < m_height; ++y)
 		{
-			// Adds a tile to this row with its grid position
+			
 			m_tiles[x].emplace_back(TileType::Grass, sf::Vector2i(x, y));
 		}
 	}
@@ -27,25 +24,23 @@ TileMap::TileMap(int t_width, int t_height, int t_tileSize)
 
 }
 
-
 void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
 {
-	// This will determine what we can see on screen
-	sf::View l_view = t_window.getView();			// Effectively 2D camera 
-	sf::Vector2f l_viewSize = l_view.getSize();		// Gets dimensions of window
-	sf::Vector2f l_viewCenter = l_view.getCenter(); // Gets the views center, we can use that to figure out easily what will be rendered just next
+	
+	sf::View l_view = t_window.getView();			
+	sf::Vector2f l_viewSize = l_view.getSize();		
+	sf::Vector2f l_viewCenter = l_view.getCenter(); 
 
-	// Calculating what tiles are to be rendered based on screen space and world placement - with a bit of a margin of error - avoids tiles disappearing
+	
 	int minX = std::max(0, static_cast<int>((l_viewCenter.x - l_viewSize.x / 2.f) / m_tileSize) - 1);
 	int maxX = std::min(m_width, static_cast<int>((l_viewCenter.x + l_viewSize.x / 2.f) / m_tileSize) + 1);
 	int minY = std::max(0, static_cast<int>((l_viewCenter.y - l_viewSize.y / 2.f) / m_tileSize) - 1);
 	int maxY = std::min(m_height, static_cast<int>((l_viewCenter.y + l_viewSize.y / 2.f) / m_tileSize) + 1);
 
-
-	// Create a reusable drawable rectangle.
+	
 	sf::RectangleShape l_tileRectangle(sf::Vector2f(m_tileSize, m_tileSize));
 
-	// We only draw visible tiles
+	
 	for (int x = minX; x < maxX; ++x)
 	{
 		for (int y = minY; y < maxY; ++y)
@@ -57,7 +52,7 @@ void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
 				getMinElevation(l_tile.m_type),
 				getMaxElevation(l_tile.m_type));
 
-			// ToDo: Refactor to a more scalable model later should it be required.
+			
 			l_tileRectangle.setPosition(sf::Vector2f(x * m_tileSize, y * m_tileSize));
 			l_tileRectangle.setFillColor(l_finalColour);
 			l_tileRectangle.setOutlineThickness(1.f);
@@ -65,8 +60,7 @@ void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
 
 			t_window.draw(l_tileRectangle);
 
-
-			// Draw machine if present
+			
 			Tile* l_liveTile = t_tileAccessor.get(sf::Vector2i(x, y));
 			if (l_liveTile && l_liveTile->m_machine.has_value())
 			{
@@ -80,7 +74,7 @@ void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
 				l_machineShape.setOutlineColor(sf::Color::Black);
 				l_machineShape.setOutlineThickness(1.f);
 
-				// Centre on tile then apply sub-tile offset
+				
 				sf::Vector2f l_centre(
 					x * m_tileSize + (m_tileSize - l_visual.m_size.x) / 2.f,
 					y * m_tileSize + (m_tileSize - l_visual.m_size.y) / 2.f
@@ -93,8 +87,6 @@ void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
 	}
 }
 
-/* - Public Getters - */
-// Returns a pointer to tile at grid position, or nullptr if out of bounds
 Tile* TileMap::getTileAt(int t_x, int t_y)
 {
 	if (!isInBounds(t_x, t_y))
@@ -125,14 +117,11 @@ int TileMap::getElevationAt(int t_x, int t_y) const
 	return m_tiles[t_x][t_y].m_elevation;
 }
 
-
 TileResource& TileMap::getTileResourceAt(int t_x, int t_y)
 {
 	return m_tiles[t_y][t_x].m_resource;
 }
 
-/* - Public Setter - */
-// Sets a tile at a specified Tile[x][y] index to a specified tileType
 void TileMap::setTileAt(int t_x, int t_y, TileType t_type)
 {
 	if (isInBounds(t_x, t_y))
@@ -150,19 +139,15 @@ void TileMap::setTileAt(int t_x, int t_y, TileType t_type, int t_elevation)
 	}
 }
 
-
-/* - Grid & World converters - */
-// Takes in a gridPosition of TileMap[x][y] and returns a world position matching that
 sf::Vector2f TileMap::gridToWorld(const sf::Vector2i& t_gridPos) const
 {
-	// We will return in the center of the tile 
+	
 	return sf::Vector2f(
 		t_gridPos.x * m_tileSize + m_tileSize / 2.f,
 		t_gridPos.y * m_tileSize + m_tileSize / 2.f
 	);
 }
 
-// Takes in a world position and returns a TileMap[x][y] matching that
 sf::Vector2i TileMap::worldToGrid(const sf::Vector2f& t_worldPos) const
 {
 	return sf::Vector2i(
@@ -171,27 +156,24 @@ sf::Vector2i TileMap::worldToGrid(const sf::Vector2f& t_worldPos) const
 	);
 }
 
-
-/* - Private Functions - */
-// determines what colour a Tile should be based on the type
 sf::Color TileMap::getTileColour(TileType t_type) const
 {
 	switch (t_type)
 	{
 	case TileType::Grass:
-		return sf::Color(34, 139, 34);      // Green
+		return sf::Color(34, 139, 34);      
 	case TileType::Trees:
-		return sf::Color(111, 78, 55);        // Brown
+		return sf::Color(111, 78, 55);        
 	case TileType::Stone:
-		return sf::Color(128, 128, 128);    // Gray
+		return sf::Color(128, 128, 128);    
 	case TileType::IronOre:
-		return sf::Color(217, 144, 88);      // Faded Orange
+		return sf::Color(217, 144, 88);      
 	case TileType::Sand:
-		return sf::Color(239, 255, 40);		// Yellow
+		return sf::Color(239, 255, 40);		
 	case TileType::Water:
-		return sf::Color(30, 144, 255);     // Dodger blue
+		return sf::Color(30, 144, 255);     
 	default:
-		return sf::Color::Magenta;          // Error - shouldn't happen
+		return sf::Color::Magenta;          
 	}
 }
 
@@ -201,11 +183,11 @@ sf::Color TileMap::applyElevationShade(sf::Color t_base, int t_elevation, int t_
 	float l_dark = 0.85f;
 	float l_light = 1.5f;
 
-	// Normalizing the value based on Biome ranges
+	
 	float l_t = static_cast<float>(t_elevation - t_minElevation) /
 				static_cast<float>(t_maxElevation - t_minElevation);
 
-	// Scalar value to lighten or deepen the shade of the colour of the tile
+	
 	float l_scalar = l_light + (l_t * (l_light - l_dark));
 
 	return sf::Color(
@@ -218,7 +200,7 @@ sf::Color TileMap::applyElevationShade(sf::Color t_base, int t_elevation, int t_
 
 int TileMap::getMinElevation(TileType t_type) const
 {
-	// ToDo: Refactor to use constant values - for now hard coded is fine
+	
 	switch (t_type)
 	{
 	case TileType::Water:   return 0;
@@ -233,7 +215,7 @@ int TileMap::getMinElevation(TileType t_type) const
 
 int TileMap::getMaxElevation(TileType t_type) const
 {
-	// ToDo: Refactor to use constant values - for now hard coded is fine
+	
 	switch (t_type)
 	{
 	case TileType::Water:   return 3;
@@ -246,7 +228,6 @@ int TileMap::getMaxElevation(TileType t_type) const
 	}
 }
 
-// checks to see if the Tile queried is inside the TileMaps bounds
 bool TileMap::isInBounds(int t_x, int t_y) const
 {
 	return t_x >= 0 && t_x < m_width && t_y >= 0 && t_y < m_height;

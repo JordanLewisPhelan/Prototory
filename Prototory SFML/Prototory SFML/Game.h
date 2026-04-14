@@ -13,7 +13,7 @@ public:
 
 private:
 
-	const sf::Color ULTRAMARINE{ 5, 55,242,255 }; // const colour
+	const sf::Color ULTRAMARINE{ 5, 55,242,255 }; 
 
 	void processEvents();
 	void checkKeyboardState();
@@ -25,8 +25,8 @@ private:
 	void setupAudio();
 
 	
-	sf::RenderWindow m_window; // main SFML window
-	sf::Font m_jerseyFont;// font used by message
+	sf::RenderWindow m_window; 
+	sf::Font m_jerseyFont;
 
 	SceneManager m_sceneManager;
 

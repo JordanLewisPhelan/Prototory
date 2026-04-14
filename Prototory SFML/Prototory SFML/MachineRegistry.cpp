@@ -1,6 +1,5 @@
 #include "MachineRegistry.h"
 
-
 void MachineRegistry::registerMachine(MachineDefinition t_machine)
 {
     if (isRegistered(t_machine.m_id))
@@ -35,10 +34,6 @@ int MachineRegistry::getCount() const
     return static_cast<int>(m_machineDefinitions.size());
 }
 
-
-/*
-    Default values currently
-*/
 void MachineRegistry::initializeMachines()
 {
     registerMachine(MachineDefinition(
@@ -47,14 +42,14 @@ void MachineRegistry::initializeMachines()
         "Simple but effective, can transport nearly all materials.",
         MachinePurpose::Transporter,
         InteractionType::None,
-        0.0f,     // No logic ticks
-        0.5f,     // Transfers items over 0.5 seconds
-        1,        // Amount of Items transferred
+        0.0f,     
+        0.5f,     
+        1,        
         0,
         0,
-        3,        // Accepts up to 3 inputs
-        2,        // Each channel has 2 buffer slots
-        2         // 2 Inventory slots - was to be 1 but allowance for different minerals together may be worth considering?
+        3,        
+        2,        
+        2         
     ));
 
     registerMachine(MachineDefinition(
@@ -63,14 +58,14 @@ void MachineRegistry::initializeMachines()
         "Perfect for planned deforestation.",
         MachinePurpose::Harvester,
         InteractionType::Chop,
-        3.0f,   // harvests every 3 seconds
-        1.0f,   // slow 1 second transfer 
+        3.0f,   
+        1.0f,   
         0,      
-        2,      // 1 unit per harvest
-        1,      // 1 tile radius around the harvester
-        0,      // nothing feeds into a harvester
-        0,      // no channel buffers
-        3       // output inventory size
+        2,      
+        1,      
+        0,      
+        0,      
+        3       
     ));
 
     registerMachine(MachineDefinition(
@@ -79,14 +74,14 @@ void MachineRegistry::initializeMachines()
         "Useful for mining Stone and Most Ores.",
         MachinePurpose::Harvester,
         InteractionType::Mine,
-        4.0f,   // harvests every 4 seconds
-        0.0f,   // no transfer tick
+        4.0f,   
+        0.0f,   
         0, 
-        1,      // 1 unit per harvest
-        0,      // Local tile mining only with this harvester
-        0,      // nothing feeds into a harvester
-        0,      // no channel buffers
-        8       // output inventory size
+        1,      
+        0,      
+        0,      
+        0,      
+        8       
     ));
 
     registerMachine(MachineDefinition(
@@ -96,12 +91,12 @@ void MachineRegistry::initializeMachines()
         MachinePurpose::Storage,
         InteractionType::None,
         0.0f,
-        0.0f,    // We only accept inputs, no automatic transfers - *Yet*
-        0,       // Amount of Items transferred *Chests wont use this innately yet - just for later* 
+        0.0f,    
+        0,       
         0,
         0,
-        4,       // Accepts inputs from 4 directions
-        16,      // Sizeable Buffer channel to account for multiple inputs
-        40       // Large storage capacity
+        4,       
+        16,      
+        40       
     ));
 }

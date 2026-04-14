@@ -1,6 +1,5 @@
 #include "ChunkManager.h"
 
-
 ChunkManager::ChunkManager() 
 	: m_chunkCountX(0),
 	  m_chunkCountY(0),
@@ -8,27 +7,25 @@ ChunkManager::ChunkManager()
 {
 }
 
-/// ToDo: Refactor Passes into functions later or during downtime - very large Initialize function, no good
 void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen)
 {
 	m_seed = t_seed;
 
-	/*- Determines chunk dimensions based on the map size and chunk size -*/
+	
 	m_chunkCountX = Globals::WORLD_WIDTH / Globals::CHUNK_SIZE;
 	m_chunkCountY = Globals::WORLD_HEIGHT / Globals::CHUNK_SIZE;
 
-	// Updates to world
+	
 	buildChunkGrid(t_loadingScreen);
 	assignBiomes(t_seed, t_loadingScreen);
 	generateTerrain(t_seed, t_tileMap, t_loadingScreen);
 	adjustOceanDepth(t_loadingScreen);
 	smoothElevation(3, t_loadingScreen);
 
-	// Smoothing / Application assurance
+	
 	applyBorderBlending();
 	assignTileResources();
 	syncToTileMap(t_tileMap);
-
 
 	if (t_loadingScreen)
 	{
@@ -75,7 +72,7 @@ BiomeType ChunkManager::determineBiomeType(float t_value) const
 
 int ChunkManager::getBiomeElevationDelta(BiomeType t_biome) const
 {
-	// Hard coded values refinement may be in order but not super prevalent
+	
 	switch (t_biome)
 	{
 	case BiomeType::Ocean:      return 1;
@@ -97,9 +94,6 @@ void ChunkManager::updateLoadingProgress(LoadingScreen* t_loadingScreen, const s
 								 static_cast<float>(t_total));
 	t_loadingScreen->render();
 }
-
-/* - Generation Pass Functions - */
-
 
 void ChunkManager::buildChunkGrid(LoadingScreen* t_loadingScreen)
 {
@@ -152,7 +146,7 @@ void ChunkManager::generateTerrain(uint32_t t_seed, TileMap& t_tileMap, LoadingS
 		}
 	}
 
-	// Initial sync so TileMap reflects base terrain before further passes
+	
 	syncToTileMap(t_tileMap);
 }
 
@@ -235,7 +229,7 @@ void ChunkManager::smoothElevation(int t_iterations, LoadingScreen* t_loadingScr
 
 void ChunkManager::smoothElevationBorders(int t_iterations)
 {
-	// Cardinal influences
+	
 	const int dx[] = {0, 0, 1, -1};
 	const int dy[] = {1, -1, 0, 0 };
 
@@ -261,7 +255,7 @@ void ChunkManager::smoothElevationBorders(int t_iterations)
 							int l_neighbourWorldX = l_worldX + dx[d];
 							int l_neighbourWorldY = l_worldY + dy[d];
 
-							// Skip out of bounds
+							
 							if (l_neighbourWorldX < 0 || l_neighbourWorldY < 0 ||
 								l_neighbourWorldX >= Globals::WORLD_WIDTH ||
 								l_neighbourWorldY >= Globals::WORLD_HEIGHT)
@@ -277,7 +271,7 @@ void ChunkManager::smoothElevationBorders(int t_iterations)
 
 							int l_delta = std::abs(l_tile.m_elevation - l_neighbour.m_elevation);
 
-							// Lower tile's biome rule determines max allowed delta
+							
 							BiomeType l_lowerBiome = (l_tile.m_elevation <= l_neighbour.m_elevation)
 								? l_chunk.getBiome()
 								: m_chunks[l_neighbourChunkX][l_neighbourChunkY].getBiome();
@@ -286,7 +280,7 @@ void ChunkManager::smoothElevationBorders(int t_iterations)
 
 							if (l_delta > l_maxDelta)
 							{
-								// Average both tiles toward each other
+								
 								int l_avg = (l_tile.m_elevation + l_neighbour.m_elevation) / 2;
 								l_tile.m_elevation = l_avg;
 								l_neighbour.m_elevation = l_avg;
@@ -301,9 +295,9 @@ void ChunkManager::smoothElevationBorders(int t_iterations)
 
 void ChunkManager::applyBorderBlending()
 {
-	// All border override rules defined in one place 
-	/// ToDo: Expand into full rulings class later on
-	/// servicable but very heavy on ChunkManager size
+	
+	
+	
 	static const std::vector<BorderRule> BORDER_RULES =
 	{
 		{ BiomeType::Forest,    BiomeType::Ocean,   TileType::Sand  },
@@ -313,7 +307,7 @@ void ChunkManager::applyBorderBlending()
 		{ BiomeType::Desert,    BiomeType::Ocean,   TileType::Sand  }
 	};
 
-	// Cardinal directions — which edge of the chunk faces which neighbour
+	
 	const int dx[] = { 0, 0, 1, -1 };
 	const int dy[] = { 1, -1, 0, 0 };
 
@@ -326,7 +320,7 @@ void ChunkManager::applyBorderBlending()
 			Chunk& l_chunk = m_chunks[chunkX][chunkY];
 			BiomeType l_sourceBiome = l_chunk.getBiome();
 
-			// Check all 4 cardinal neighbours
+			
 			for (int d = 0; d < 4; d++)
 			{
 				int l_neighbourChunkX = chunkX + dx[d];
@@ -337,7 +331,7 @@ void ChunkManager::applyBorderBlending()
 
 				BiomeType l_neighbourBiome = m_chunks[l_neighbourChunkX][l_neighbourChunkY].getBiome();
 
-				// Find a matching rule for this biome pairing
+				
 				const BorderRule* l_rule = nullptr;
 				for (const BorderRule& rule : BORDER_RULES)
 				{
@@ -352,14 +346,14 @@ void ChunkManager::applyBorderBlending()
 				if (!l_rule)
 					continue;
 
-				// Apply override to edge tiles within BORDER_DEPTH
+				
 				for (int localX = 0; localX < Globals::CHUNK_SIZE; localX++)
 				{
 					for (int localY = 0; localY < Globals::CHUNK_SIZE; localY++)
 					{
 						uint32_t l_SEEDOFFSET = 1457894689u;
 
-						// Determine how close this tile is to the relevant edge
+						
 						int l_edgeDist = 0;
 						if (dx[d] == 1) l_edgeDist = (Globals::CHUNK_SIZE - 1) - localX;
 						if (dx[d] == -1) l_edgeDist = localX;
@@ -371,17 +365,17 @@ void ChunkManager::applyBorderBlending()
 
 						Tile& l_tile = l_chunk.getTile(localX, localY);
 
-						// Use hash noise to vary the border naturally
-						// Tiles further from the edge need a higher noise value to be overridden
-						// giving an irregular rather than perfectly straight border
+						
+						
+						
 						float l_noise = m_worldGen.getBiomeValue(
 							l_tile.m_gridPosition.x,
 							l_tile.m_gridPosition.y,
 							m_seed ^ l_SEEDOFFSET
 						);
 
-						// Edge tile (dist 0) — always override
-						// One tile in (dist 1) — only override if noise clears threshold
+						
+						
 						float l_threshold = (l_edgeDist == 0) ? 0.3f : 0.6f;
 
 						if (l_noise >= l_threshold)
@@ -408,51 +402,51 @@ void ChunkManager::assignTileResources()
 				{
 					Tile& l_tile = l_chunk.getTile(localX, localY);
 
-					/// ToDo: Overhaul to limit resource availability - e.g. Mountains
-					/// can only have 6 tiles in a whole chunk - May be a larger refactor 
-					/// but its what i want post project to make the land feel more natural or limited
-					/// Also add in some visual artifacts to signify interactability clearly - maybe
-					/// not something to add here specifically but a note all the same
-					// Based on tile and biome altered quantities
+					
+					
+					
+					
+					
+					
 					switch (l_tile.m_type)
 					{
 					case TileType::Trees:
-						l_tile.m_resource.m_resourceID = 1; // Wood
+						l_tile.m_resource.m_resourceID = 1; 
 						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Forest) ? 50 : 25;
 						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
 						l_tile.m_resource.m_interactionType = InteractionType::Chop;
 						break;
 
 					case TileType::Stone:
-						l_tile.m_resource.m_resourceID = 2; // Stone
+						l_tile.m_resource.m_resourceID = 2; 
 						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Mountains) ? 80 : 40;
 						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
 						l_tile.m_resource.m_interactionType = InteractionType::Mine;
 						break;
 
 					case TileType::IronOre:
-						l_tile.m_resource.m_resourceID = 3; // Iron Ore
+						l_tile.m_resource.m_resourceID = 3; 
 						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Mountains) ? 40 : 15;
 						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
 						l_tile.m_resource.m_interactionType = InteractionType::Mine;
 						break;
 
 					case TileType::Sand:
-						l_tile.m_resource.m_resourceID = 5; // Sand
+						l_tile.m_resource.m_resourceID = 5; 
 						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Desert) ? 100 : 60;
 						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
 						l_tile.m_resource.m_interactionType = InteractionType::Shovel;
 						break;
 
 					case TileType::Grass:
-						l_tile.m_resource.m_resourceID = 6; // Dirt
+						l_tile.m_resource.m_resourceID = 6; 
 						l_tile.m_resource.m_maxQuantity = (l_biome == BiomeType::Plains) ? 60 : 25;
 						l_tile.m_resource.m_currentQuantity = l_tile.m_resource.m_maxQuantity;
 						l_tile.m_resource.m_interactionType = InteractionType::Shovel;
 						break;
 
 					default:
-						// Quantity stays 0 == not harvestable
+						
 						break;
 					}
 				}
@@ -478,7 +472,7 @@ void ChunkManager::syncToTileMap(TileMap& t_tileMap)
 						l_tile.m_gridPosition.y
 					);
 
-					// TileMap version of checked data so reflections are accurate
+					
 					if (!l_mapTile)
 						continue;
 
@@ -490,5 +484,4 @@ void ChunkManager::syncToTileMap(TileMap& t_tileMap)
 		}
 	}
 }
-
 

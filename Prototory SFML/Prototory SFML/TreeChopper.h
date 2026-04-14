@@ -14,16 +14,16 @@ public:
     void onNeighbourChanged()                      override;
 
 private:
-    // Scans tiles within harvest range and builds candidate list
+    
     void refreshHarvestCandidates(TileMap& t_tileMap);
 
-    // Attempts to harvest from the next available candidate
+    
     void tick(TileMap& t_tileMap);
 
-    // Candidate tile positions within harvest range that are harvestable
+    
     std::vector<sf::Vector2i> m_harvestCandidates;
 
-    // Visual representation
+    
     sf::RectangleShape m_shape;
     sf::RectangleShape m_rangeIndicator;
     bool               m_showRange{ false };

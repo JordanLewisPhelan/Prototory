@@ -4,13 +4,12 @@
 #include <cstdint>
 #include "Globals.h"
 
-
 enum class MachinePurpose
 {
     Harvester,
     Transporter,
     Storage,
-    Processor       // Post Deadline
+    Processor       
 };
 
 struct MachineDefinition
@@ -19,15 +18,15 @@ struct MachineDefinition
     std::string     m_name;
     std::string     m_description;
     MachinePurpose  m_purpose;
-    InteractionType m_harvestType;    // None for non-harvester machines
-    float           m_tickRate;       // General machine processing rate
-    float           m_transferRate;   // Secondary tick rate for Transfer logic
-    int             m_transferAmount; // Amount of units we move per transfer tick  
+    InteractionType m_harvestType;    
+    float           m_tickRate;       
+    float           m_transferRate;   
+    int             m_transferAmount; 
     int             m_harvestAmount;
-    int             m_harvestRange;   // Tile based range; 0 == local tile only
-    int             m_inputChannels;  // How many directional connections can feed into this machine
-    int             m_inputSlots;     // Buffer slots per channel
-    int             m_outputSlots;    // How many inventorySlots this machine has
+    int             m_harvestRange;   
+    int             m_inputChannels;  
+    int             m_inputSlots;     
+    int             m_outputSlots;    
 
     MachineDefinition(
         uint32_t        t_id,

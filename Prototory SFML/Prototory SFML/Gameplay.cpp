@@ -13,17 +13,17 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 		std::cout << "Gameplay: Font has not been loaded. \n";
 	}
 
-	// Used to Show progression of loading process 
+	
 	LoadingScreen l_loadingScreen(t_window, m_gameFont);
 
-	// World Gen with FIXED SEED for debugging
-	//m_worldGen.generateSeededWorld(m_tileMap, 5878514, &l_loadingScreen);
 	
-	// Random World Generation - as long as a "l_seed" is used
+	
+	
+	
 	uint32_t l_seed = m_worldGen.generateSeed();
-	m_chunkManager.initialize(l_seed, m_tileMap, &l_loadingScreen);	// debugging ; Const seed: 5878514
+	m_chunkManager.initialize(l_seed, m_tileMap, &l_loadingScreen);	
 
-	// default text for debugging - will refine later(intended to show key data later)
+	
 	m_areaText.setString("Gameplay Screen");
 	m_areaText.setCharacterSize(36);
 	m_areaText.setFillColor(sf::Color::White);
@@ -43,16 +43,15 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	m_inspectorText.setFillColor(sf::Color::Cyan);
 	m_inspectorText.setPosition(sf::Vector2f(Globals::SCREEN_WIDTH - 220.f, 10.f));
 
-	// Setup camera
+	
 	m_camera.setSize(sf::Vector2f(static_cast<float>(Globals::SCREEN_WIDTH),
-								  static_cast<float>(Globals::SCREEN_HEIGHT))); // Matches window size
+								  static_cast<float>(Globals::SCREEN_HEIGHT))); 
 	m_camera.setCenter(m_player.getWorldPosition());
 
 	m_resourceRegistry.initializeResources();
 	m_machineRegistry.initializeMachines();
 }
 
-// Will be used to determine player key presses and click inputs during gameplay
 void Gameplay::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWindow& t_window)
 {
 	if (!t_event.has_value()) return;
@@ -70,30 +69,28 @@ void Gameplay::HandleEvent(const std::optional<sf::Event>& t_event, sf::RenderWi
 		}
 	}
 
-	// We are investigating key releases here - i.e. out of loop
+	
 	m_placementController.handleEvent(t_event.value());
 }
 
 void Gameplay::Update(sf::Time t_dt)
 {
-	/*--
-	ToDo: Separate Later on into Paused & Unpaused will help clarify operations
-	--*/
+	
 
 	m_player.update(t_dt, m_tileMap, m_resourceRegistry);
 
-	// Update camera to follow player
+	
 	updateCamera();
 
-	/// ToDo: Prevent constant checks, when we add in modes for this and not
-	/// keybinds we can do this a lot easier but for now it is constant
+	
+	
 	PlacementRequest l_request = m_placementController.update(
 		m_player.getWorldPosition(),
 		m_player.getFacing(),
 		m_machineSystem
 	);
 
-	// Check Intent for actions
+	
 	switch (l_request.m_intent)
 	{
 	case PlacementIntent::Place:
@@ -113,7 +110,6 @@ void Gameplay::Update(sf::Time t_dt)
 		break;
 	}
 
-
 	m_machineSystem.update(t_dt);
 
 	m_areaText.setString("Biome " + getCurrentBiome());
@@ -130,8 +126,8 @@ void Gameplay::Render(sf::RenderWindow& t_window)
 
 	m_player.render(t_window);
 
-	/// ToDo: Prevent constant checks, when we add in modes for this and not
-	/// keybinds we can do this a lot easier but for now it is constant
+	
+	
 	m_placementController.render(t_window);
 
 	t_window.setView(t_window.getDefaultView());
@@ -150,12 +146,11 @@ SceneActions Gameplay::getRequestedAction()
 	return action;
 }
 
-
 void Gameplay::updateCamera()
 {
 	m_camera.setCenter(m_player.getWorldPosition());
 
-	// Clamping camera so it doesn't show outside world bounds
+	
 	float l_halfWidth = m_camera.getSize().x / 2.f;
 	float l_halfHeight = m_camera.getSize().y / 2.f;
 
@@ -164,7 +159,7 @@ void Gameplay::updateCamera()
 
 	sf::Vector2f l_camPos = m_camera.getCenter();
 
-	// Clamp camera to world bounds
+	
 	if (l_camPos.x - l_halfWidth < 0.f)
 		l_camPos.x = l_halfWidth;
 	if (l_camPos.x + l_halfWidth > l_worldWidth)
@@ -204,7 +199,6 @@ std::string Gameplay::getCurrentBiome()
 
 }
 
-// ToDo: Refactor into a proper space - not gameplay
 void Gameplay::renderInventory(sf::RenderWindow& t_window)
 {
 	const std::vector<InventorySlot>& l_slots = m_player.getInventory().getSlots();
@@ -227,11 +221,9 @@ void Gameplay::renderInventory(sf::RenderWindow& t_window)
 
 }
 
-
-
 void Gameplay::renderInteractionPrompt(sf::RenderWindow& t_window)
 {
-	// Get the tile the player is facing
+	
 	sf::Vector2f l_harvestPoint = m_player.getWorldPosition() +
 		(m_player.getFacing() * Globals::HARVEST_REACH);
 
@@ -250,7 +242,7 @@ void Gameplay::renderInteractionPrompt(sf::RenderWindow& t_window)
 		default: return;
 	}
 
-	// Position prompt at center bottom of screen
+	
 	m_promptText.setString(l_prompt);
 	m_promptText.setPosition(sf::Vector2f(
 		Globals::SCREEN_WIDTH / 2.f - m_promptText.getGlobalBounds().size.x / 2.f,

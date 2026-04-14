@@ -1,7 +1,5 @@
 #include "MachineSystem.h"
 
-
-
 MachineSystem::MachineSystem(TileAccessor& t_tileAccessor, MachineRegistry& t_machineRegistry, const ResourceRegistry& t_resourceRegistry)
 	: m_tileAccessor(t_tileAccessor)
 	, m_machineRegistry(t_machineRegistry)
@@ -9,19 +7,17 @@ MachineSystem::MachineSystem(TileAccessor& t_tileAccessor, MachineRegistry& t_ma
 {
 }
 
-
-
 void MachineSystem::update(sf::Time t_dt)
 {
-	// Loop through all tiles that are confirmed in the world
-	/// ToDo: Update to be Graph based and ordered - prevents checking whole system each
-	/// frame when we can cut off further processing of elements that cant be processing
+	
+	
+	
 	for (const sf::Vector2i l_pos : m_activeTiles)
 	{
 
 		Tile* l_tile = m_tileAccessor.get(l_pos);
 
-		// Make sure tile position is valid
+		
 		if (!l_tile)
 		{
 			std::cerr << "MachineSystem: active tile at "
@@ -30,8 +26,8 @@ void MachineSystem::update(sf::Time t_dt)
 			continue;
 		}
 
-		// Checks to ensure each tile here has a machine component 
-		// before trying to work with it
+		
+		
 		if (!l_tile->m_machine.has_value())
 		{
 			std::cerr << "MachineSystem: tile at "
@@ -45,7 +41,7 @@ void MachineSystem::update(sf::Time t_dt)
 		const MachineDefinition* l_def =
 			m_machineRegistry.getMachine(l_component.getDefinitionId());
 
-		// Make sure machine definition intended to be used actually exists
+		
 		if (!l_def)
 		{
 			std::cerr << "MachineSystem: no definition found for ID "
@@ -54,7 +50,7 @@ void MachineSystem::update(sf::Time t_dt)
 			continue;
 		}
 
-		// Do Machine update operations
+		
 		tickComponent(l_component, *l_def, t_dt, l_pos, m_resourceRegistry);
 		transferComponent(l_component, *l_def, t_dt, l_pos);
 		drainInputBuffers(l_component, *l_def);
@@ -63,7 +59,7 @@ void MachineSystem::update(sf::Time t_dt)
 
 bool MachineSystem::placeMachine(uint32_t t_machineID, sf::Vector2i t_gridPos, sf::Vector2f t_worldOffset, sf::Vector2f t_facingDirection, TileMap& t_tileMap)
 {
-	// Checking Tile Space - Can quickly and easily Update to check for player range allowances later
+	
 	if (!m_tileAccessor.isValid(t_gridPos))
 	{
 		std::cerr << "MachineSystem: placeMachine - invalid grid position "
@@ -71,8 +67,7 @@ bool MachineSystem::placeMachine(uint32_t t_machineID, sf::Vector2i t_gridPos, s
 		return false;
 	}
 
-
-	// Ensure a valid definition before continuing
+	
 	const MachineDefinition* l_def = m_machineRegistry.getMachine(t_machineID);
 
 	if (!l_def)
@@ -82,11 +77,10 @@ bool MachineSystem::placeMachine(uint32_t t_machineID, sf::Vector2i t_gridPos, s
 		return false;
 	}
 
-
-	// Get the tile for further queries
+	
 	Tile* l_tile = m_tileAccessor.get(t_gridPos);
 
-	// Check to ensure the Tile has no existing machine on it
+	
 	if (l_tile->m_machine.has_value())
 	{
 		std::cerr << "MachineSystem: placeMachine - tile "
@@ -95,7 +89,7 @@ bool MachineSystem::placeMachine(uint32_t t_machineID, sf::Vector2i t_gridPos, s
 		return false;
 	}
 
-	// Make the Machine and assign to tile directly
+	
 	l_tile->m_machine = MachineComponent(*l_def, t_worldOffset, t_facingDirection);
 
 	Tile* l_mapTile = t_tileMap.getTileAt(t_gridPos.x, t_gridPos.y);
@@ -103,11 +97,10 @@ bool MachineSystem::placeMachine(uint32_t t_machineID, sf::Vector2i t_gridPos, s
 	if (l_mapTile)
 		l_mapTile->m_machine = l_tile->m_machine;
 
-	// Add to the tiles to update
+	
 	m_activeTiles.push_back(t_gridPos);
 
 	resolveConnection(t_gridPos);
-
 
 	std::vector<sf::Vector2i> l_offsets = {
 	{ 0, -1 }, { 0, 1 }, { -1, 0 }, { 1, 0 }
@@ -122,7 +115,6 @@ bool MachineSystem::placeMachine(uint32_t t_machineID, sf::Vector2i t_gridPos, s
 			resolveConnection(l_neighbourPos);
 		}
 	}
-
 
 	std::cout << "MachineSystem: placed " << l_def->m_name
 			  << " at " << t_gridPos.x << "," << t_gridPos.y << "\n";
@@ -141,7 +133,7 @@ bool MachineSystem::removeMachine(sf::Vector2i t_gridPos, TileMap& t_tileMap)
 
 	Tile* l_tile = m_tileAccessor.get(t_gridPos);
 
-	// Check to ensure the Tile has no existing machine on it
+	
 	if (!l_tile->m_machine.has_value())
 	{
 		std::cerr << "MachineSystem: removeMachine - tile "
@@ -150,10 +142,10 @@ bool MachineSystem::removeMachine(sf::Vector2i t_gridPos, TileMap& t_tileMap)
 		return false;
 	}
 
-	// Ensures local negighbours dont hold outdated references/data
+	
 	notifyNeighbours(t_gridPos);
 
-	// Clear the std::optional machine of the tile
+	
 	l_tile->m_machine.reset();
 
 	Tile* l_mapTile = t_tileMap.getTileAt(t_gridPos.x, t_gridPos.y);
@@ -161,7 +153,7 @@ bool MachineSystem::removeMachine(sf::Vector2i t_gridPos, TileMap& t_tileMap)
 	if (l_mapTile)
 		l_mapTile->m_machine.reset();
 
-	// Remove that tile from the list of machinery tiles
+	
 	m_activeTiles.erase(
 		std::remove(m_activeTiles.begin(), m_activeTiles.end(), t_gridPos), m_activeTiles.end()
 	);
@@ -171,8 +163,6 @@ bool MachineSystem::removeMachine(sf::Vector2i t_gridPos, TileMap& t_tileMap)
 
 	return true;
 }
-
-
 
 bool MachineSystem::hasMachineAt(sf::Vector2i t_gridPos) const
 {
@@ -194,13 +184,9 @@ MachineComponent* MachineSystem::getMachineAt(sf::Vector2i t_gridPos) const
 	return &l_tile->m_machine.value();
 }
 
-
-
-/* - Component Processors/Updators - */
-
 void MachineSystem::tickComponent(MachineComponent& t_component, const MachineDefinition& t_definition, sf::Time t_dt, sf::Vector2i t_pos, const ResourceRegistry& t_resourceRegistry)
 {
-	// Non-ticking machines skip entirely
+	
 	if (t_definition.m_tickRate <= 0.f)
 		return;
 
@@ -211,37 +197,35 @@ void MachineSystem::tickComponent(MachineComponent& t_component, const MachineDe
 
 	t_component.resetTickTimer();
 
-	// Only harvesters have tick logic currently
+	
 	if (t_definition.m_purpose != MachinePurpose::Harvester)
 		return;
 
-	// Output full - go idle, nothing to do
+	
 	if (t_component.getOutputInventory().isFull())
 	{
 		t_component.setIdle(true);
 		return;
 	}
 
-	// Get the tile this machine sits on
+	
 	Tile* l_tile = m_tileAccessor.get(t_pos);
 	if (!l_tile)
 		return;
 
-	// Check harvest range for valid tiles
+	
 	int l_range = t_definition.m_harvestRange;
 	bool l_harvested = false;
-
 
 	for (int dx = -l_range; dx <= l_range && !l_harvested; dx++)
 	{
 		for (int dy = -l_range; dy <= l_range && !l_harvested; dy++)
 		{
-			// Enforces we check local tile always unless we have range
+			
 			if (l_range > 0 && dx == 0 && dy == 0)
 				continue;
 
 			sf::Vector2i l_targetPos = t_pos + sf::Vector2i(dx, dy);
-
 
 			if (!m_tileAccessor.isValid(l_targetPos))
 				continue;
@@ -253,11 +237,11 @@ void MachineSystem::tickComponent(MachineComponent& t_component, const MachineDe
 
 			TileResource& l_resource = l_targetTile->m_resource;
 
-			//std::cout << "checking tile " << l_targetPos.x << "," << l_targetPos.y
-			//	<< " harvestable: " << l_resource.isHarvestable()
-			//	<< " quantity: " << l_resource.m_currentQuantity << "\n";
+			
+			
+			
 
-			// Check if this tile matches what this machine harvests
+			
 			if (!l_resource.isHarvestable())
 				continue;
 
@@ -270,13 +254,12 @@ void MachineSystem::tickComponent(MachineComponent& t_component, const MachineDe
 				continue;
 			}
 
-
 			int l_amount = std::min(t_definition.m_harvestAmount,
 									l_resource.m_currentQuantity);
 
 			l_resource.m_currentQuantity -= l_amount;
 
-			// Inideal but cleaner than alternative for now
+			
 			const ResourceDefinition* l_resDef = t_resourceRegistry.getResource(l_resource.m_resourceID);
 
 			if (!l_resDef)
@@ -286,21 +269,19 @@ void MachineSystem::tickComponent(MachineComponent& t_component, const MachineDe
 				return;
 			}
 
-			// Get max stack from resource
+			
 			t_component.getOutputInventory().addResources(
 				l_resource.m_resourceID,
 				l_amount,
 				l_resDef->m_maxInStack
 			);
 
-
 			t_component.setIdle(false);
 			l_harvested = true;
 		}
 	}
 
-
-	// Nothing harvestable found in range
+	
 	if (!l_harvested)
 		t_component.setIdle(true);
 }
@@ -310,7 +291,7 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 	if (t_definition.m_purpose != MachinePurpose::Transporter)
 		return;
 
-	// Non-transferring machines skip entirely
+	
 	if (t_definition.m_transferRate <= 0.f)
 		return;
 
@@ -320,7 +301,6 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 		return;
 
 	t_component.resetTransferTimer();
-
 
 	const std::vector<sf::Vector2i>& l_sources = t_component.getInputSources(); 
 
@@ -356,7 +336,7 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 		}
 	}
 
-	// No output target - nothing to transfer to
+	
 	if (!t_component.getOutputTarget().has_value())
 	{
 		t_component.setIdle(true);
@@ -365,7 +345,7 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 
 	sf::Vector2i l_targetPos = t_component.getOutputTarget().value();
 
-	// Validate target position
+	
 	if (!m_tileAccessor.isValid(l_targetPos))
 	{
 		t_component.clearOutputTarget();
@@ -377,7 +357,7 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 
 	if (!l_target)
 	{
-		// Target no longer exists - clear the link
+		
 		t_component.clearOutputTarget();
 		t_component.setIdle(true);
 		return;
@@ -389,7 +369,7 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 		return;
 	}
 
-	// Push to target's first available input buffer
+	
 	int l_availableChannel = -1;
 	for (int l_i = 0; l_i < l_target->getInputBufferCount(); l_i++)
 	{
@@ -406,7 +386,6 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 		return;
 	}
 
-
 	const auto& l_slots = t_component.getOutputInventory().getSlots();
 
 	for (const auto& l_slot : l_slots)
@@ -422,7 +401,7 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 
 			if (l_targetDef && l_targetDef->m_purpose == MachinePurpose::Transporter)
 			{
-				// Next machine is a conveyor - push into its output inventory
+				
 				t_component.getOutputInventory().transferTo(
 					l_target->getOutputInventory(),
 					l_slot.m_resourceID,
@@ -432,7 +411,7 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 			}
 			else
 			{
-				// Next machine is a chest or storage - push into input buffer
+				
 				t_component.getOutputInventory().transferTo(
 					l_target->getInputBuffer(l_availableChannel),
 					l_slot.m_resourceID,
@@ -447,18 +426,17 @@ void MachineSystem::transferComponent(MachineComponent& t_component, const Machi
 	}
 }
 
-
 std::vector<sf::Vector2i> MachineSystem::getDirectionalOffsets(const MachineDefinition& t_def) const
 {
-	// Cardinals always checked
+	
 	std::vector<sf::Vector2i> l_offsets =
 	{
 		{  0, -1 }, {  0,  1 },
 		{ -1,  0 }, {  1,  0 }
 	};
 
-	// Diagonals added based on definition flags later
-	// e.g. if t_def allows diagonal connections, append them here
+	
+	
 
 	return l_offsets;
 }
@@ -485,8 +463,7 @@ void MachineSystem::resolveConnection(sf::Vector2i t_gridPos)
 	if (!l_def)
 		return;
 
-
-	// Get the tile this conveyor is facing
+	
 	sf::Vector2i l_facingTile = t_gridPos +
 		dominantTileStep(l_component.getFacingDirection());
 
@@ -519,12 +496,12 @@ void MachineSystem::resolveConnection(sf::Vector2i t_gridPos)
 
 	std::vector<sf::Vector2i> l_offsets = getDirectionalOffsets(*l_def);
 
-	// Adds the offset to current Tile/Grid position so we dont have to move through whole map for comparison
+	
 	for (const sf::Vector2i& l_offset : l_offsets)
 	{
 		sf::Vector2i l_neighbourPos = t_gridPos + l_offset;
 
-		// Skip the output target 
+		
 		if (l_component.getOutputTarget().has_value() &&
 			l_component.getOutputTarget().value() == l_neighbourPos)
 			continue;
@@ -550,12 +527,12 @@ void MachineSystem::resolveConnection(sf::Vector2i t_gridPos)
 		if (l_neighbourDef->m_purpose != MachinePurpose::Transporter
 			&& l_neighbourDef->m_outputSlots > 0)
 		{
-			// Harvester or other producer adjacent to this conveyor
+			
 			l_shouldAddAsInput = true;
 		}
 		else if (l_neighbourDef->m_purpose == MachinePurpose::Transporter)
 		{
-			// Neighbouring conveyor facing toward this tile
+			
 			sf::Vector2i l_neighbourFacing = l_neighbourPos +
 				dominantTileStep(l_neighbour.getFacingDirection());
 
@@ -563,7 +540,7 @@ void MachineSystem::resolveConnection(sf::Vector2i t_gridPos)
 			{
 				l_shouldAddAsInput = true;
 
-				// Also set that conveyor's output target if not set
+				
 				if (!l_neighbour.getOutputTarget().has_value())
 				{
 					l_neighbour.setOutputTarget(t_gridPos);
@@ -608,7 +585,6 @@ void MachineSystem::notifyNeighbours(sf::Vector2i t_gridPos)
 
 	std::vector<sf::Vector2i> l_offsets = getDirectionalOffsets(*l_def);
 
-
 	for (const sf::Vector2i l_offset : l_offsets)
 	{
 		sf::Vector2i l_neighbourPos = t_gridPos + l_offset;
@@ -623,8 +599,8 @@ void MachineSystem::notifyNeighbours(sf::Vector2i t_gridPos)
 
 		MachineComponent& l_neighbour = l_neighbourTile->m_machine.value();
 
-		// If neighbour was pointing at this position, clear its output 
-		// as if this function is called a machine has been deleted at gridPos
+		
+		
 		if (l_neighbour.getOutputTarget().has_value() &&
 			l_neighbour.getOutputTarget().value() == t_gridPos)
 		{
@@ -633,7 +609,7 @@ void MachineSystem::notifyNeighbours(sf::Vector2i t_gridPos)
 					  << l_neighbourPos.x << "," << l_neighbourPos.y << "\n";
 		}
 
-		// Remove this position from neighbour's input sources
+		
 		if (l_neighbour.hasInputSource(t_gridPos))
 		{
 			l_neighbour.removeInputSource(t_gridPos);
@@ -646,7 +622,7 @@ void MachineSystem::notifyNeighbours(sf::Vector2i t_gridPos)
 
 void MachineSystem::drainInputBuffers(MachineComponent& t_component, const MachineDefinition& t_definition)
 {
-	// Only storage drains input buffers into output inventory
+	
 	if (t_definition.m_purpose != MachinePurpose::Storage)
 		return;
 

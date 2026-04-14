@@ -13,8 +13,6 @@
 #include "MachineSystem.h"
 #include "PlacementController.h"
 
-
-
 class Gameplay : public Scene
 {
 public:
@@ -39,8 +37,8 @@ private:
 	Player m_player;
 	sf::View m_camera;
 
-	WorldGenerator m_worldGen;		// Leftovers and general use
-	ChunkManager m_chunkManager;	// Current implementation 
+	WorldGenerator m_worldGen;		
+	ChunkManager m_chunkManager;	
 
 	ResourceRegistry m_resourceRegistry;
 	MachineRegistry m_machineRegistry;
@@ -54,11 +52,11 @@ private:
 	void updateCamera();
 	std::string getCurrentBiome();
 
-	/// ToDo: replace with an actual placement for these - Inventory needs to 
-	/// but not in Gameplay, this is sacreligious - but added for testing
+	
+	
 	void renderInventory(sf::RenderWindow& t_window);
-	/// Displays when facing and hovering over a harvestable tile
+	
 	void renderInteractionPrompt(sf::RenderWindow& t_window);
-	/// Displays the Inventory or a machine we are hovering over - Debug to be removed/refined later
+	
 	void renderMachineInspector(sf::RenderWindow& t_window);
 };

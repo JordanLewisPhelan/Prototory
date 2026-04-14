@@ -1,8 +1,5 @@
 #include "MachineComponent.h"
 
-
-
-
 MachineComponent::MachineComponent(const MachineDefinition& t_definition, sf::Vector2f t_worldOffset, sf::Vector2f t_facingDirection)
 	: m_defID(t_definition.m_id)
 	, m_worldOffset(t_worldOffset)
@@ -18,7 +15,7 @@ MachineComponent::MachineComponent(const MachineDefinition& t_definition, sf::Ve
 		m_inputBuffers.emplace_back(t_definition.m_inputSlots);
 	}
 
-	// Slight differentials
+	
 	switch (t_definition.m_purpose)
 	{
 		case MachinePurpose::Harvester:
@@ -28,23 +25,18 @@ MachineComponent::MachineComponent(const MachineDefinition& t_definition, sf::Ve
 			m_visual.m_colour = sf::Color::Black;  
 			break;
 		case MachinePurpose::Storage:
-			m_visual.m_colour = sf::Color(139, 90, 43);  // brown
+			m_visual.m_colour = sf::Color(139, 90, 43);  
 			break;
 		default:
-			m_visual.m_colour = sf::Color(160, 160, 160); // grey
+			m_visual.m_colour = sf::Color(160, 160, 160); 
 			break;
 	}
 
-
-	// -Defaults-
+	
 	m_visual.m_idle = false;
 	m_visual.m_size = { Globals::TILE_SIZE * 0.75f, Globals::TILE_SIZE * 0.5f };
 	m_visual.m_offsetPos = t_worldOffset;
 }
-
-
-
-/* - Getter functions - */
 
 const MachineVisual& MachineComponent::getVisual() const
 {
@@ -60,7 +52,6 @@ sf::Vector2f MachineComponent::getFacingDirection() const
 {
 	return m_facingDirection;
 }
-
 
 int MachineComponent::getInputBufferCount() const
 {
@@ -78,7 +69,6 @@ void MachineComponent::setIdle(bool t_idle)
 	m_visual.m_idle = t_idle;
 }
 
-
 Inventory& MachineComponent::getOutputInventory()
 {
 	return m_outputInventory;
@@ -93,8 +83,6 @@ Inventory& MachineComponent::getInputBuffer(int t_channel)
 	}
 	return m_inputBuffers[t_channel];
 }
-
-/* - Input/Output functions - */
 
 void MachineComponent::setOutputTarget(sf::Vector2i t_target)
 {

@@ -1,13 +1,11 @@
-#include "TileAccessor.h"
+	#include "TileAccessor.h"
 #include "ChunkManager.h"
-
 
 TileAccessor::TileAccessor(ChunkManager& t_chunkManager)
 	: m_chunkManager(t_chunkManager)
 {
 }
 
-// Retrieves a Tile& in Chunk space and where in said chunk we are aiming to grab
 Tile* TileAccessor::get(sf::Vector2i t_gridPos)
 {
 	if (!isValid(t_gridPos))
@@ -25,7 +23,6 @@ Tile* TileAccessor::get(sf::Vector2i t_gridPos)
 	return &tile;
 }
 
-// Chunk Space Validator
 bool TileAccessor::isValid(sf::Vector2i t_gridPos) const
 {
 	int l_chunkX = t_gridPos.x / Globals::CHUNK_SIZE;

@@ -12,7 +12,7 @@ Player::Player(const sf::Vector2f& t_startPos, const sf::Vector2f& t_size)
     , m_inventory(21)
     , m_directionIndicator(4.f)
 {
-	// Sprite Creation
+	
 	m_playerSprite.setSize(m_playerSize);
 	m_playerSprite.setFillColor(sf::Color::Red);
 	m_playerSprite.setOrigin(sf::Vector2f(m_playerSize.x / 2.f, m_playerSize.y / 2.f));
@@ -24,25 +24,24 @@ Player::Player(const sf::Vector2f& t_startPos, const sf::Vector2f& t_size)
 	std::cout << "Player created at: (" << m_position.x << ", " << m_position.y << ")\n";
 }
 
-
 void Player::handleInput(sf::Time t_dt)
 {
 	sf::Vector2f l_direction = getInputDirection();
 
-    // Accelerator force
+    
     if (l_direction.x != 0.f || l_direction.y != 0)
     {
         m_playerFacing = l_direction;
 
         sf::Vector2f l_desiredVelocity = l_direction * m_walkSpeed;
 
-        // Aimed velocity difference to current velocity
+        
         sf::Vector2f l_velocityDelta = l_desiredVelocity - m_velocity;
 
-        // Prevents jumping to the intended velocity immediately, enforces the acceleration
+        
         float l_adjustmentCap = m_acceleration * t_dt.asSeconds();
 
-        // Comparison between the adjustment we allow and this value - the magnitude
+        
         float l_adjustmentMagnitude = std::sqrt(l_velocityDelta.x * l_velocityDelta.x +
                                                 l_velocityDelta.y * l_velocityDelta.y);
 
@@ -54,7 +53,7 @@ void Player::handleInput(sf::Time t_dt)
         }
     }
 
-    // Decelerator force
+    
     else
     {
         float l_currentSpeed = std::sqrt(m_velocity.x * m_velocity.x +
@@ -64,16 +63,16 @@ void Player::handleInput(sf::Time t_dt)
         {
             float l_decelerationVelocity = m_deceleration * t_dt.asSeconds();
 
-            // Close enough to stopped - stop fully
+            
             if (l_decelerationVelocity >= l_currentSpeed)
             {
                 m_velocity = sf::Vector2f(0.f, 0.f);
             }
 
-            // Decelerate gradually
+            
             else
             {
-                // Decelerate based on direction, this computation prevents negative values accelerating - e.g. going left and up then letting go of inputs
+                
                 sf::Vector2f l_decelDir = m_velocity / l_currentSpeed;
                 m_velocity -= l_decelDir * l_decelerationVelocity;
             }
@@ -81,7 +80,6 @@ void Player::handleInput(sf::Time t_dt)
     }
 
 }
-
 
 void Player::update(sf::Time t_dt, TileMap& t_tileMap, const ResourceRegistry& t_resourceRegistry)
 {
@@ -101,7 +99,7 @@ void Player::update(sf::Time t_dt, TileMap& t_tileMap, const ResourceRegistry& t
         m_playerSprite.setFillColor(sf::Color::Red);
     }
 
-    // Hold to Harvest
+    
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::E))
     {
         m_harvestTimer -= t_dt.asSeconds();
@@ -113,8 +111,8 @@ void Player::update(sf::Time t_dt, TileMap& t_tileMap, const ResourceRegistry& t
     }
     else
     {
-        /// Debate if player should be able to spam tap to harvest faster
-       // m_harvestTimer = 0.f;   // Player stopped trying to harvest
+        
+       
     }
 
 	constrainToWorldBounds(t_tileMap);
@@ -123,13 +121,11 @@ void Player::update(sf::Time t_dt, TileMap& t_tileMap, const ResourceRegistry& t
 
 }
 
-
 void Player::render(sf::RenderWindow& t_window)
 {
 	t_window.draw(m_playerSprite);
     renderDirectionalIndicator(t_window);
 }
-
 
 sf::Vector2i Player::getGridPosition(const TileMap& t_tileMap) const
 {
@@ -140,8 +136,7 @@ sf::Vector2f Player::getInputDirection() const
 {
     sf::Vector2f l_direction(0.f, 0.f);
 
-
-    // WASD + Arrow Keys
+    
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) ||
         sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
     {
@@ -166,7 +161,7 @@ sf::Vector2f Player::getInputDirection() const
         l_direction.x += 1.f;
     }
 
-    // Normalize for diagonal movement
+    
     float length = std::sqrt(l_direction.x * l_direction.x + l_direction.y * l_direction.y);
     if (length != 0.f)
     {
@@ -181,11 +176,11 @@ void Player::constrainToWorldBounds(const TileMap& t_tileMap)
     float l_worldWidth = t_tileMap.getWidth() * Globals::TILE_SIZE;
     float l_worldHeight = t_tileMap.getHeight() * Globals::TILE_SIZE;
 
-    // accounts for sprite size
+    
     float l_halfWidth = m_playerSize.x / 2.f;
     float l_halfHeight = m_playerSize.y / 2.f;
 
-    // Clamp to world edges
+    
     if (m_position.x - l_halfWidth < 0.f)
         m_position.x = l_halfWidth;
     if (m_position.x + l_halfWidth > l_worldWidth)
@@ -201,7 +196,7 @@ void Player::checkElevationMovement(const TileMap& t_tileMap, sf::Time t_dt)
     sf::Vector2i l_currentGridPos = t_tileMap.worldToGrid(m_position);
     int l_currentElevation = t_tileMap.getElevationAt(l_currentGridPos.x, l_currentGridPos.y);
 
-    // X axis checks
+    
     sf::Vector2f l_targetX = m_position + sf::Vector2f(m_velocity.x * t_dt.asSeconds(), 0.f);
     sf::Vector2i l_targetGridX = t_tileMap.worldToGrid(l_targetX);
     int l_elevationX = t_tileMap.getElevationAt(l_targetGridX.x, l_targetGridX.y);
@@ -212,7 +207,7 @@ void Player::checkElevationMovement(const TileMap& t_tileMap, sf::Time t_dt)
         m_blockTimer = BLOCKED_FLASH_DURATION;
     }
 
-    // Y axis checks
+    
     sf::Vector2f l_targetY = m_position + sf::Vector2f(0.f, m_velocity.y * t_dt.asSeconds());
     sf::Vector2i l_targetGridY = t_tileMap.worldToGrid(l_targetY);
     int l_elevationY = t_tileMap.getElevationAt(l_targetGridY.x, l_targetGridY.y);
@@ -224,23 +219,14 @@ void Player::checkElevationMovement(const TileMap& t_tileMap, sf::Time t_dt)
     }
 }
 
-
-/// <summary>
-/// This cobblepot of a function seems logical - but it is genuinely an architectural
-/// disgrace I am not proud to even test, the coupling, the fake definitions to query
-/// are ALL WRONG, this is ARCHITECTURAL GORE AND I WILL SOLVE IT PROPERLY. At a later date..
-/// TLDR; if you push this and are reading this and dont feel shame you have failed as a programmer.
-/// </summary>
-
 void Player::tryHarvest(TileMap& t_tileMap, const ResourceRegistry& t_resourceRegistry)
 {   
     sf::Vector2f l_harvestPoint = m_position + (m_playerFacing * Globals::HARVEST_REACH);
     sf::Vector2i l_targetGrid = t_tileMap.worldToGrid(l_harvestPoint);
     sf::Vector2i l_currentGrid = t_tileMap.worldToGrid(m_position);
 
-    // Getting a tile to alter Resource data
+    
     Tile* l_tile = t_tileMap.getTileAt(l_targetGrid.x, l_targetGrid.y);
-
 
     const ResourceDefinition* l_def = t_resourceRegistry.getResource(l_tile->m_resource.m_resourceID);
 
@@ -252,7 +238,7 @@ void Player::tryHarvest(TileMap& t_tileMap, const ResourceRegistry& t_resourceRe
         t_tileMap.getElevationAt(l_currentGrid.x, l_currentGrid.y)) > MAX_ELEVATION_DELTA)
         return;
     
-    // Prep testing for multiple resources being accrued at once - Defaulting to 1 initially
+    
     int l_harvested = std::min(1, l_tile->m_resource.m_currentQuantity);
     l_tile->m_resource.m_currentQuantity -= l_harvested;
 
@@ -263,11 +249,11 @@ void Player::tryHarvest(TileMap& t_tileMap, const ResourceRegistry& t_resourceRe
 
     if (l_leftOver > 0)
     {
-        std::cout << "Player: Inventory full — could not store " << l_leftOver << " units.\n";
+        std::cout << "Player: Inventory full  could not store " << l_leftOver << " units.\n";
     }
     else
         std::cout << "Player: Harvested " << l_def->m_name
-        << " — tile has " << l_tile->m_resource.m_currentQuantity << " remaining.\n";
+        << "  tile has " << l_tile->m_resource.m_currentQuantity << " remaining.\n";
 }
 
 void Player::renderDirectionalIndicator(sf::RenderWindow& t_window)

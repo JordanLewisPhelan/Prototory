@@ -1,6 +1,5 @@
 #include "WorldGenerator.h"
 
-
 WorldGenerator::WorldGenerator() : 
 	m_currentSeed(0)
 {
@@ -15,15 +14,15 @@ void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed)
 
 void WorldGenerator::generateSeededWorld(TileMap& t_tileMap, uint32_t t_seed, LoadingScreen* t_loadingScreen)
 {
-    // Iterate through each tile & generate noise
+    
     for (int x = 0; x < t_tileMap.getWidth(); x++)
     {
         for (int y = 0; y < t_tileMap.getHeight(); y++)
         {
-            // Get noise for this grid position
+            
             float l_noiseValue = m_terrainGen.generate(x, y, m_currentSeed);
 
-            // Affirm the type of tile it will be
+            
             TileType t_type = determineTileType(l_noiseValue, BiomeType::Plains);
 
             t_tileMap.setTileAt(x, y, t_type);
@@ -40,7 +39,6 @@ void WorldGenerator::generateWorld(TileMap& t_tileMap)
 	generateSeededWorld(t_tileMap, l_seed);
 }
 
-
 void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
 {
     ChunkPosition l_chunkPos = t_chunk.getPosition();
@@ -50,12 +48,12 @@ void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
     {
         for (int y = 0; y < Globals::CHUNK_SIZE; y++)
         {
-            // Convert Chunk Space into area for Noise to be applied
+            
             int l_worldX = (l_chunkPos.x * Globals::CHUNK_SIZE) + x;
             int l_worldY = (l_chunkPos.y * Globals::CHUNK_SIZE) + y;
 
             float l_elevationVal = m_terrainGen.generate(l_worldX, l_worldY, t_seed + ELEVATION_SEED_OFFSET);
-            // The same generation Logic - But Elevation uses an offset to break away from the pattern
+            
             float l_terrainVal = m_terrainGen.generate(l_worldX, l_worldY, t_seed);
 
             int l_elevation = calculateElevation(l_elevationVal, l_biome);
@@ -73,7 +71,7 @@ void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
 
 int WorldGenerator::calculateElevation(float t_noiseVal, BiomeType t_biome) const
 {
-    // Each biome has a min and max elevation — noise [0,1] is scaled into that range
+    
     int l_min = 0;
     int l_max = 0;
 
@@ -90,7 +88,6 @@ int WorldGenerator::calculateElevation(float t_noiseVal, BiomeType t_biome) cons
     return l_min + static_cast<int>(t_noiseVal * static_cast<float>(l_max - l_min));
 }
 
-
 float WorldGenerator::getBiomeValue(int t_x, int t_y, uint32_t t_seed)
 {
     return m_biomeGen.generate(t_x, t_y, t_seed);
@@ -98,7 +95,7 @@ float WorldGenerator::getBiomeValue(int t_x, int t_y, uint32_t t_seed)
 
 uint32_t WorldGenerator::generateSeed()
 {
-    // Uses std::chrono high resolution clock to get time for seed
+    
     auto l_now = std::chrono::high_resolution_clock::now();
     auto l_duration = l_now.time_since_epoch();
 
@@ -140,17 +137,3 @@ TileType WorldGenerator::determineTileType(float t_value, BiomeType t_biome) con
     }
 }
 
-
-
-
-//void WorldGenerator::setNoiseGenerator(std::unique_ptr<INoiseGenerator> t_generator)
-//{
-//	m_noiseGen = std::move(t_generator);
-//	std::cout << "WorldGenerator: Generation type has changed.\n\n";
-//}
-//
-//void WorldGenerator::setBiomeNoiseGeneratro(std::unique_ptr<INoiseGenerator> t_generator)
-//{
-//    m_biomeNoiseGen = std::move(t_generator);
-//    std::cout << "WorldGenerator: Biome Generation type has changed.\n\n";
-//}
