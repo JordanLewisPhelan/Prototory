@@ -67,6 +67,12 @@
     <Filter Include="Source Files\Components\Machinery &amp; Automation">
       <UniqueIdentifier>{cb7e6b49-d623-4e9f-9b32-3e64604f4f4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Visuals">
+      <UniqueIdentifier>{e65a7fb9-a26c-4776-a1e5-b7a3ff3f8f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Visuals">
+      <UniqueIdentifier>{2a80abbf-8e23-4972-b326-b89699e0bab0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -137,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="PlacementController.cpp">
       <Filter>Source Files\Components\Machinery &amp; Automation</Filter>
+    </ClCompile>
+    <ClCompile Include="UIVisuals.cpp">
+      <Filter>Source Files\Visuals</Filter>
+    </ClCompile>
+    <ClCompile Include="TileVisuals.cpp">
+      <Filter>Source Files\Visuals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +235,12 @@
     </ClInclude>
     <ClInclude Include="TileAccessor.h">
       <Filter>Header Files\Terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="TileVisuals.h">
+      <Filter>Header Files\Visuals</Filter>
+    </ClInclude>
+    <ClInclude Include="UIVisuals.h">
+      <Filter>Header Files\Visuals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

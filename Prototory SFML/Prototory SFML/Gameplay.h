@@ -49,6 +49,7 @@ private:
 	MachineSystem m_machineSystem;
 	PlacementController m_placementController;
 
+
 	SceneActions m_pendingAction;
 
 	void updateCamera();

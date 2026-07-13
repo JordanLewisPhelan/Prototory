@@ -33,12 +33,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Overview.md",
+                "file": "Active Progress.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Overview"
+              "title": "Active Progress"
             }
           }
         ]
@@ -205,11 +205,12 @@
   },
   "active": "c5153f729bf56bae",
   "lastOpenFiles": [
+    "Pivot 1.md",
+    "Active Progress.md",
     "Preliminary Planning.md",
+    "Overview.md",
     "ExampleInventory.png",
     "README.md",
-    "Overview.md",
-    "Active Progress.md",
     "ExampleTileset.png",
     "Screenshot 2026-06-29 152700.png"
   ]

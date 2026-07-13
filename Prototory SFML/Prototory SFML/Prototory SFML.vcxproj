@@ -41,6 +41,8 @@
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="TileAccessor.cpp" />
     <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileVisuals.cpp" />
+    <ClCompile Include="UIVisuals.cpp" />
     <ClCompile Include="WorldGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +73,8 @@
     <ClInclude Include="Tile.h" />
     <ClInclude Include="TileAccessor.h" />
     <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileVisuals.h" />
+    <ClInclude Include="UIVisuals.h" />
     <ClInclude Include="WorldGenerator.h" />
   </ItemGroup>
   <ItemGroup>
