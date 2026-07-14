@@ -12,6 +12,7 @@
 #include "TileAccessor.h"
 #include "MachineSystem.h"
 #include "PlacementController.h"
+#include "TileVisuals.h"
 
 
 
@@ -44,6 +45,7 @@ private:
 
 	ResourceRegistry m_resourceRegistry;
 	MachineRegistry m_machineRegistry;
+	TileVisuals m_tileVisualizer;
 
 	TileAccessor m_tileAccessor;	
 	MachineSystem m_machineSystem;

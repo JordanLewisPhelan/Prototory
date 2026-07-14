@@ -50,6 +50,8 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 
 	m_resourceRegistry.initializeResources();
 	m_machineRegistry.initializeMachines();
+
+	m_tileVisualizer.registerDefaults();
 }
 
 // Will be used to determine player key presses and click inputs during gameplay

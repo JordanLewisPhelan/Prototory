@@ -20,3 +20,33 @@ Added in TileVisual Setup, tested renderDebug in player(just needed to see it wa
 
 Was a very nothing day in terms of progress but all the data I collected and basic sprite work done, while literally the bare minimum was done for coding the setup and theory was tested, i just need to make the tile logic next.
 
+---
+
+## Day Two
+Today had decent progress but I have not enough time to finalize and test building sprites yet. 
+
+Made a slight change, not really Pivot or note worthy but I updated texture as a sole texture space to a map. I done this because I wanted to allow custom sprites and setups and it also makes breaking up textures easier, I can simply make a Grass or Sand or Stone texture image and use that whole file but keep their dimensions small.
+
+So instead of an atlas or a god sprite sheet with everything bundled together I chose to spread them out. 
+
+This did mean I had to tweak the system slightly from plans to accomodate, but it was nothing major as this was always the plan, I just didn't expect so many minor hitches to crop up.
+
+There was a lot of issues ones I hadn't even considered until working on it actively, the initial test texture i thought would be enough to test the pair I have added in this commit, rock and grass, but no, Due to the prior issue of separate images and overwriting this wasn't feasible long term, this would certainly cause issues;
+Another issue was having to worry about identifying how to account for different image/sprite images would be spaced out or handled, forcing all images to be 3x3 - due to my test examples, would be catastrophically limiting. 
+I went with the choice that made the most sense, A simple struct that Holds basic data about how many rows or columns to partition and skim through. 
+
+I didn't realize it initially but this does have some overlap with how I could setup the inventory system, I had envisioned using the same system before to construct UI and Tile Variants but by complete coincidence I have the segment that applies to both as a struct and can focus on working on both in time.
+
+Inventory is a ways off of course but it just intrigued me that while I missed the implementation my idea had merit, I just had to extract the right parts. Will attempt to use this when I work on the inventory UIs.
+
+
+I have added this work into Gameplay, this is because the work above made sense and was made easier by referring to my old work, the Definitions for machines and resources, the idea is scraped from there, assign everything in a local hotspot and register them all when needed.
+
+This push will not have any sprites showing but I have tested that the images load correctly.
+
+The next day will consist of trying to implement them to tiles. 
+That was meant to be today, but alas it was a bigger job debugging and planning than I thought so will be progressing with optimistic caution.
+
+---
+## Day Three
+~Prepped~
