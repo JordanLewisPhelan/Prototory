@@ -16,12 +16,19 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	// Used to Show progression of loading process 
 	LoadingScreen l_loadingScreen(t_window, m_gameFont);
 
+
+	m_resourceRegistry.initializeResources();
+	m_machineRegistry.initializeMachines();
+
+	m_tileVisualizer.registerDefaults();
+
+
 	// World Gen with FIXED SEED for debugging
 	//m_worldGen.generateSeededWorld(m_tileMap, 5878514, &l_loadingScreen);
 	
 	// Random World Generation - as long as a "l_seed" is used
 	uint32_t l_seed = m_worldGen.generateSeed();
-	m_chunkManager.initialize(l_seed, m_tileMap, &l_loadingScreen);	// debugging ; Const seed: 5878514
+	m_chunkManager.initialize(l_seed, m_tileMap, &l_loadingScreen, m_tileVisualizer);	// debugging ; Const seed: 5878514
 
 	// default text for debugging - will refine later(intended to show key data later)
 	m_areaText.setString("Gameplay Screen");
@@ -47,11 +54,6 @@ Gameplay::Gameplay(sf::RenderWindow& t_window)
 	m_camera.setSize(sf::Vector2f(static_cast<float>(Globals::SCREEN_WIDTH),
 								  static_cast<float>(Globals::SCREEN_HEIGHT))); // Matches window size
 	m_camera.setCenter(m_player.getWorldPosition());
-
-	m_resourceRegistry.initializeResources();
-	m_machineRegistry.initializeMachines();
-
-	m_tileVisualizer.registerDefaults();
 }
 
 // Will be used to determine player key presses and click inputs during gameplay
@@ -125,7 +127,7 @@ void Gameplay::Render(sf::RenderWindow& t_window)
 {
 	t_window.setView(m_camera);
 
-	m_tileMap.render(t_window, m_tileAccessor);
+	m_tileMap.render(t_window, m_tileAccessor, m_tileVisualizer);
 
 	if (m_tileMap.getDebugElevation())
 		m_tileMap.renderDebugElevation(t_window, m_gameFont);

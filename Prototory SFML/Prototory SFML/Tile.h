@@ -29,6 +29,8 @@ struct Tile {
 	TileType m_type;		// The type associated with the tile.
 	sf::Vector2i m_gridPosition;	// Vector of where in the TileMap will this be housed
 	int m_elevation;			// determining height of a map tile
+	int m_variantIndex = 0;		// Sprite Allocated
+	int m_rotationStep = 0;
 	TileResource m_resource;	// Resource and its attributes associated with this tile
 	std::optional<MachineComponent> m_machine;		// What piece of machinery occupies this tile
 

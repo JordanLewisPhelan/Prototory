@@ -9,7 +9,7 @@ ChunkManager::ChunkManager()
 }
 
 /// ToDo: Refactor Passes into functions later or during downtime - very large Initialize function, no good
-void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen)
+void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen, const TileVisuals& t_tileVisuals)
 {
 	m_seed = t_seed;
 
@@ -20,7 +20,7 @@ void ChunkManager::initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen
 	// Updates to world
 	buildChunkGrid(t_loadingScreen);
 	assignBiomes(t_seed, t_loadingScreen);
-	generateTerrain(t_seed, t_tileMap, t_loadingScreen);
+	generateTerrain(t_seed, t_tileMap, t_loadingScreen, t_tileVisuals);
 	adjustOceanDepth(t_loadingScreen);
 	smoothElevation(3, t_loadingScreen);
 
@@ -135,7 +135,7 @@ void ChunkManager::assignBiomes(uint32_t t_seed, LoadingScreen* t_loadingScreen)
 	}
 }
 
-void ChunkManager::generateTerrain(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen)
+void ChunkManager::generateTerrain(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen, const TileVisuals& t_tileVisuals)
 {
 	int l_total = m_chunkCountX * m_chunkCountY;
 	int l_completed = 0;
@@ -147,7 +147,7 @@ void ChunkManager::generateTerrain(uint32_t t_seed, TileMap& t_tileMap, LoadingS
 		for (int y = 0; y < m_chunkCountY; y++)
 		{
 			Chunk& l_chunk = m_chunks[x][y];
-			m_worldGen.generateChunk(l_chunk, t_seed);
+			m_worldGen.generateChunk(l_chunk, t_seed, t_tileVisuals);
 			updateLoadingProgress(t_loadingScreen, "Generating Terrain...", ++l_completed, l_total);
 		}
 	}
@@ -485,6 +485,8 @@ void ChunkManager::syncToTileMap(TileMap& t_tileMap)
 					l_mapTile->m_type = l_tile.m_type;
 					l_mapTile->m_elevation = l_tile.m_elevation;
 					l_mapTile->m_resource = l_tile.m_resource;
+					l_mapTile->m_variantIndex = l_tile.m_variantIndex;
+					l_mapTile->m_rotationStep = l_tile.m_rotationStep;
 				}
 			}
 		}

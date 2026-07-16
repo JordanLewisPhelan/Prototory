@@ -28,7 +28,7 @@ TileMap::TileMap(int t_width, int t_height, int t_tileSize)
 }
 
 
-void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
+void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor, const TileVisuals& t_tileVisuals)
 {
 	// This will determine what we can see on screen
 	sf::View l_view = t_window.getView();			// Effectively 2D camera 
@@ -65,6 +65,15 @@ void TileMap::render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor)
 
 			t_window.draw(l_tileRectangle);
 
+			// Render sprite if set
+			std::optional<sf::Sprite> l_sprite = t_tileVisuals.buildSprite(l_tile.m_type, l_tile.m_variantIndex, l_tile.m_rotationStep);
+
+			if (l_sprite.has_value())
+			{
+				sf::Vector2f l_centre(x * m_tileSize + m_tileSize / 2.f, y * m_tileSize + m_tileSize / 2.f);
+				l_sprite->setPosition(l_centre);
+				t_window.draw(*l_sprite);
+			}
 
 			// Draw machine if present
 			Tile* l_liveTile = t_tileAccessor.get(sf::Vector2i(x, y));

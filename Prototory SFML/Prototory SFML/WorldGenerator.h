@@ -2,12 +2,11 @@
 
 #include "TileMap.h"
 #include "INoiseGenerator.h"
-// Remove when re-adding Interfaced Noise
 #include "HashNoiseGenerator.h"
 #include "PerlinNoiseGenerator.h"
-//
 #include "LoadingScreen.h"
 #include "chunk.h"
+#include "TileVisuals.h"
 #include <iostream>
 #include <memory>
 #include <chrono>	//std::chrono
@@ -28,11 +27,8 @@ public:
 	void generateWorld(TileMap& t_tileMap);
 
 	// Generates a chunk - sequential
-	void generateChunk(Chunk& t_chunk, uint32_t t_seed);
+	void generateChunk(Chunk& t_chunk, uint32_t t_seed, const TileVisuals& t_tileVisuals);
 
-	// Applies or changes used Noise Algorithm
-	//void setNoiseGenerator(std::unique_ptr<INoiseGenerator> t_generator);
-	//void setBiomeNoiseGeneratro(std::unique_ptr<INoiseGenerator> t_generator);
 
 	float getBiomeValue(int t_x, int t_y, uint32_t t_seed);
 
@@ -45,13 +41,6 @@ public:
 	uint32_t generateSeed();
 
 private:
-/// Not useless but not currently used.		
-					//std::unique_ptr<INoiseGenerator> m_noiseGen;
-					///* Unideal to make 2 Interface Variables but idea to swap at runtime 
-					//   is short-sighted Better this way for flow control anyway
-					//*/
-					//std::unique_ptr<INoiseGenerator> m_biomeNoiseGen;	
-
 	PerlinNoiseGenerator m_terrainGen;
 	HashNoiseGenerator m_biomeGen;
 

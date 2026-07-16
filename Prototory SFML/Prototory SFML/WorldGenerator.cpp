@@ -41,7 +41,7 @@ void WorldGenerator::generateWorld(TileMap& t_tileMap)
 }
 
 
-void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
+void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed, const TileVisuals& t_tileVisuals)
 {
     ChunkPosition l_chunkPos = t_chunk.getPosition();
     BiomeType l_biome = t_chunk.getBiome();
@@ -66,7 +66,8 @@ void WorldGenerator::generateChunk(Chunk& t_chunk, uint32_t t_seed)
             l_tile.m_type = l_tileType;
             l_tile.m_gridPosition = sf::Vector2i(l_worldX, l_worldY);
             l_tile.m_elevation = l_elevation;
-
+            l_tile.m_variantIndex = t_tileVisuals.selectVariant(l_tile.m_type, l_worldX, l_worldY, t_seed, m_biomeGen);
+            l_tile.m_rotationStep = t_tileVisuals.selectRotation(l_worldX, l_worldY, t_seed, m_biomeGen);
         }
     }
 }
@@ -139,18 +140,3 @@ TileType WorldGenerator::determineTileType(float t_value, BiomeType t_biome) con
         return TileType::Grass;
     }
 }
-
-
-
-
-//void WorldGenerator::setNoiseGenerator(std::unique_ptr<INoiseGenerator> t_generator)
-//{
-//	m_noiseGen = std::move(t_generator);
-//	std::cout << "WorldGenerator: Generation type has changed.\n\n";
-//}
-//
-//void WorldGenerator::setBiomeNoiseGeneratro(std::unique_ptr<INoiseGenerator> t_generator)
-//{
-//    m_biomeNoiseGen = std::move(t_generator);
-//    std::cout << "WorldGenerator: Biome Generation type has changed.\n\n";
-//}

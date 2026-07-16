@@ -2,8 +2,9 @@
 #include "Globals.h"
 #include <vector>
 #include <cstdint>
+#include <optional>
 #include "Tile.h"
-
+#include "HashNoiseGenerator.h"	// Adding to use Hash function for variant selection
 
 struct TileVariant
 {
@@ -45,9 +46,21 @@ public:
 	// Returns Variant of : Type , index, e.g. Grass, 4 will give 4th grass variant 
 	sf::IntRect getVariantRect(TileType t_type, int t_variantIndex) const;
 
-private:
+	std::optional<sf::Sprite> buildSprite(TileType t_type, int t_variantIndex, int t_rotationStep) const;
 
+	int selectVariant(TileType t_type, int t_x, int t_y, uint32_t t_seed, const HashNoiseGenerator& t_generator) const;
+
+	// Chooses a random rotation for the sprite in 90 degree intervals - Idea; Makes terrain look livelier than it is
+	int selectRotation(int t_x, int t_y, uint32_t t_seed, const HashNoiseGenerator& t_generator) const;
+
+
+private:
 	std::unordered_map<std::string, sf::Texture> m_textures;
 	std::unordered_map<int, std::string> m_typeToTexturePaths;
 	std::unordered_map<int, std::vector<TileVariant>> m_variants;
+
+	// Random mid-sized numbers for hashing specific things
+	const uint32_t HASH_SALT_VARIANT = 104729u;
+	const uint32_t HASH_SALT_ROTATION = 217645u;
+
 };

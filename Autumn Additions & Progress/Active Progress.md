@@ -49,4 +49,7 @@ That was meant to be today, but alas it was a bigger job debugging and planning 
 
 ---
 ## Day Three
-~Prepped~
+An ([[Idea 1]]) popped into my head as I was working here today that is certainly too soon to make a call on but would be quite interesting.
+Sadly this will be scrapped likely and just fixed, but it will remain like this until I make a RockTest image sheet. So around now and maybe later expect some terrain to look a little wonky as I combat the urge to want to add more complexity.
+
+

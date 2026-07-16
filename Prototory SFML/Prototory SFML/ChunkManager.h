@@ -5,6 +5,7 @@
 #include "TileMap.h"
 #include "LoadingScreen.h"
 #include "WorldGenerator.h"
+#include "TileVisuals.h"
 #include <stdexcept>	
 
 
@@ -21,7 +22,7 @@ public:
 
 
 	// Utilizes seed set by Game to generate the Chunk Grid
-	void initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen);
+	void initialize(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen, const TileVisuals& t_tileVisuals);
 
 
 	Chunk& getChunk(int t_x, int t_y);
@@ -61,7 +62,7 @@ private:
 	void assignBiomes(uint32_t t_seed, LoadingScreen* t_loadingScreen);
 
 	// Generates the terrain based on Biome Rules 
-	void generateTerrain(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen);
+	void generateTerrain(uint32_t t_seed, TileMap& t_tileMap, LoadingScreen* t_loadingScreen, const TileVisuals& t_tileVisuals);
 
 	// Scales the ocean to always ensure traversal is possible 
 	void adjustOceanDepth(LoadingScreen* t_loadingScreen);

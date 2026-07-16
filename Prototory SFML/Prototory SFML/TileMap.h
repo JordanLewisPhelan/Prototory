@@ -2,6 +2,7 @@
 #include "Tile.h"
 #include <vector>
 #include "Globals.h"
+#include "TileVisuals.h"
 
 
 class TileAccessor;
@@ -11,7 +12,7 @@ class TileMap
 public:
 	TileMap(int t_width, int t_height, int t_tileSize);
 
-	void render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor);
+	void render(sf::RenderWindow& t_window, TileAccessor& t_tileAccessor, const TileVisuals& t_tileVisuals);
 
 	// - Accessors -
 	Tile* getTileAt(int t_x, int t_y);
