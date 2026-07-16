@@ -52,4 +52,31 @@ That was meant to be today, but alas it was a bigger job debugging and planning 
 An ([[Idea 1]]) popped into my head as I was working here today that is certainly too soon to make a call on but would be quite interesting.
 Sadly this will be scrapped likely and just fixed, but it will remain like this until I make a RockTest image sheet. So around now and maybe later expect some terrain to look a little wonky as I combat the urge to want to add more complexity.
 
+Wrote beyond here after this day - Basically backfilling what I had done and why to the best of my recollection.
+
+Added in buildSprite function to make and display a Sprite Variant and return that sprite. It uses std::optional as I wanted to protect against moments during debugging where a Sprite may not exist or for later on in case it has no sprite whether i forget to give a sprite or under the guise of extensibility, it doesnt break if I were to attempt to add a new sprite type and I apply it incorrectly, those tiles would not have a sprite and errors would occur.
+
+Documentation on how ([[BuildSprite()]]) is used and handled is in the respective linked md file under Documentation.
+
+Built on buildSprite to add in rotating the sprite to add more randomness. This is simple overall but I wanted to make sure this worked, so something that could have been ; sprite.setRotation(value) - Had to take up some attention I didnt really plan to do today but when something feels simple its a lot easier just do it.
+Sadly that meant I had to add in another feature;
+
+Deterministic Selection for Sprites: This was initially to organise the sprites rotation. But what makes it deterministic is I had to tie it to the seed somehow. 
+I was stumped but it dawned on me I always had plans to reuse the Noise Generators, and this was only a simple number selection so i decided to use the HashNoiseGenerator for this and just made some salt values - copied logic from WorldGenerator - Holding onto that old code in comments worked out! Even if not used 1 to 1.
+
+I do have some gripes about how I designed it this commit, it feels weird to pass in a full generator, even if it already existed and is simply a reference in my case. I'd like to go back later if I have time and find a more light or atleast not parameter cramming method of doing the same thing, but it is proven to work! So that is key takeaway from this commit, it panned out and the seed does influence the tiles sprite and random rotation, which is what I wanted.
+
+Those were the only additions but of course I had to update the Generation process to add this logic in. 
+
+Updated TileMap and WorldGenerator and Im pretty sure ChunkManager to accept TileVisuals reference to apply the changes.
+
+A neat but welcome boon was I was worried about how the rendering of TileMap would act if I was to add the Sprites, sprites loaded forever isnt exactly safe culling, But the design of attaching the loaded sprite via VariantIndex and the rotation made this relatively cheap considering its sprite building. Only draws and builds tiles and sprites that are near the player.
+It was welcome as it worked out of the box after adding those variables to Tile and updating the values when generated.
+
+NOTE: Still not entirely sure about the frame hitching, will explore on the next full working day.
+
+
+## Day Four
+~Prepped~
+
 
