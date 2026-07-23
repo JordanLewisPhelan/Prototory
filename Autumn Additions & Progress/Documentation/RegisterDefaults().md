@@ -10,7 +10,7 @@ The current setup and examples are hardcoded, I have not yet added a JSON parser
 
 1. Add your sprite sheet to the project, remember where you put it; The Project standard is currently in "ASSETS\\IMAGES\\-YourSpriteSheet-".
 2. Make a string and assign the string the FilePath in the project, tell it where to go to get your Sprites
-3. Tell { m_typeToTexturePaths } what TileType you are attempting to reach - it uses basic integers, don't forget to static_cast TileType to ensure its readable.
+3. Input the Type of Tile we are saying will use this sheet.
    Then assign your string path to it, that TileType will now use your spriteSheet.
 4. Next we want to use GridLayout class to understand how we should cut up your sprite sheet to extract the Sprites and ideally leave no coarse edges or taking too much.
    
@@ -28,10 +28,14 @@ The current setup and examples are hardcoded, I have not yet added a JSON parser
 ### *<u>Description</u>*
 This is a very important feature as it ensures we have SpriteSheets or images to reference and segment into usable sprites.
 
-The idea is simple, you add in a filePath, wherever you have your Image sheet - ***Usability Note: Could probably adjust to be a list that this calls from and assigns automatically and you add to that list.***
+The idea is simple;
+- You add in a filePath, wherever you have your Image sheet.
+- Mark what TileType will be populated by the sprites we have at the filePath.
+- Set up the dimensions and spacing for GridLayout to take "pictures" of your sprite sheet to use as Sprites.
+Done, that is process and will scale as more files are added or updated, as long as it is remembered to update GridLayouts dimensions.
 
-Then load that texture and assign the filepath to the list of Texture-TileTypes unordered map variable named { m_typeToTexturePaths } in the game. This ties that filePath to the Type so whenever you want to get valid variants of that type of Tile, you can just look it up!
-This streamlines the process so that all bound sprite sheets. 
+
+This streamlines the process so that all bound sprites have a reference to the texture they use, ensures that if a new filePath is added for a Type of Tile we don't overwrite the Old filePaths. 
 
 ---
 

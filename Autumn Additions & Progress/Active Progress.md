@@ -1,4 +1,4 @@
-## Day One
+## Session One
 Initially started with going in with the idea of a full Visualizer Constructor as it made sense. 
 But beginning to write and even name classes I began doubting it this was the right direction as it is not super logical to tie all visuals to one class.
 
@@ -22,7 +22,7 @@ Was a very nothing day in terms of progress but all the data I collected and bas
 
 ---
 
-## Day Two
+## Session Two
 Today had decent progress but I have not enough time to finalize and test building sprites yet. 
 
 Made a slight change, not really Pivot or note worthy but I updated texture as a sole texture space to a map. I done this because I wanted to allow custom sprites and setups and it also makes breaking up textures easier, I can simply make a Grass or Sand or Stone texture image and use that whole file but keep their dimensions small.
@@ -48,7 +48,7 @@ The next day will consist of trying to implement them to tiles.
 That was meant to be today, but alas it was a bigger job debugging and planning than I thought so will be progressing with optimistic caution.
 
 ---
-## Day Three
+## Session Three
 An ([[Idea 1]]) popped into my head as I was working here today that is certainly too soon to make a call on but would be quite interesting.
 Sadly this will be scrapped likely and just fixed, but it will remain like this until I make a RockTest image sheet. So around now and maybe later expect some terrain to look a little wonky as I combat the urge to want to add more complexity.
 
@@ -76,7 +76,29 @@ It was welcome as it worked out of the box after adding those variables to Tile 
 NOTE: Still not entirely sure about the frame hitching, will explore on the next full working day.
 
 
-## Day Four
-~Prepped~
+## Session Four
+Today was small but very important. Done a mild refactor to the TileVisuals setup, moved from trying to force textures and types to be synchronous and bound to being a little more flexible. As I discovered from earlier, there was an Overwritting issue when calling TileType::Grass twice, but trying to add on another sprite sheet, example, rocks can sparsely appear in plains biome as a use case example. 
 
+The issue was this was overwriting the previous bound filePath so I had to change how that was registered and assigned slightly.
+
+The only thing really left for this feature is adding in the remaining TileType sheets and to add in IronOre - I actually forgot to make that before.
+
+I have some wishes I would like to add to this, such as a Compendium, throw in all file paths there and either organise a delegation system when passing in, e,g. an unordered map like these variants can be used by Sand and Stone tiles, while this other list can be sand and water tiles, I think this would start simple and scale up into visual deviations like how I wanted certain tiles a certain colour based on depth, this is still present but isn't functionally implemented with sprites.
+
+
+**ADDENDUM:** There is 1 additional feature I added all this for and nearly forgot about adding;
+Depth Gauging Terrain - Basically if terrain is too steep on a certain side a visual will come alongside that to reflect that you cant scale it.
+
+Next session will probably consist of Tidying up loose ends with the TileTypes being set up and adding in IronOre sprites.
+
+Followed by work starting on the Depth Gauging - Unsure what to call it, will workshop it when I look into researching it. 
+**BONUS NOTE:** Should be able to use bitmapping setup, it should be able to work well as should be quick enough to do during generation to update and join terrain.
+Maybe orchestrating a full bitmap system and rendering the sprites based on ruled pairings? Would be a big shift but would tie sprites visually together seamlessly.
+Will be considered but focus will be on bitmapping or simply exploring possibilities pertaining to determining directional steepness.
+
+**Closing Note:** Also changed Day 1,2,3 headings into Sessions - between research and other unavoidable breaks some workflow has been split between commits, 'Day' is an inaccurate portrayal of the process.
+
+
+## Session Five
+~Prepped~
 

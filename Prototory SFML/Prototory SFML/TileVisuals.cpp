@@ -36,87 +36,78 @@ const sf::Texture* TileVisuals::getTexture(const std::string& t_filePath) const
 	return &l_it->second;
 }
 
-const sf::Texture* TileVisuals::getTextureForType(TileType t_type) const
-{
-	auto l_pathIt = m_typeToTexturePaths.find(static_cast<int>(t_type));
 
-	if (l_pathIt == m_typeToTexturePaths.end())
+void TileVisuals::registerTileType(TileType t_type, const std::string& t_filePath, const GridLayout& t_layout)
+{
+	if (!loadTexture(t_filePath))
 	{
-		std::cout << "[TileVisuals] No texture path registered for this TileType.\n";
-		return nullptr;
+		std::cout << "[TileVisuals] Requested file path not loaded: " << t_filePath << "\n";
+		return;
 	}
 
-	return getTexture(l_pathIt->second);
+	const sf::Texture* l_texture = getTexture(t_filePath);
+
+	for (const sf::IntRect& l_rect : sliceIntoRects(t_layout))
+	{
+		m_variants[static_cast<int>(t_type)].push_back(TileVariant{ l_rect, l_texture });
+	}
 }
+
 
 void TileVisuals::registerDefaults()
 {
+	/// ToDo?: Add to a TileType Compendium - Feed in relevant paths and run them all together
+	/// Is potentially redundant currently as I don't plan to have several sprite sheets conjoin
+	/// Outside of testing, but it is something I wanted to be functionally doable easily
+	
+	// FilePaths for SpriteSheets used
 	const std::string l_grassPath = "ASSETS\\IMAGES\\GrassTest.png";
-
-	// Links path to TileType
-	if (loadTexture(l_grassPath))
-	{
-		m_typeToTexturePaths[static_cast<int>(TileType::Grass)] = l_grassPath;
-
-		// Note and reminder of Layouts
-		//					rows , columns , Sprite Size , Space between Cells , The Offset to reach the sprite
-		GridLayout l_grassLayout{ 3, 3, sf::Vector2i(64,64),  sf::Vector2i(16,16), sf::Vector2i(16,16) };
-
-		for (const sf::IntRect& l_rect : sliceIntoRects(l_grassLayout))
-		{
-			m_variants[static_cast<int>(TileType::Grass)].push_back(TileVariant{ l_rect });
-		}
-	}
-
-
 	const std::string l_stonePath = "ASSETS\\IMAGES\\RockTest.png";
 
-	if (loadTexture(l_stonePath))
-	{
-		m_typeToTexturePaths[static_cast<int>(TileType::Stone)] = l_stonePath;
+	// Note and reminder of Layouts
+	//					rows , columns , Sprite Size , Space between Cells , The Offset to reach the sprite
+	GridLayout l_grassLayout{ 3, 3, sf::Vector2i(64,64),  sf::Vector2i(16,16), sf::Vector2i(16,16) };
+	GridLayout l_stoneLayout{ 5, 5, sf::Vector2i(40, 40), sf::Vector2i(8, 8), sf::Vector2i(16, 16) };
 
-		GridLayout l_stoneLayout{ 5, 5, sf::Vector2i(40, 40), sf::Vector2i(8, 8), sf::Vector2i(16, 16) };
 
-		for (const sf::IntRect& l_rect : sliceIntoRects(l_stoneLayout))
-		{
-			m_variants[static_cast<int>(TileType::Stone)].push_back(TileVariant{ l_rect });
-		}
-	}
+	// Assigning Defaults
+	registerTileType(TileType::Grass, l_grassPath, l_grassLayout);
+
+	registerTileType(TileType::Stone, l_stonePath, l_stoneLayout);
+
+
 }
 
 sf::IntRect TileVisuals::getVariantRect(TileType t_type, int t_variantIndex) const
 {
-	auto l_it = m_variants.find(static_cast<int>(t_type));
+	const TileVariant* l_variant = getVariant(t_type, t_variantIndex);
 
-	if (l_it == m_variants.end() || l_it->second.empty())
+	if (l_variant == nullptr)
 	{
 		std::cout << "[TileVisuals] No variants registered for this TileType. \n";
 		return sf::IntRect();
 	}
 
-	// Prevents overcasting - e.g. havve only 10 sprites, attempting to grab 15 sprite will return element 5
-	int l_index = t_variantIndex % static_cast<int>(l_it->second.size());
-
-	return l_it->second[l_index].m_spriteRect;
+	return l_variant->m_spriteRect;
 }
 
 std::optional<sf::Sprite> TileVisuals::buildSprite(TileType t_type, int t_variantIndex, int t_rotationStep) const
 {
-	const sf::Texture* l_texture = getTextureForType(t_type);
+	const TileVariant* l_variant = getVariant(t_type, t_variantIndex);
 
-	if (l_texture == nullptr)
+	if (l_variant == nullptr)
 	{
 		return std::nullopt;
 	}
 
-	sf::IntRect l_rect = getVariantRect(t_type, t_variantIndex);
+	sf::IntRect l_rect = l_variant->m_spriteRect;
 	// Ensures there is actually a value being returned - catches empty sf::IntRect() return values
 	if (l_rect.size.x <= 0 || l_rect.size.y <= 0)
 	{
 		return std::nullopt;
 	}
 
-	sf::Sprite l_sprite(*l_texture);
+	sf::Sprite l_sprite(*l_variant->m_texture);
 
 	l_sprite.setTextureRect(l_rect);
 	l_sprite.setScale(sf::Vector2f(static_cast<float>(Globals::TILE_SIZE) / static_cast<float>(l_rect.size.x),
@@ -153,6 +144,21 @@ int TileVisuals::selectRotation(int t_x, int t_y, uint32_t t_seed, const HashNoi
 	l_value = static_cast<int>(l_value * 4) % 4;
 
 	return l_value;
+}
+
+const TileVariant* TileVisuals::getVariant(TileType t_type, int t_variantIndex) const
+{
+	auto l_it = m_variants.find(static_cast<int>(t_type));
+
+	if (l_it == m_variants.end() || l_it->second.empty())
+	{
+		return nullptr;
+	}
+
+	// Prevents overcasting - e.g. havve only 10 sprites, attempting to grab 15 sprite will return element 5
+	int l_index = t_variantIndex % static_cast<int>(l_it->second.size());
+
+	return &l_it->second[l_index];
 }
 
 

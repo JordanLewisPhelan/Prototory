@@ -9,6 +9,7 @@
 struct TileVariant
 {
 	sf::IntRect m_spriteRect;
+	const sf::Texture* m_texture = nullptr;
 };
 
 
@@ -38,7 +39,7 @@ public:
 
 	const sf::Texture* getTexture(const std::string& t_filePath) const;
 
-	const sf::Texture* getTextureForType(TileType t_type) const;
+	void registerTileType(TileType t_type, const std::string& t_filePath, const GridLayout& t_layout);
 
 	// Sets up TileType variants - same concept from the definitions before; Machine/Resources
 	void registerDefaults();
@@ -56,11 +57,12 @@ public:
 
 private:
 	std::unordered_map<std::string, sf::Texture> m_textures;
-	std::unordered_map<int, std::string> m_typeToTexturePaths;
 	std::unordered_map<int, std::vector<TileVariant>> m_variants;
 
 	// Random mid-sized numbers for hashing specific things
 	const uint32_t HASH_SALT_VARIANT = 104729u;
 	const uint32_t HASH_SALT_ROTATION = 217645u;
 
+
+	const TileVariant* getVariant(TileType t_type, int t_variantIndex) const;
 };

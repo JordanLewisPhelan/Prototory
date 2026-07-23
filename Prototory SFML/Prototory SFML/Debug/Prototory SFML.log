@@ -1,4 +1,29 @@
-﻿  LINK : C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Debug\Prototory SFML.exe not found or not built by the last incremental link; performing full link
+﻿  TileVisuals.cpp
+C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,47): warning C4275: non dll-interface class 'std::runtime_error' used as base for dll-interface class 'sf::Exception'
+  (compiling source file 'TileVisuals.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.41.34120\include\stdexcept(100,19):
+      see declaration of 'std::runtime_error'
+      C:\SFML-3.0.0\include\SFML\System\Exception.hpp(41,23):
+      see declaration of 'sf::Exception'
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(7,43): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'TileVisuals.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\Globals.h(8,44): warning C4244: 'initializing': conversion from 'float' to 'const unsigned int', possible loss of data
+  (compiling source file 'TileVisuals.cpp')
+  
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,67): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,67): warning C4244:         with
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,67): warning C4244:         [
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,67): warning C4244:             T=float
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,67): warning C4244:         ]
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,48): warning C4244: 'argument': conversion from 'int' to 'T', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,48): warning C4244:         with
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,48): warning C4244:         [
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,48): warning C4244:             T=float
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(115,48): warning C4244:         ]
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(144,42): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Prototory SFML\TileVisuals.cpp(146,9): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
   Prototory SFML.vcxproj -> C:\Users\Jordan\Desktop\Prototory SFML\Prototory\Prototory SFML\Debug\Prototory SFML.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.
